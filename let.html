@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        var a = 10;
+        let a = 20; // This will throw an error because 'let' does not allow redeclaration
+        console.log(a); // Outputs 20
+        
+        // Redeclaration of variables
+        let test = 5;
+        // let test = 10; // This will throw an error because 'let' does not allow redeclaration
+
+        // Reassignment of variables
+        let test1 = 10;
+        test1 = 20;
+        console.log(test1); // Outputs 20
+
+        // Block scope
+        // Case 1 :-
+        let test2 = 30;
+        {
+            let test2 = 40; // This 'test2' is a different variable, scoped to this block
+            console.log(test2,"inside block"); // Outputs 40
+        }
+        console.log(test2,"outside block"); // Outputs 30
+
+        // Case 2 :-
+        {
+            let test3 = 60; // This 'test3' is scoped to this block
+            console.log(test3); // Outputs 60
+        }
+        console.log(test3); // This will throw an error because 'test3' is not defined outside the block
+    </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Redeclaration of variables
+        var test = 5;
+        var test = 10;
+
+        // Reassignment of variables
+        var test1 = 10;
+        test1 = 20;
+
+        // Block scope
+
+        // Case 1 :- 
+        var test2 = 30;
+        {
+            test2 = 40;
+        }
+        console.log(test2); // Outputs 40, as var is function scoped
+        
+
+        // Case 2 :-
+        {
+            var test3 = 60;
+        }
+        console.log(test3); // Outputs 60
+    </script>
+</body>
+</html>

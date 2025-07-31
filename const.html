@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Redeclaration of constants
+        const a = 10;
+        // const a = 20; // This will throw an error because 'const' does not allow redeclaration
+
+        // Reassignment of constants
+        const b = 30;
+        // b = 40; // This will throw an error because 'const' does not allow reassignment
+
+        // Block scope
+        // Case 1 :-
+        const test1 = 50;
+        {
+            const test1 = 60; // This 'test1' is a different variable, scoped to this block
+            console.log(test1, "inside block"); // Outputs 60
+        }
+        console.log(test1, "outside block"); // Outputs 50
+
+        // Case 2 :-
+        {
+            const test2 = 70; // This 'test2' is scoped to this block
+        }
+        console.log(test2); // This will throw an error because 'test2' is not defined outside the block
+    </script>
+</body>
+</html>
