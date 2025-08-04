@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Logical assignment operators
+        let a = 10;
+        let b = 5;
+        a = a && b; // Logical AND operator
+        console.log("Logical AND:", a); // Outputs 5 
+
+        // Logical OR operator
+        let c = undefined;
+        let d = 5;
+        c = c || d;
+        console.log("Logical OR:", c); // Outputs 10
+
+        // Nullish coalescing assignment operator
+        let e = null; // null or undefined
+        let f = 5;
+        e = e ?? f;
+        console.log("Nullish coalescing assignment:", e); // Outputs 5
+    </script>
+</body>
+</html>
