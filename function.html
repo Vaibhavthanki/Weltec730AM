@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // Function declaration
+        function firstFunction() {
+            console.log("This is the first function.");
+        }
+
+        // Function invocation
+        firstFunction();
+        
+        // function with parameters
+        function sum(value1, value2) {
+            console.log("Sum Typeof :", typeof value1, typeof value2);
+            console.log("Sum :",value1 + value2);
+        }
+
+        // function call with arguments
+        sum(10,20)
+
+        function checkDoubleEqual(value1,value2){
+            console.log("Double Equal Typeof :", typeof value1, typeof value2);
+            console.log("Double Equal :",value1 == value2);
+        }
+
+        function checkTripleEqual(value1,value2){
+            console.log("Triple Equal Typeof :", typeof value1, typeof value2);
+            console.log("Triple Equal :",value1 === value2);
+        }
+
+        checkDoubleEqual(10,'10')
+        checkTripleEqual(10,'10')
+    </script>
+</body>
+</html>

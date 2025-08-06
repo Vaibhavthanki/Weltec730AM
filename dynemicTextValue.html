@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<p id="dynamic-text"></p>
+<button onclick="printText()">Print Text</button>
+<button onclick="printBoldText()">Print Bold Text</button>
+<body>
+    <script>
+        function printText() {
+            document.getElementById("dynamic-text").innerText = "Hello, World!";
+        }
+
+        function printBoldText() {
+            document.getElementById("dynamic-text").innerHTML = "<b>Hello, World!</b>";
+        }
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<input type="number" value="firstInputValue" id="input1" onchange="firstInputChange(this.value)">
+<input type="number" value="secondInputValue" id="input2" onchange="secondInputChange(this.value)">
+
+<button onclick="inputSum()">Calculate Sum</button>
+<body>
+    <script>
+        let firstInputValue = 0
+        let secondInputValue = 0
+        function firstInputChange(value){
+            console.log("First input change value:",typeof value,value)
+            firstInputValue = Number(value)
+            // alert("First input change :- " + value)
+        }
+
+        function secondInputChange(value){
+            console.log("Second input change value:",typeof value,value)
+            secondInputValue = Number(value)
+            // alert("Second input change :-" + value)
+        }
+
+        function inputSum() {
+            const sum = firstInputValue + secondInputValue
+            alert("Sum of inputs :- " + sum)
+        }
+    </script>
+</body>
+</html>
