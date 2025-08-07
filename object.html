@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let person = {
+            name: "John",
+            age: 30,
+            city: "New York"
+        };
+
+        person = 'test'
+
+        console.log("Person :-",person);
+        
+        const person1 = {
+            name: "John",
+            age: 30,
+            address : {
+                street: "123 Main St",
+                city: "New York"
+            },
+            // Address : {
+            //     street: "321 Main St",
+            //     city: "321 New York"
+            // }
+        };
+
+        const person2 = structuredClone(person1)
+
+        const person3 ={}
+    
+        // person1 = {
+        //     car : "test"
+        // }
+
+        console.log("Person1 :-",person1);
+
+        // How to access properties
+        console.log("Name:", person1.name);
+        console.log( person1["age"]);
+        console.log('address:', person1.address);
+        
+        // how to access nested properties
+        console.log("Street:", person1.address.street);
+        console.log("City:", person1.address["city"]);
+        console.log("City:", person1["address"]["city"]);
+
+        // console.log("Address:", person1.Address);
+        // console.log("Street:", person1.Address.street);
+
+        // How to add properties
+            person1.country = "USA";
+            person1.address.zip = "10001";
+
+            person1["phone"] = "123-456-7890";
+
+            person1["address"]["state"] = "NY";
+
+        console.log("New Person1 :-",person1);
+        console.log("New Person2 :-",person2);  
+
+
+    </script>
+</body>
+</html>
