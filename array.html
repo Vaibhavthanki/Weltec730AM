@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>        // 0 1 2 3 4 -- index
+        const array = [
+            1,
+            2,
+            3,
+            4,
+            5
+        ]
+        const array2 = [1,"test",true,undefined,null,NaN,Infinity]
+        const person = [
+            {
+                name: "John",
+                age: 30,
+                city: "New York"
+            },
+            {
+                name: "Jane",
+                age: 25
+            }
+        ]
+        console.log("array :- ",array.toString()); // "1,2,3,4,5"
+        console.log("array2 :- ",array2.toString()); // "1,test,true,,null,NaN,Infinity"
+        console.log("person",person);
+
+
+        // Accessing elements
+        console.log("array[0]", array[0]); // 1
+        console.log("array[1]", array[1]); // 2
+        console.log("array[2]", array[2]); // 3
+        console.log("array[3]", array[3]); // 4 
+        console.log("array[4]", array[4]); // 5
+
+        array[0] = 10; // Changing the first element
+        console.log("array after change", array); // [10, 2, 3, 4, 5]
+
+        const person1 = new Array(
+            {
+                name: "John",
+                age: 30,
+                city: "New York"
+            },
+            {
+                name: "Jane",
+                age: 25
+            }
+        )
+        console.log("person1", person1.toString()); // "[object Object],[object Object]"
+
+                    //   0          1         2         3 --- index
+        const fruits = ["Banana", "Orange", "Apple", "Mango"]
+                    //   1          2         3         4 --- length
+
+                  //  0         1        2      3  --- index
+        const name = ["John", "Jane", "Doe", "Smith"]
+                  //   1       2         3       4 --- length
+
+        console.log("name[length] :-", name[name.length - 1]); // "Smith"
+        console.log("name :-", name[name.length - name.length]) // "John"
+        console.log("name first index:-", name[name.length - name.length + 1]) // "Jane"
+
+        console.log("name of fifth index:-", name[5]); // undefined
+        console.log("name of fifth index:-", name[name.length]); // undefined
+
+        // console.log("name[3] :- ", name[3]); // "Smith"
+        // console.log("fruits :- ", fruits.toString()); // "Banana,Orange,Apple,Mango"
+        // console.log("length of fruits", fruits.length); // 4
+        // console.log("typeof array", typeof fruits === 
+        // "object", typeof typeof fruits); // "object"
+
+
+    </script>
+</body>
+</html>
