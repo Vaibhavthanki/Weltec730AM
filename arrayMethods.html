@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // JavaScript code can go here
+
+        // Method 1 :- 
+        const fruits = ["Banana", "Orange", "Apple", "Mango"];
+        const removeFirstElement = fruits.shift();
+        // fruits.shift()
+        // console.log("Removed first element:", removeFirstElement);
+        // console.log("Updated fruits array:", fruits);
+
+        // Method 2 :-
+        const fruits1 = ["Banana", "Orange", "Apple", "Mango"];
+        const addFirstElement = fruits1.unshift("Grapes","Pineapple","Watermelon");
+        // console.log("Added first element:", addFirstElement);
+        // console.log("Updated fruits array:", fruits1);
+
+       // Method 3 :-
+       const fruits2 = ["Banana", "Orange", "Apple", "Mango"];
+       const addLastElement = fruits2.push("Grapes","Pineapple","Watermelon");
+       //  console.log("Added last element:", addLastElement);
+       //  console.log("Updated fruits array:", fruits2);
+
+       // Method 4 :-
+       const fruits3 = ["Banana", "Orange", "Apple", "Mango"];
+       const removeLastElement = fruits3.pop();
+       console.log("Removed last element:", removeLastElement);
+       console.log("Updated fruits array:", fruits3);
+    </script>
+</body>
+</html>
