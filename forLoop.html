@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id="demo"></p>
+    <script>
+        let i = 0;
+        for (let i = 0; i <= 10; i++) {
+            console.log("i",i)
+        }
+
+        let text = "";
+        const cars = ["BMW", "Volvo", "Saab", "Ford", "Fiat", "Audi"];
+
+        for (let i = 0; i < cars.length; i++) {
+            // text = text + cars[i] + "<br>";
+            text += cars[i] + "<br>";
+            // text = cars[i] + "<br>";
+            console.log("car", cars[i],text);
+        }
+
+        // console.log("i", i)
+
+
+        document.getElementById("demo").innerHTML = text;
+
+
+        for (i = 0, len = cars.length, text1 = ""; i < len; i++) {
+            text1 += cars[i] + "<br>";
+        }
+
+        console.log("text1", text1);
+
+
+        [1,2,3,4,5,6]
+    </script>
+</body>
+</html>
