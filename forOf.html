@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id="demo"></p>
+    <p id="demo1"></p>
+    <div id="customer-list"></div>
+    <script>
+        const cars = ["BMW", "Volvo", "Mini"];
+
+            let text = "";
+            let htmlWithText = '<ul>';
+            for (let x of cars) {
+                text += x + "\n";
+                htmlWithText += `<li>${x}</li>`;
+            }
+            htmlWithText += '</ul>';
+        document.getElementById("demo").innerText = text;
+        document.getElementById("demo1").innerHTML = htmlWithText;
+
+
+        const name = "Weltec"
+
+        for (let test of name) {
+            console.log("check char :- ", test);
+        }
+
+        const customerList = [
+            {
+                name: "John",
+                age: 30,
+                city: "New York",
+                country : "USA"
+            },
+            {
+                name: "Jane",
+                age: 25,
+                city: "Los Angeles"
+            }
+        ]
+
+        let customerTextData = "<ul>"
+        for (let x of customerList){
+            console.log("check customer data :- ", x);
+            for(let y in x){
+                console.log("check customer data neset loop :- ", y, " :- ", x[y]);
+                customerTextData += `<li>${y} : ${x[y]}</li>`;
+            }
+            // customerTextData += 
+            // `<li>name : ${x.name}</li>
+            //                     <li>age : ${x.age}</li>
+            //                     <li>city : ${x.city}</li>
+            //                     <li>country : ${x.country}</li>
+            //                     `
+        }
+        customerTextData += "</ul>"
+
+        document.getElementById("customer-list").innerHTML = customerTextData;
+
+    </script>
+</body>
+</html>
+</html>

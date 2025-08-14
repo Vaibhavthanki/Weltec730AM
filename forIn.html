@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id="demo"></p>
+    <p id="demo1"></p>
+    <script>
+        const person = {fname:"John", lname:"Doe", age:25};
+
+        // person.fname
+        // person["lname"]
+
+        // For in loop
+        for (let x in person) {
+            // "lname"
+            // person["lname"]
+            console.log("check person data :- ",person[x]);
+            // console.log("check person data 123:- ",person.x);
+        }
+
+        let text = ''
+        let htmlWithText = '<ul>'
+        for (let x in person) {
+            // text += x + " :- " + person[x] + "\n";
+            // Backtick 
+            text += `${x} :- ${person[x]} \n`;
+            htmlWithText += `<li>${x} :- ${person[x]}</li>`;
+            console.log("check html with text inside loop :- ", htmlWithText);
+        }
+        htmlWithText += '</ul>';
+        console.log("check html with text outside loop :- ", htmlWithText);
+        // document.getElementById("demo").innerText = text;
+        document.getElementById("demo1").innerHTML = htmlWithText;
+    </script>
+</body>
+</html>
