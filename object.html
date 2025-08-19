@@ -30,6 +30,8 @@
             // }
         };
 
+        person1["name"]
+
         const person2 = structuredClone(person1)
 
         const person3 ={}
@@ -42,7 +44,7 @@
 
         // How to access properties
         console.log("Name:", person1.name);
-        console.log( person1["age"]);
+        console.log( person1["age"],person1["name"]);
         console.log('address:', person1.address);
         
         // how to access nested properties
@@ -58,6 +60,8 @@
             person1.address.zip = "10001";
 
             person1["phone"] = "123-456-7890";
+
+            person1.address["country"] = "USA";
 
             person1["address"]["state"] = "NY";
 
@@ -78,6 +82,8 @@
             2 : "Doe",
             3 : "Smith"
         }
+
+        
 
         console.log(
             "Person5 :-", person5[0], person5[1], person5[2], person5[3] // John, Jane, Doe, Smith
