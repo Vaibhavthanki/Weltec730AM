@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="number" placeholder="Enter number here" onchange="handleInputChange(event)" id="numberInput" value="inputValue">
+    <button onclick="generateTable()">Get Table</button>
+    <div id="tableContainer"></div>
+    <script>
+        let inputValue = 0;
+        function handleInputChange(event) {
+
+            inputValue = event.target.value;
+            console.log("Input changed:", inputValue,event.target.value);
+        }
+
+        
+        const numbers = []
+        for (let i = 1; i <= 40; i++) {
+            numbers.push(i);
+        }
+        console.log(numbers,"check21");
+
+
+        function generateTable() {
+            console.log(inputValue,"check20");
+            // 5
+            // const inputValue = document.getElementById('numberInput').value;
+            // [1,2,3,4,5,6,7,8,9,10]
+            const numberTable = numbers.map(function(value) {
+                return `${inputValue} x ${value} = ${inputValue * value}`;
+            })
+
+            console.log(numberTable,"check22");
+
+            let htmlText = ''
+
+            numberTable.forEach(function(row) {
+                htmlText += `${row} <br/>`;
+            });
+
+            document.getElementById('tableContainer').innerHTML = htmlText;
+
+        }
+
+    
+
+
+    </script>
+</body>
+</html>

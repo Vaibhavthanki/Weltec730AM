@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const ages = [3, 10, 18, 20];
+
+        const foundAge = ages.find(function(value){
+            return value > 100;
+        })
+
+        console.log(foundAge,"check17",ages);
+
+        const person = [
+            { name: "John", age: 25 },
+            { name: "Jane", age: 30 },
+            { name: "Jim", age: 35 }
+        ]
+
+        const foundPerson = person.find(function(value){
+            return value.age > 30;
+        })
+    </script>
+</body>
+</html>

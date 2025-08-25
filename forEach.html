@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id="demo"></p>
+    <p id="demo2"></p>
+    <script>
+
+        //  Method 1 :- 
+        const fruits = ["apple", "orange", "cherry"];
+        function myFunction(fruit,index,arr) {
+            console.log(fruit,index,arr, this,"method 1");
+        }
+        fruits.forEach(myFunction,["Test"]);
+
+
+        const numbers = [1, 2, 3, 4];
+        let sum = 0;
+        let text = "<ul>"
+        // Method 2 :-
+        numbers.forEach(function(number,index,arr) {
+            console.log(number,index,arr, this,"method 2");
+            sum += number;
+            console.log("Sum: " + sum);
+            // text += "<li>" + number + "</li>";
+            text += `<li> index :-  ${index} value :- ${number} </li>`
+        },["Test"]);
+
+        text += "</ul>";
+        document.getElementById("demo2").innerHTML = text;
+        document.getElementById("demo").innerHTML = "Sum: " + sum;
+        
+       const newArray =  numbers.forEach(function(number, index, arr){
+            // return numbers * 2
+            number *=  2;
+            console.log(number,index,arr,"method 3");
+        });
+
+        console.log(numbers,"newArray",newArray); // This will remain the same
+
+        numbers.forEach(function(number, index, arr){
+            arr[index] *=  2;
+        });
+        console.log(numbers,"numbers"); 
+    </script>
+</body>
+</html>

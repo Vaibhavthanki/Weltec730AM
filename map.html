@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const numbers = [1, 2, 3, 4];
+       // [2,4,6,8]
+       const newArray =  numbers.map(function(value,index,arr){
+            return value * 2;
+            console.log(value * 2,"inside map function")
+        })
+        console.log(newArray,"newArray",numbers);
+
+        const person = [
+            {
+                name: "John",
+                age: 30
+            },
+            {
+                name: "Jane",
+                age: 25
+            },
+            {
+                name: "Jim",
+                age: 35
+            }
+        ]
+
+        const newArray1 = person.map(function(value,index,arr){
+            return {
+                ...value,
+                id : index + 1,
+            }
+        })
+
+        console.log(newArray1,"newArray1",person);
+    </script>
+</body>
+</html>
