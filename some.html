@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const ages = [15,32, 33,  40];
+
+        // Function to Run for every Element
+        function checkAge(age,index) {
+            console.log(age,index,"check14");
+            return age < 18;
+        }
+
+        // Using every() to check if all are above 18
+        const allAdults = ages.some(checkAge);
+        console.log(allAdults,"check20"); // false
+
+        const survey = [
+            { name: "Steve",   answer: "Yes"},
+            { name: "Jessica", answer: "Yes"},
+            { name: "Peter",   answer: "Yes"},
+            { name: "Elaine",  answer: "No"}
+        ];
+
+        // Function to Run for every Element
+        function isSameAnswer(el, index, arr) {
+            // Return true for the first element
+            if (index === 0){
+                return true;
+            }
+            else {
+                // Compare the value of the previous element
+                return (el.answer === arr[index - 1].answer);
+            }
+        }
+
+        console.log(survey.some(isSameAnswer),"check45");
+    </script>
+</body>
+</html>

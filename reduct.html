@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const numbers = [75, 50, 25];
+        let subtracted = 0;
+        let sum = 0;
+
+        numbers.forEach(function(num) {
+            // 0 - 75
+            //-75 - 50
+            // -125 - 25
+            subtracted -= num;
+            // sum = 0 + 75
+            // sum = 75 + 50
+            // sum = 125 + 25
+            sum += num;
+        });
+
+        console.log(subtracted,"check20",sum);
+      // [175, 50, 25];
+        const reduced = numbers.reduce(function(acc, curr,index) {
+            console.log("check12",'Index:', index, 'Accumulator:', acc, 'Current Value:', curr);
+            // 0 - 75
+            // -75 - 50
+            // -125 - 25
+            return acc - curr
+            // 175 - 50
+            // 125 - 25
+        },0);
+        console.log(reduced,"check21");
+        // [175, 50, 25];
+        const total = numbers.reduce(function(acc, curr,index) {
+            console.log("check13",'Index:', index, 'Accumulator:', acc, 'Current Value:', curr);
+            // sum = 0 + 175
+            // sum = 175 + 50
+            // sum = 225 + 25
+            return acc + curr
+        });
+        console.log(total,"check133");
+
+
+        const fruits = ['apple', 'banana', 'orange', 'mango',"apple","orange"];
+
+        const fruitCount = fruits.reduce(function(acc, curr) {
+            console.log(acc,"checkboth",curr,acc[curr]);
+            // acc['apple'] = (acc['apple'] || 0) + 1;
+            // acc['banana'] = (acc['banana'] || 0) + 1;
+            // acc['orange'] = (acc['orange'] || 0) + 1;
+            // acc['mango'] = (acc['mango'] || 0) + 1;
+            // acc['apple'] = (1 || 0) + 1;
+            // acc['orange'] = (1 || 0) + 1;
+            acc[curr] = (acc[curr] || 0) + 1;
+            return acc;
+        },{});
+        console.log(fruitCount,"check14");
+
+        const fruitString = fruits.reduce(function(acc, curr) {
+            // '' + 'apple' = 'apple'
+            // 'apple' + 'banana' = 'applebanana'
+            // 'applebanana' + 'orange' = 'applebananaorange'
+            return acc + "-" + curr;
+        });
+        console.log(fruitString,"check15");
+    </script>
+</body>
+</html>
