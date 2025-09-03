@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const fruits = ["Banana", "Orange", "Apple", "Mango"];
+        // fruits.splice(2, 0, {name: "Lemon", color: "yellow"},{name: "Kiwi", color: "green"});
+        // console.log(fruits,"checkfruit");
+
+      const updatedFruits = fruits.splice(2,1, {name: "Lemon", color: "yellow"},{name: "Kiwi", color: "green"})
+
+        console.log(fruits,"checkfruit",updatedFruits);
+
+        const fruits1 = ["Banana", "Orange", "Apple", "Mango"];
+
+        const updatedFruits1 = fruits1.toSpliced(2,1, {name: "Lemon", color: "yellow"},{name: "Kiwi", color: "green"})
+
+        console.log(fruits1,"checkfruit1",updatedFruits1);
+    </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const person = [
+            {
+                name: "John",
+                age: 30,
+                city: "New York",
+                email : "john@example.com"
+            },
+            {
+                name: "Jane",
+                age: 25,
+                city: "Los Angeles",
+                email: "jane@example.com"
+            },
+            {
+                name: "Alice",
+                age: 28,
+                city: "Chicago",
+                email: "alice@example.com"
+            },
+            {
+                name: "Bob",
+                age: 35,
+                city: "San Francisco",
+                email: "bob@example.com"
+            },
+            {
+                name: "Charlie",
+                age: 32,
+                city: "Seattle",
+                email: "charlie@example.com"
+            }
+        ]
+
+        const filteredEmail = ["alice@example.com", "bob@example.com"]
+
+        const filteredPersons = person.filter(function(person) {
+            // return person.email === "alice@example.com" || person.email === "bob@example.com"
+            return filteredEmail.includes(person.email)
+        })
+
+        console.log(filteredPersons,"check50")
+    </script>
+</body>
+</html>

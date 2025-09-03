@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        // Case1 :-
+        let fruits = ["Banana", "Apple", "Orange"];
+        console.log(fruits.sort(),"check14");
+
+        // Case2 :-
+        let fruits1 = ["Banana", "Blueberry", "Blackberry", "Apple"];
+        // Apple Banana Blackberry Blueberry
+        console.log(fruits1.sort(),"check15");
+
+        // Case3 :- 
+        let fruits2 = ["Banana", "apple", "Orange"];
+        // Banana Orange apple
+        console.log(fruits2.sort(),"check16");
+
+        // Case4 :-
+        let numbers = [40, 5, 100, 101, 25];
+        // 100 101 40 25 5
+        console.log(numbers.sort(),"check17");
+
+        // Case5 :-     //0    1   2  3  4    5
+        const numbers1 = [40, 100, 1, 5, 25, 10];
+        numbers1.sort(function(a, b) {
+            // return a - b; // asc 
+            return b - a; // desc
+        });
+        console.log(numbers1,"check18");
+
+        // Case6 :-
+
+        let fruits3 = ["Banana", "Apple", "Kiwi", "Watermelon"];
+                //        6        5      4      10
+        console.log(fruits3.sort((a, b) => b.length - a.length),"check41");
+
+                let fruits4 = ["Banana", "Apple", "Kiwi", "Watermelon"];
+                console.log(fruits4.sort(),"check42");
+
+                const fruits5 = {
+                    name : "banana"
+                }
+
+    console.log(Array.isArray(fruits5),"Check48")
+
+    </script>
+</body>
+</html>
