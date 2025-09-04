@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // [1,2,2,4,3,6]
+        let numbers = [1, 2, 3];
+        let mapped = numbers.map(function(n){
+            return [n,n * 2];
+        });
+        // [[1,2],[2,4],[3,6]]
+        console.log(mapped,"check12",mapped.flat());
+
+
+        let numbers1 = [1, 2, 3];
+        let result = numbers1.flatMap(function(n) {
+            return [n, n * 2];
+        });
+        // [1,2,2,4,3,6]
+        console.log(result,"check21");
+
+        let data = [0,1, 2, null, 3, undefined, 4,NaN,'',false];
+        let clean = data.flatMap(function(n) {
+            console.log(n  ? [n] : [],"check28",typeof n, n)
+            return n  ? [n] : [];
+        });
+
+        console.log(clean,"check31");
+
+        let fruits = ["apple", "banana"];
+        let doubled = fruits.flatMap(function(fruit) {
+            return [fruit, fruit.toUpperCase()];
+        });
+        console.log(doubled,"check38");
+
+        const number2 = [1, 2, 3, 4]
+        // [4,8]
+        const mappedNumber = number2.flatMap(function(x) {
+            return x % 2 === 0 ? [x * 2] : [];
+        });
+        console.log(mappedNumber,"check41");
+
+
+    </script>
+</body>
+</html>
