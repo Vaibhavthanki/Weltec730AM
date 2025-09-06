@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function add(a, b) {
+            return a + b;
+        }
+
+        let myFunction = (a, b) => a + b;
+
+        let hello = function() {
+            return "Hello World!";
+        }
+
+        let hello2 = () => "Hello World!";
+
+        let hello3 = (val) => "Hello " + val;
+        let hello4 = val => "Hello " + val;
+
+        let myFunction1 = (x, y) => { return x * y };
+
+        console.log(this,"check27") // this refers to the window object
+
+        const age = 26;
+
+        function displayAge() {
+            console.log(this.age,"check32");
+            console.log(this,"check33");
+        }
+
+        // // you can write any of the below to call the function since this refers to the window object
+        // displayAge();
+        // window.displayAge();
+
+        console.log("---------------------------");
+
+
+
+        // Case 1: Using regular function
+        const person = {
+            age: 25,
+            displayAge: function displayAge() {
+            console.log(this.age,"check48");
+            console.log(this,"check49");
+        },
+            nestedPerson: {
+            age: 30,
+            displayAge: function displayAge() {
+            console.log(this.age,"check50");
+            console.log(this,"check51");
+        }
+            }
+        };
+
+        // In this case, 'this' refers to the 'person' object
+
+        console.log(person.displayAge(),"check62"); 
+        console.log(person.nestedPerson.displayAge(),"check63");
+
+        console.log("---------------------------");
+
+        // In regular function the value of this keyword is based on how the function is called.
+
+
+        // Case 2: Using arrow function
+
+        const person2 = {
+            age: 25,
+            displayAge123: () => {
+                console.log(this.age,"check36");
+                console.log(this,"check37");
+            },
+            nestedPerson: {
+                age: 30,
+                displayAge456: () => {
+                    console.log(this.age,"check38");
+                    console.log(this,"check39");
+                }
+            }
+        };
+        
+        console.log(person2.displayAge123(),"check40"); 
+        console.log(person2.nestedPerson.displayAge456(),"check41");
+
+        console.log("---------------------------");
+
+        const person3 = {
+            age: 25,
+            displayAge: function displayAge() {
+                console.log(this.age,"check95");
+                console.log(this,"check96");
+                let c = 100
+
+                const innerFunction = () => {
+                    let d = 10
+                    console.log(c,"check100")
+                    console.log(this.age,"check101");
+                    console.log(this,"check102");
+                };
+
+                innerFunction();
+
+            }
+        };
+
+        console.log(person3.displayAge(),"check44");
+
+        // In arrow function the value of this keyword is based on the scope the arrow function is defined within.
+
+
+    </script>
+</body>
+</html>
