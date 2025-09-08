@@ -24,95 +24,129 @@
 
         let myFunction1 = (x, y) => { return x * y };
 
-        console.log(this,"check27") // this refers to the window object
+        // console.log(this,"check27") // this refers to the window object
 
-        const age = 26;
+        // const age = 26;
 
-        function displayAge() {
-            console.log(this.age,"check32");
-            console.log(this,"check33");
-        }
+        // function displayAge() {
+        //     console.log(this.age,"check32");
+        //     console.log(this,"check33");
+        // }
 
-        // // you can write any of the below to call the function since this refers to the window object
+        // // // you can write any of the below to call the function since this refers to the window object
         // displayAge();
-        // window.displayAge();
+        // // window.displayAge();
 
-        console.log("---------------------------");
-
-
-
-        // Case 1: Using regular function
-        const person = {
-            age: 25,
-            displayAge: function displayAge() {
-            console.log(this.age,"check48");
-            console.log(this,"check49");
-        },
-            nestedPerson: {
-            age: 30,
-            displayAge: function displayAge() {
-            console.log(this.age,"check50");
-            console.log(this,"check51");
-        }
-            }
-        };
-
-        // In this case, 'this' refers to the 'person' object
-
-        console.log(person.displayAge(),"check62"); 
-        console.log(person.nestedPerson.displayAge(),"check63");
-
-        console.log("---------------------------");
-
-        // In regular function the value of this keyword is based on how the function is called.
+        // console.log("---------------------------");
 
 
-        // Case 2: Using arrow function
 
-        const person2 = {
-            age: 25,
-            displayAge123: () => {
-                console.log(this.age,"check36");
-                console.log(this,"check37");
-            },
-            nestedPerson: {
-                age: 30,
-                displayAge456: () => {
-                    console.log(this.age,"check38");
-                    console.log(this,"check39");
-                }
-            }
-        };
+        // // Case 1: Using regular function
+        // const person = {
+        //     age: 25,
+        //     displayAge: function displayAge() {
+        //     console.log(this.age,"check48");
+        //     console.log(this,"check49");
+        // },
+        //     nestedPerson: {
+        //     age: 30,
+        //     displayAge: function displayAge() {
+        //     console.log(this.age,"check50");
+        //     console.log(this,"check51");
+        // }
+        //     }
+        // };
+
+        // // In this case, 'this' refers to the 'person' object
+
+        // console.log(person.displayAge(),"check62"); 
+        // console.log(person.nestedPerson.displayAge(),"check63");
+
+        // console.log("---------------------------");
+
+        // // In regular function the value of this keyword is based on how the function is called.
+
+
+        // // Case 2: Using arrow function
+
+        // const person2 = {
+        //     age: 25,
+        //     displayAge123: () => {
+        //         console.log(this.age,"check36");
+        //         console.log(this,"check37");
+        //     },
+        //     nestedPerson: {
+        //         age: 30,
+        //         displayAge456: () => {
+        //             console.log(this.age,"check38");
+        //             console.log(this,"check39");
+        //         }
+        //     }
+        // };
         
-        console.log(person2.displayAge123(),"check40"); 
-        console.log(person2.nestedPerson.displayAge456(),"check41");
+        // console.log(person2.displayAge123(),"check40"); 
+        // console.log(person2.nestedPerson.displayAge456(),"check41");
 
-        console.log("---------------------------");
+        // console.log("---------------------------");
 
-        const person3 = {
-            age: 25,
-            displayAge: function displayAge() {
-                console.log(this.age,"check95");
-                console.log(this,"check96");
-                let c = 100
+        // const person3 = {
+        //     age: 25,
+        //     displayAge: function displayAge() {
+        //         console.log(this.age,"check95");
+        //         console.log(this,"check96");
+        //         let c = 100
 
-                const innerFunction = () => {
-                    let d = 10
-                    console.log(c,"check100")
-                    console.log(this.age,"check101");
-                    console.log(this,"check102");
-                };
+        //         const innerFunction = () => {
+        //             let d = 10
+        //             console.log(c,"check100")
+        //             console.log(this.age,"check101");
+        //             console.log(this,"check102");
+        //         };
 
-                innerFunction();
+        //         innerFunction();
 
-            }
-        };
+        //     }
+        // };
 
-        console.log(person3.displayAge(),"check44");
+        // console.log(person3.displayAge(),"check44");
 
         // In arrow function the value of this keyword is based on the scope the arrow function is defined within.
 
 
+        console.log(this,'check116')
+
+        function displayAge() {
+            console.log(this,'check119')
+        }
+
+        displayAge();
+
+        const person = {
+            age : 26,
+            displayAge: displayAge
+        }
+        person.displayAge();
+
+        const person2 = {
+            age : 26,
+            displayAge: () => {
+                console.log(this,'check129')
+            }
+        }   
+        person2.displayAge();
+        
+        const person3 = {
+            age : 26,
+            displayAge: function() {
+                let c = 100
+                console.log(this,'check136')
+                const innerFunction = () => {
+                    console.log(this,'check138')
+                    console.log(c,'check139')
+                }
+                innerFunction();
+            }
+        }
     </script>
 </body>
 </html>

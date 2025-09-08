@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const str = "Hello World";
+        console.log(str.split(" "),"checksplit11");
+        let text = "a,b,c,d,e,f";
+        const myArray = text.split(",");
+        console.log(myArray,"checksplit22");
+
+        const fullName = "John_Doe";
+        const address = " 123 Main St, Anytown, USA ";
+
+        const trimmedAddress = {
+            street : '',
+            city: '',
+            country: ''
+        };
+        address.split(",").forEach((value,index) => {
+            if(index === 0) {
+                trimmedAddress.street = value.trim();
+            } else if(index === 1) {
+                trimmedAddress.city = value.trim();
+            } else if(index === 2) {
+                trimmedAddress.country = value.trim();
+            }
+        })
+        [23, 24, 25, 26].forEach(num => {
+            console.log(num);
+        })
+        console.log(trimmedAddress,"checksplit33");
+        console.log(fullName.split("_"),"checksplit44");
+
+    </script>
+</body>
+</html>
