@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM Basics - Beginner Level</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
+      .container {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+      h1,
+      h2 {
+        color: #333;
+      }
+      .example-box {
+        border: 2px solid #e0e0e0;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+      }
+      button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin: 5px;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+      .highlight {
+        background-color: yellow;
+        padding: 2px 4px;
+      }
+      .demo-text {
+        font-size: 18px;
+        margin: 10px 0;
+      }
+      code {
+        background-color: #f4f4f4;
+        padding: 2px 4px;
+        border-radius: 3px;
+        font-family: "Courier New", monospace;
+      }
+      .code-block {
+        background-color: #f4f4f4;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 15px;
+        margin: 10px 0;
+        overflow-x: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>DOM Basics - Beginner Level</h1>
+      <p>
+        Welcome to JavaScript DOM (Document Object Model) basics. The DOM
+        represents the structure of HTML documents as objects that JavaScript
+        can manipulate.
+      </p>
+    </div>
+
+    <div class="container">
+      <h2>1. What is the DOM?</h2>
+      <div class="example-box">
+        <p>
+          The DOM is a programming interface for HTML documents. It represents
+          the page so that programs can change the document structure, style,
+          and content.
+        </p>
+        <div class="code-block">
+          // The document object represents the entire HTML page
+          console.log(document); console.log(document.title);
+          console.log(document.URL);
+        </div>
+        <button onclick="showDocumentInfo()">Show Document Info</button>
+        <div id="document-info"></div>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2>2. Selecting Elements by ID</h2>
+      <div class="example-box">
+        <p>
+          Use <code>document.getElementById()</code> to select an element by its
+          ID attribute.
+        </p>
+        <div class="code-block">
+          // Syntax: document.getElementById('elementId') let element =
+          document.getElementById('myText');
+        </div>
+        <p id="myText" class="demo-text">
+          This is a paragraph with ID 'myText'
+        </p>
+        <button onclick="changeTextById()">Change Text by ID</button>
+        <button onclick="changeColorById()">Change Color by ID</button>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2>3. Selecting Elements by Class Name</h2>
+      <div class="example-box">
+        <p>
+          Use <code>document.getElementsByClassName()</code> to select elements
+          by their class name.
+        </p>
+        <div class="code-block">
+          // Returns a collection of elements let elements =
+          document.getElementsByClassName('demo-class');
+        </div>
+        <p class="demo-class">First paragraph with class 'demo-class'</p>
+        <p class="demo-class">Second paragraph with class 'demo-class'</p>
+        <p class="demo-class">Third paragraph with class 'demo-class'</p>
+        <button id="highlight-button" onclick="highlightByClass()">
+          Highlight All by Class
+        </button>
+        <button onclick="resetByClass()">Reset All</button>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2>4. Selecting Elements by Tag Name</h2>
+      <div class="example-box">
+        <p>
+          Use <code>document.getElementsByTagName()</code> to select elements by
+          their tag name.
+        </p>
+        <div class="code-block">
+          // Select all paragraph tags let paragraphs =
+          document.getElementsByTagName('p');
+        </div>
+        <div id="tag-demo">
+          <span>This is a span element</span>
+          <span>Another span element</span>
+          <span>Third span element</span>
+        </div>
+        <span>This is a span element outside div box</span>
+        <button onclick="highlightSpans()">
+          Highlight All Spans in Demo Area
+        </button>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2>5. Query Selectors (Modern Approach)</h2>
+      <div class="example-box">
+        <p>
+          Use <code>document.querySelector()</code> for the first match and
+          <code>document.querySelectorAll()</code> for all matches.
+        </p>
+        <div class="code-block">
+          // CSS selector syntax let firstPara = document.querySelector('p'); //
+          First paragraph let allParas = document.querySelectorAll('p'); // All
+          paragraphs let specificClass = document.querySelector('.my-class'); //
+          First element with class let specificId =
+          document.querySelector('#my-id'); // Element with ID
+        </div>
+        <div class="query-demo">
+          <p class="query-class">Paragraph 1 with query-class</p>
+          <p class="query-class">Paragraph 2 with query-class</p>
+          <p id="special-para">Special paragraph with ID</p>
+        </div>
+        <button onclick="querySelectDemo()">Demo Query Selectors</button>
+        <div id="query-results"></div>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2>6. Changing Element Content</h2>
+      <div class="example-box">
+        <p>
+          Use <code>innerHTML</code>, <code>textContent</code>, and
+          <code>innerText</code> to change element content.
+        </p>
+        <div class="code-block">
+          element.innerHTML = '&lt;strong&gt;Bold text&lt;/strong&gt;'; // Can
+          include HTML element.textContent = 'Plain text only'; // Text only, no
+          HTML element.innerText = 'Visible text only'; // Respects styling
+        </div>
+        <div id="content-demo">
+          <p id="demo-para">Original content</p>
+        </div>
+        <button onclick="changeInnerHTML()">Change with innerHTML</button>
+        <button onclick="changeTextContent()">Change with textContent</button>
+        <button onclick="resetContent()">Reset Content</button>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2>7. Changing Element Attributes</h2>
+      <div class="example-box">
+        <p>
+          Use <code>getAttribute()</code>, <code>setAttribute()</code>, and
+          <code>removeAttribute()</code> to work with attributes.
+        </p>
+        <div class="code-block">
+          element.setAttribute('class', 'new-class'); let className =
+          element.getAttribute('class'); element.removeAttribute('class');
+        </div>
+        <img
+          id="demo-image"
+          src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzMzNzNkYyIvPgogIDx0ZXh0IHg9IjUwIiB5PSI1NSIgZm9udC1zaXplPSIxNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkltYWdlPC90ZXh0Pgo8L3N2Zz4K"
+          alt="Demo Image"
+          style="border: 2px solid #ccc"
+        />
+        <button onclick="changeImageAttributes()">
+          Change Image Size & Border
+        </button>
+        <button onclick="resetImageAttributes()">Reset Image</button>
+        <div id="attribute-info"></div>
+      </div>
+    </div>
+
+    <div id="visible"></div>
+    <div id="hidden" style="display: none">I am hidden</div>
+
+    <script>
+      // Difference between textContent and innerText
+      const visible = document.getElementById("visible");
+      visible.innerHTML = "1<br>2<br>3<br>4\n5\n6\n7\n8";
+      console.log(visible.textContent, "check234");
+      console.log(visible.innerText, "check235");
+
+      // 1. Document Info Demo
+      function showDocumentInfo() {
+        const info = document.getElementById("document-info");
+        info.innerHTML = `
+                <h4>Document Information:</h4>
+                <p><strong>Title:</strong> ${document.title}</p>
+                <p><strong>URL:</strong> ${document.URL}</p>
+                <p><strong>Domain:</strong> ${document.domain}</p>
+            `;
+      }
+
+      // 2. ID Selection Demo
+      function changeTextById() {
+        const element = document.getElementById("myText");
+        element.textContent = "Text changed using getElementById()!";
+        element.style.fontWeight = "bold";
+      }
+
+      function changeColorById() {
+        const element = document.getElementById("myText");
+        element.style.color = element.style.color === "red" ? "blue" : "red";
+      }
+
+      // 3. Class Selection Demo
+      function highlightByClass() {
+        const buttonElement = document.getElementById("highlight-button");
+        buttonElement.style.backgroundColor = "green";
+        const elements = document.getElementsByClassName("demo-class");
+        console.log(elements, "check263");
+        for (let i = 0; i < elements.length; i++) {
+          elements[i].style.backgroundColor = "lightblue";
+          elements[i].style.padding = "10px";
+          elements[i].style.margin = "5px 0";
+          elements[i].style.borderRadius = "4px";
+        }
+      }
+
+      function resetByClass() {
+        const buttonElement = document.getElementById("highlight-button");
+        buttonElement.style.backgroundColor = "#007bff";
+        const elements = document.getElementsByClassName("demo-class");
+        for (let i = 0; i < elements.length; i++) {
+          elements[i].style.backgroundColor = "";
+          elements[i].style.padding = "";
+          elements[i].style.margin = "";
+          elements[i].style.borderRadius = "";
+        }
+      }
+
+      // 4. Tag Selection Demo
+      function highlightSpans() {
+        const tagDemo = document.getElementById("tag-demo");
+        const spans = tagDemo.getElementsByTagName("span");
+        for (let i = 0; i < spans.length; i++) {
+          spans[i].style.backgroundColor = "lightgreen";
+          spans[i].style.padding = "5px";
+          spans[i].style.margin = "2px";
+          spans[i].style.display = "inline-block";
+          spans[i].style.borderRadius = "3px";
+        }
+        const getAllSpanTags = document.getElementsByTagName("span");
+        console.log(getAllSpanTags, "check300", spans);
+      }
+
+      // 5. Query Selector Demo
+      function querySelectDemo() {
+        const results = document.getElementById("query-results");
+
+        // querySelector - gets first match
+        const firstQueryClass = document.querySelector(".query-class");
+        console.log(firstQueryClass, "check312");
+        firstQueryClass.style.backgroundColor = "lightcoral";
+
+        // querySelectorAll - gets all matches
+        const allQueryClass = document.querySelectorAll(".query-class");
+
+        for (let i = 0; i < allQueryClass.length; i++) {
+          allQueryClass[i].style.fontWeight = "bold";
+        }
+        console.log(allQueryClass, "check315");
+        // querySelector with ID
+        const specialPara = document.querySelector("#special-para");
+        specialPara.style.backgroundColor = "lightyellow";
+
+        console.log(specialPara, "check320");
+
+        results.innerHTML = `
+                <h4>Query Selector Results:</h4>
+                <p>Found ${allQueryClass.length} elements with class 'query-class'</p>
+                <p>First element with class highlighted in light coral</p>
+                <p>Element with ID 'special-para' highlighted in light yellow</p>
+            `;
+      }
+
+      // 6. Content Change Demo
+      function changeInnerHTML() {
+        const para = document.getElementById("demo-para");
+        para.innerHTML =
+          "<strong>Bold text</strong> and <em>italic text</em> using innerHTML";
+      }
+
+      function changeTextContent() {
+        const para = document.getElementById("demo-para");
+        para.textContent =
+          "Plain text only - HTML tags are not rendered with textContent";
+      }
+
+      function resetContent() {
+        const para = document.getElementById("demo-para");
+        para.innerHTML = "Original content";
+      }
+
+      // 7. Attribute Demo
+      function changeImageAttributes() {
+        const img = document.getElementById("demo-image");
+        img.setAttribute("width", "150");
+        img.setAttribute("height", "150");
+        img.style.border = "3px solid red";
+        // img.style.width = "150px";
+        // img.style.height = "150px";
+        img.setAttribute("alt", "Modified Demo Image");
+
+        const info = document.getElementById("attribute-info");
+        info.innerHTML = `
+                <h4>Current Image Attributes:</h4>
+                <p><strong>Width:</strong> ${
+                  img.getAttribute("width") || "not set"
+                }</p>
+                <p><strong>Height:</strong> ${
+                  img.getAttribute("height") || "not set"
+                }</p>
+                <p><strong>Alt text:</strong> ${img.getAttribute("alt")}</p>
+            `;
+      }
+
+      function resetImageAttributes() {
+        const img = document.getElementById("demo-image");
+        img.removeAttribute("width");
+        img.removeAttribute("height");
+        img.style.border = "2px solid #ccc";
+        img.setAttribute("alt", "Demo Image");
+
+        const info = document.getElementById("attribute-info");
+        info.innerHTML = "<p>Image attributes reset to default</p>";
+      }
+    </script>
+  </body>
+</html>
