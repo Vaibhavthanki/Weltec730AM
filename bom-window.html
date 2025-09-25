@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Window Object - BOM</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        line-height: 1.6;
+      }
+      .example {
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin: 10px 0;
+      }
+      button {
+        background: #007acc;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        cursor: pointer;
+        margin: 5px;
+      }
+      .output {
+        background: #e8f4f8;
+        padding: 10px;
+        margin: 10px 0;
+        border-left: 4px solid #007acc;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Window Object in BOM</h1>
+
+    <p>
+      The <strong>window</strong> object represents the browser window and is
+      the global object in JavaScript.
+    </p>
+
+    <div class="example">
+      <h3>Window Properties</h3>
+      <button onclick="showWindowProperties()">Show Window Properties</button>
+      <div id="windowProps" class="output"></div>
+    </div>
+
+    <div class="example">
+      <h3>Window Methods - Open/Close</h3>
+      <button onclick="openNewWindow()">Open New Window</button>
+      <button onclick="closeWindow()">Close Current Window</button>
+      <p><em>Note: Popup blockers may prevent new windows from opening</em></p>
+    </div>
+
+    <div class="example">
+      <h3>Window Scrolling</h3>
+      <button onclick="scrollToTop()">Scroll to Top</button>
+      <button onclick="scrollToBottom()">Scroll to Bottom</button>
+      <button onclick="scrollBy100()">Scroll Down 100px</button>
+    </div>
+
+    <div class="example">
+      <h3>Window Resizing (may not work in all browsers)</h3>
+      <button onclick="resizeWindow()">Resize Window</button>
+      <button onclick="moveWindow()">Move Window</button>
+      <p><em>Modern browsers restrict these operations for security</em></p>
+    </div>
+
+    <!-- Add some content to test scrolling -->
+    <div
+      style="
+        height: 1000px;
+        background: linear-gradient(to bottom, #f0f0f0, #ffffff);
+      "
+    >
+      <h3>Scroll Test Area</h3>
+      <p>This is a tall section to test window scrolling methods.</p>
+      <p>
+        Use the scroll buttons above to see how window.scrollTo() and
+        window.scrollBy() work.
+      </p>
+    </div>
+
+    <script>
+      function showWindowProperties() {
+        const output = document.getElementById("windowProps");
+        output.innerHTML = `
+                <h4>Window Properties:</h4>
+                <p><strong>Inner Width:</strong> ${window.innerWidth}px</p>
+                <p><strong>Inner Height:</strong> ${window.innerHeight}px</p>
+                <p><strong>Outer Width:</strong> ${window.outerWidth}px</p>
+                <p><strong>Outer Height:</strong> ${window.outerHeight}px</p>
+                <p><strong>Screen X:</strong> ${window.screenX}</p>
+                <p><strong>Screen Y:</strong> ${window.screenY}</p>
+                <p><strong>Page X Offset (scroll):</strong> ${window.pageXOffset}</p>
+                <p><strong>Page Y Offset (scroll):</strong> ${window.pageYOffset}</p>
+            `;
+      }
+
+      let newWindow;
+      function openNewWindow() {
+        newWindow = window.open("", "newWindow", "width=400,height=300");
+        if (newWindow) {
+          newWindow.document.write(`
+                    <h3>New Window</h3>
+                    <p>This is a new browser window opened using window.open()</p>
+                    <button onclick="window.close()">Close This Window</button>
+                `);
+        } else {
+          alert("Popup blocked! Please allow popups for this site.");
+        }
+      }
+
+      function closeWindow() {
+        if (newWindow && !newWindow.closed) {
+          newWindow.close();
+          alert("New window closed!");
+        } else {
+          // Note: Can't close main window that wasn't opened by script
+          alert("No window to close or cannot close main window");
+        }
+      }
+
+      function scrollToTop() {
+        window.scrollTo(0, 0);
+      }
+
+      function scrollToBottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+      }
+
+      function scrollBy100() {
+        window.scrollBy(0, 100);
+      }
+
+      function resizeWindow() {
+        try {
+          window.resizeTo(600, 400);
+        } catch (e) {
+          alert("Cannot resize window - modern browsers restrict this");
+        }
+      }
+
+      function moveWindow() {
+        try {
+          window.moveTo(100, 100);
+        } catch (e) {
+          alert("Cannot move window - modern browsers restrict this");
+        }
+      }
+
+      // Console examples for students
+      console.log("=== Window Object Examples ===");
+      console.log("window.innerWidth:", window.innerWidth);
+      console.log("window.innerHeight:", window.innerHeight);
+      console.log("window.location:", window.location.href);
+
+      // Global variables become window properties
+      var globalVar = "I'm a global variable";
+      console.log("window.globalVar:", window.globalVar);
+    </script>
+  </body>
+</html>

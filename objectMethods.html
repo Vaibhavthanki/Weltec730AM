@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const user =   {
+    "id": 1,
+    "name": "Leanne Graham",
+    "username": "Bret",
+    "email": "Sincere@april.biz",
+    "address": {
+      "street": "Kulas Light",
+      "suite": "Apt. 556",
+      "city": "Gwenborough",
+      "zipcode": "92998-3874",
+      "geo": {
+        "lat": "-37.3159",
+        "lng": "81.1496"
+      }
+    },
+    "phone": "1-770-736-8031 x56442",
+    "website": "hildegard.org",
+    "company": {
+      "name": "Romaguera-Crona",
+      "catchPhrase": "Multi-layered client-server neural-net",
+      "bs": "harness real-time e-markets"
+    }
+  }
+
+  const user1 = {
+    address: "test",
+    test: "test123"
+  }
+
+  const user2 = {
+   website : "test.com",
+   test : "test456"
+  }
+
+  console.log(Object.assign(user,user2,user1),"check40")
+
+  const person = {
+  firstName : "John",
+  lastName : "Doe",
+  age : 50,
+  eyeColor : "blue"
+}
+
+let text = Object.entries(person).flatMap((currentValue) => {
+let [key, value] = currentValue;
+    console.log(key, value, "check42",currentValue);
+    return `${key}: ${value}`
+});
+
+console.log(Object.entries(person), "check41")
+
+console.log(Object.keys(person), "check61")
+console.log(Object.values(person), "check62")
+
+const {age,...rest} = person;
+delete person.age
+console.log(age, "check66",person)
+</script>
+</body>
+</html>

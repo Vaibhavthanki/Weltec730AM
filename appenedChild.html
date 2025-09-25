@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>User Table with LocalStorage</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+      table {
+        border-collapse: collapse;
+        width: 60%;
+        margin-top: 20px;
+      }
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 10px;
+        text-align: left;
+      }
+      th {
+        background: #f4f4f4;
+      }
+      button {
+        padding: 5px 10px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>User Form</h2>
+    <form id="userForm">
+      <label>
+        Username:
+        <input type="text" id="username" required />
+      </label>
+      <br /><br />
+      <label>
+        Email:
+        <input type="email" id="email" required />
+      </label>
+      <br /><br />
+      <button type="submit">Add User</button>
+      <button type="reset">Reset</button>
+    </form>
+
+    <h2>User List</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="userTableBody">
+        <!-- rows will appear here -->
+      </tbody>
+    </table>
+
+    <script>
+      const userForm = document.getElementById("userForm");
+      const usernameInput = document.getElementById("username");
+      const emailInput = document.getElementById("email");
+      const userTableBody = document.getElementById("userTableBody");
+
+      // Load users from localStorage
+      let users = JSON.parse(localStorage.getItem("users")) || [];
+
+      // Function to render table
+      function renderTable() {
+        // userTableBody.innerHTML = "";
+        users.forEach((user, index) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${user.username}</td>
+          <td>${user.email}</td>
+          <td><button class="deleteBtn" data-index="${index}">Delete</button></td>
+        `;
+          userTableBody.innerHTML += row.innerHTML;
+          //   userTableBody.appendChild(row);
+        });
+      }
+
+      // Initial render
+      renderTable();
+
+      // Handle form submit
+      userForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const username = usernameInput.value.trim();
+        const email = emailInput.value.trim();
+
+        if (username && email) {
+          // Add user to array
+          users.push({ username, email });
+
+          // Save to localStorage
+          localStorage.setItem("users", JSON.stringify(users));
+
+          // Re-render table
+          renderTable();
+
+          // Clear inputs
+          usernameInput.value = "";
+          emailInput.value = "";
+        }
+      });
+
+      // Handle delete
+      userTableBody.addEventListener("click", function (e) {
+        console.log("check113", e);
+        if (e.target && e.target.classList.contains("deleteBtn")) {
+          const index = e.target.getAttribute("data-index");
+          users.splice(index, 1); // remove user from array
+
+          // Update localStorage
+          localStorage.setItem("users", JSON.stringify(users));
+
+          // Re-render table
+          renderTable();
+        }
+      });
+    </script>
+  </body>
+</html>

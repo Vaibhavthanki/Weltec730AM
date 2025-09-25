@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Window Object Methods Examples</h1>
+
+    <h2>1. window.open() - Open a new window</h2>
+    <button onclick="openNewWindow()">Open New Window</button>
+    <button onclick="openWithOptions()">Open Window with Options</button>
+    <button onclick="openPopup()">Open Popup Window</button>
+
+    <h2>2. window.close() - Close the current window</h2>
+    <button onclick="closeCurrentWindow()">Close Current Window</button>
+    <button onclick="closePopup()">Close Popup Window</button>
+
+    <h2>3. window.moveTo() - Move the current window</h2>
+    <p style="color: orange; font-size: 12px;">
+      <strong>Note:</strong> moveTo() may not work on the main window due to browser security restrictions. 
+      It works better on popup windows opened by JavaScript.
+    </p>
+    <button onclick="moveWindow()">Try Move Main Window to (100, 100)</button>
+    <button onclick="moveToCenter()">Try Move Main Window to Center</button>
+    <button onclick="createMovableWindow()">Create Movable Popup Window</button>
+
+    <h2>4. window.resizeTo() - Resize the current window</h2>
+    <p style="color: orange; font-size: 12px;">
+      <strong>Note:</strong> resizeTo() may not work on the main window due to browser security restrictions. 
+      It works better on popup windows opened by JavaScript.
+    </p>
+    <button onclick="resizeWindow()">Try Resize Main Window to 800x600</button>
+    <button onclick="resizeSmall()">Try Resize Main Window to Small (400x300)</button>
+    <button onclick="resizeLarge()">Try Resize Main Window to Large (1200x800)</button>
+    <button onclick="createResizableWindow()">Create Resizable Popup Window</button>
+
+    <script>
+      let popupWindow; // Variable to store reference to popup window
+
+      // window.open() examples
+      function openNewWindow() {
+        // Open a new window/tab with default settings
+        window.open("https://www.example.com", "_blank");
+      }
+
+      function openWithOptions() {
+        // Open window with specific options
+        window.open(
+          "https://www.google.com",
+          "GoogleWindow",
+          "width=800,height=600,scrollbars=yes,resizable=yes"
+        );
+      }
+
+      function openPopup() {
+        // Open a popup window and store reference
+        popupWindow = window.open(
+          "https://www.stackoverflow.com",
+          "PopupWindow",
+          "width=500,height=400,left=200,top=200,scrollbars=no,resizable=no,menubar=no,toolbar=no"
+        );
+      }
+
+      // window.close() examples
+      function closeCurrentWindow() {
+        // Close the current window (may not work in all browsers due to security)
+        if (confirm("Do you want to close this window?")) {
+          window.close();
+        }
+      }
+
+      function closePopup() {
+        // Close the popup window if it exists
+        if (popupWindow && !popupWindow.closed) {
+          popupWindow.close();
+          alert("Popup window closed!");
+        } else {
+          alert("No popup window to close or already closed!");
+        }
+      }
+
+      // window.moveTo() examples
+      function moveWindow() {
+        // Try to move main window (may not work due to security restrictions)
+        try {
+          const oldX = window.screenX;
+          const oldY = window.screenY;
+          
+          window.moveTo(100, 100);
+          
+          // Check if it actually moved
+          setTimeout(() => {
+            if (window.screenX === oldX && window.screenY === oldY) {
+              alert("❌ Move failed - Browser security restrictions prevent moving the main window.\nTry the 'Create Movable Popup Window' button instead!");
+            } else {
+              alert("✅ Window successfully moved to position (100, 100)");
+            }
+          }, 100);
+        } catch (error) {
+          alert("❌ Error: " + error.message);
+        }
+      }
+
+      function moveToCenter() {
+        // Try to move main window to center
+        try {
+          const oldX = window.screenX;
+          const oldY = window.screenY;
+          
+          const screenWidth = screen.availWidth;
+          const screenHeight = screen.availHeight;
+          const windowWidth = window.outerWidth;
+          const windowHeight = window.outerHeight;
+
+          const centerX = (screenWidth - windowWidth) / 2;
+          const centerY = (screenHeight - windowHeight) / 2;
+
+          window.moveTo(centerX, centerY);
+          
+          // Check if it actually moved
+          setTimeout(() => {
+            if (window.screenX === oldX && window.screenY === oldY) {
+              alert("❌ Move failed - Browser security restrictions prevent moving the main window.\nTry the 'Create Movable Popup Window' button instead!");
+            } else {
+              alert("✅ Window successfully moved to center of screen");
+            }
+          }, 100);
+        } catch (error) {
+          alert("❌ Error: " + error.message);
+        }
+      }
+
+      function createMovableWindow() {
+        // Create a popup window that can actually be moved
+        const movableWindow = window.open(
+          "",
+          "MovableWindow",
+          "width=400,height=300,left=200,top=200,scrollbars=yes,resizable=yes"
+        );
+        
+        if (movableWindow) {
+          movableWindow.document.write(`
+            <html>
+              <head><title>Movable Window Demo</title></head>
+              <body style="font-family: Arial; padding: 20px; background: #f0f8ff;">
+                <h2>🚀 Movable Window Demo</h2>
+                <p>This window can be moved and resized!</p>
+                <button onclick="moveToPosition(50, 50)" style="margin: 5px; padding: 8px;">Move to (50, 50)</button><br>
+                <button onclick="moveToPosition(300, 100)" style="margin: 5px; padding: 8px;">Move to (300, 100)</button><br>
+                <button onclick="moveToCenter()" style="margin: 5px; padding: 8px;">Move to Center</button><br>
+                <button onclick="window.close()" style="margin: 5px; padding: 8px; background: #ff6b6b; color: white; border: none;">Close Window</button>
+                
+                <script>
+                  function moveToPosition(x, y) {
+                    window.moveTo(x, y);
+                    alert('✅ Window moved to (' + x + ', ' + y + ')');
+                  }
+                  
+                  function moveToCenter() {
+                    const centerX = (screen.availWidth - window.outerWidth) / 2;
+                    const centerY = (screen.availHeight - window.outerHeight) / 2;
+                    window.moveTo(centerX, centerY);
+                    alert('✅ Window moved to center!');
+                  }
+                </script>
+              </body>
+            </html>
+          `);
+        } else {
+          alert("❌ Popup blocked! Please allow popups for this site and try again.");
+        }
+      }
+
+      // window.resizeTo() examples
+      function resizeWindow() {
+        // Try to resize main window to 800x600
+        try {
+          const oldWidth = window.outerWidth;
+          const oldHeight = window.outerHeight;
+          
+          window.resizeTo(800, 600);
+          
+          // Check if it actually resized
+          setTimeout(() => {
+            if (window.outerWidth === oldWidth && window.outerHeight === oldHeight) {
+              alert("❌ Resize failed - Browser security restrictions prevent resizing the main window.\nTry the 'Create Resizable Popup Window' button instead!");
+            } else {
+              alert("✅ Window successfully resized to 800x600");
+            }
+          }, 100);
+        } catch (error) {
+          alert("❌ Error: " + error.message);
+        }
+      }
+
+      function resizeSmall() {
+        // Try to resize to small window
+        try {
+          const oldWidth = window.outerWidth;
+          const oldHeight = window.outerHeight;
+          
+          window.resizeTo(400, 300);
+          
+          // Check if it actually resized
+          setTimeout(() => {
+            if (window.outerWidth === oldWidth && window.outerHeight === oldHeight) {
+              alert("❌ Resize failed - Browser security restrictions prevent resizing the main window.\nTry the 'Create Resizable Popup Window' button instead!");
+            } else {
+              alert("✅ Window successfully resized to 400x300");
+            }
+          }, 100);
+        } catch (error) {
+          alert("❌ Error: " + error.message);
+        }
+      }
+
+      function resizeLarge() {
+        // Try to resize to large window
+        try {
+          const oldWidth = window.outerWidth;
+          const oldHeight = window.outerHeight;
+          
+          window.resizeTo(1200, 800);
+          
+          // Check if it actually resized
+          setTimeout(() => {
+            if (window.outerWidth === oldWidth && window.outerHeight === oldHeight) {
+              alert("❌ Resize failed - Browser security restrictions prevent resizing the main window.\nTry the 'Create Resizable Popup Window' button instead!");
+            } else {
+              alert("✅ Window successfully resized to 1200x800");
+            }
+          }, 100);
+        } catch (error) {
+          alert("❌ Error: " + error.message);
+        }
+      }
+
+      function createResizableWindow() {
+        // Create a popup window that can actually be resized
+        const resizableWindow = window.open(
+          "",
+          "ResizableWindow",
+          "width=600,height=400,left=150,top=150,scrollbars=yes,resizable=yes"
+        );
+        
+        if (resizableWindow) {
+          resizableWindow.document.write(`
+            <html>
+              <head><title>Resizable Window Demo</title></head>
+              <body style="font-family: Arial; padding: 20px; background: #f0fff0;">
+                <h2>📏 Resizable Window Demo</h2>
+                <p>This window can be resized!</p>
+                <p>Current size: <span id="size">Loading...</span></p>
+                <button onclick="resizeToSize(400, 300)" style="margin: 5px; padding: 8px;">Resize to 400x300</button><br>
+                <button onclick="resizeToSize(800, 600)" style="margin: 5px; padding: 8px;">Resize to 800x600</button><br>
+                <button onclick="resizeToSize(1000, 700)" style="margin: 5px; padding: 8px;">Resize to 1000x700</button><br>
+                <button onclick="updateSize()" style="margin: 5px; padding: 8px;">Update Size Display</button><br>
+                <button onclick="window.close()" style="margin: 5px; padding: 8px; background: #ff6b6b; color: white; border: none;">Close Window</button>
+                
+                <script>
+                  function resizeToSize(width, height) {
+                    window.resizeTo(width, height);
+                    setTimeout(() => {
+                      updateSize();
+                      alert('✅ Window resized to ' + width + 'x' + height);
+                    }, 100);
+                  }
+                  
+                  function updateSize() {
+                    document.getElementById('size').textContent = window.outerWidth + 'x' + window.outerHeight;
+                  }
+                  
+                  // Update size on load and resize
+                  window.onload = updateSize;
+                  window.onresize = updateSize;
+                </script>
+              </body>
+            </html>
+          `);
+        } else {
+          alert("❌ Popup blocked! Please allow popups for this site and try again.");
+        }
+      }
+
+      // Display current window information
+      function displayWindowInfo() {
+        const info = `
+          Window Information:
+          - Position: (${window.screenX}, ${window.screenY})
+          - Size: ${window.outerWidth} x ${window.outerHeight}
+          - Inner Size: ${window.innerWidth} x ${window.innerHeight}
+        `;
+        console.log(info);
+      }
+
+      // Call displayWindowInfo on page load
+      window.onload = function () {
+        displayWindowInfo();
+
+        // Add some styling
+        document.body.style.fontFamily = "Arial, sans-serif";
+        document.body.style.padding = "20px";
+        document.body.style.lineHeight = "1.6";
+
+        const buttons = document.querySelectorAll("button");
+        buttons.forEach((button) => {
+          button.style.margin = "5px";
+          button.style.padding = "8px 15px";
+          button.style.backgroundColor = "#4CAF50";
+          button.style.color = "white";
+          button.style.border = "none";
+          button.style.borderRadius = "4px";
+          button.style.cursor = "pointer";
+        });
+      };
+    </script>
+  </body>
+</html>

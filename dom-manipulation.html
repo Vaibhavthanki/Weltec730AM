@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM Manipulation - Intermediate Level</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .example-box {
+            border: 2px solid #e0e0e0;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        button {
+            background-color: #6f42c1;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        button:hover {
+            background-color: #5a32a3;
+        }
+        .danger-btn {
+            background-color: #dc3545;
+        }
+        .danger-btn:hover {
+            background-color: #c82333;
+        }
+        .success-btn {
+            background-color: #28a745;
+        }
+        .success-btn:hover {
+            background-color: #218838;
+        }
+        .code-block {
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        .demo-area {
+            min-height: 100px;
+            border: 2px dashed #ccc;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+        }
+        .element-item {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            margin: 5px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .list-item {
+            background-color: #e9ecef;
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .style-demo {
+            width: 150px;
+            height: 100px;
+            background-color: #ffc107;
+            border: 2px solid #fd7e14;
+            margin: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .form-group {
+            margin: 15px 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .clone-item {
+            background-color: #17a2b8;
+            color: white;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 8px;
+            position: relative;
+        }
+        .highlight {
+            background-color: yellow;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        .animated {
+            animation: slideIn 0.5s ease-in-out;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-100px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>DOM Manipulation - Intermediate Level</h1>
+        <p>Learn how to create, modify, and manage DOM elements dynamically using JavaScript.</p>
+    </div>
+
+    <div class="container">
+        <h2>1. Creating and Adding Elements</h2>
+        <div class="example-box">
+            <p>Use <code>document.createElement()</code>, <code>appendChild()</code>, and <code>insertBefore()</code> to create and add elements.</p>
+            <div class="code-block">
+// Create new element
+let newDiv = document.createElement('div');
+newDiv.textContent = 'New element';
+newDiv.className = 'my-class';
+
+// Add to DOM
+parent.appendChild(newDiv);           // Add as last child
+parent.insertBefore(newDiv, existing); // Insert before existing element
+            </div>
+            <div class="demo-area" id="creation-demo">
+                <p>Dynamic elements will appear here:</p>
+            </div>
+            <button onclick="createDiv()">Create Div</button>
+            <button onclick="createButton()">Create Button</button>
+            <button onclick="createList()">Create List</button>
+            <button onclick="insertAtBeginning()">Insert at Beginning</button>
+            <button onclick="clearArea('creation-demo')" class="danger-btn">Clear Area</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>2. Removing Elements</h2>
+        <div class="example-box">
+            <p>Remove elements using <code>removeChild()</code> or the modern <code>remove()</code> method.</p>
+            <div class="code-block">
+// Old method
+parent.removeChild(childElement);
+
+// Modern method (easier)
+element.remove();
+
+// Remove all children
+while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
+}
+            </div>
+            <div class="demo-area" id="removal-demo">
+                <div class="element-item" onclick="removeThis(this)">Click to remove me</div>
+                <div class="element-item" onclick="removeThis(this)">Click to remove me</div>
+                <div class="element-item" onclick="removeThis(this)">Click to remove me</div>
+            </div>
+            <button onclick="addRemovableElement()">Add New Element</button>
+            <button onclick="removeAllElements()" class="danger-btn">Remove All</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>3. Modifying Element Properties and Styles</h2>
+        <div class="example-box">
+            <p>Change element properties, CSS styles, and classes dynamically.</p>
+            <div class="code-block">
+// Change properties
+element.id = 'new-id';
+element.className = 'new-class';
+element.classList.add('another-class');
+element.classList.remove('old-class');
+element.classList.toggle('active');
+
+// Change styles
+element.style.color = 'red';
+element.style.backgroundColor = 'blue';
+element.style.fontSize = '20px';
+            </div>
+            <div class="style-demo" id="style-demo">Style Me!</div>
+            <div>
+                <button onclick="changeColor()">Change Color</button>
+                <button onclick="changeSize()">Change Size</button>
+                <button onclick="addBorder()">Toggle Border</button>
+                <button onclick="animateElement()">Animate</button>
+                <button onclick="resetStyles()">Reset Styles</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>4. Working with CSS Classes</h2>
+        <div class="example-box">
+            <p>Use <code>classList</code> methods to manage CSS classes efficiently.</p>
+            <div class="code-block">
+element.classList.add('class1', 'class2');     // Add classes
+element.classList.remove('class1');           // Remove class
+element.classList.toggle('active');           // Toggle class
+element.classList.contains('class1');         // Check if class exists
+element.classList.replace('old', 'new');      // Replace class
+            </div>
+            <div class="demo-area" id="class-demo">
+                <div class="element-item" id="class-target">Target Element</div>
+            </div>
+            <button onclick="addClass()">Add Class</button>
+            <button onclick="removeClass()">Remove Class</button>
+            <button onclick="toggleClass()">Toggle Class</button>
+            <button onclick="checkClass()">Check Class</button>
+            <div id="class-info" style="margin: 10px 0; padding: 10px; background-color: #e9ecef; border-radius: 4px;"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>5. Cloning and Copying Elements</h2>
+        <div class="example-box">
+            <p>Use <code>cloneNode()</code> to create copies of existing elements.</p>
+            <div class="code-block">
+// Shallow clone (element only, no children)
+let shallowClone = element.cloneNode(false);
+
+// Deep clone (element and all children)
+let deepClone = element.cloneNode(true);
+            </div>
+            <div class="clone-item" id="original-item">
+                <h4>Original Item</h4>
+                <p>This is the original content.</p>
+                <button onclick="cloneShallow()">Shallow Clone</button>
+                <button onclick="cloneDeep()">Deep Clone</button>
+            </div>
+            <div class="demo-area" id="clone-area">
+                <p>Cloned items will appear here:</p>
+            </div>
+            <button onclick="clearArea('clone-area')" class="danger-btn">Clear Clones</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>6. Dynamic List Management</h2>
+        <div class="example-box">
+            <p>Create and manage dynamic lists with add, edit, and delete functionality.</p>
+            <div class="code-block">
+// Create list item with controls
+function createListItem(text) {
+    let li = document.createElement('li');
+    li.innerHTML = `
+        ${text}
+        &lt;button onclick="editItem(this)"&gt;Edit&lt;/button&gt;
+        &lt;button onclick="deleteItem(this)"&gt;Delete&lt;/button&gt;
+    `;
+    return li;
+}
+            </div>
+            <div class="form-group">
+                <input type="text" id="item-input" placeholder="Enter item text...">
+                <button onclick="addListItem()" class="success-btn">Add Item</button>
+            </div>
+            <div class="demo-area" id="dynamic-list">
+                <!-- Dynamic list items will appear here -->
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>7. DOM Traversal and Navigation</h2>
+        <div class="example-box">
+            <p>Navigate through the DOM tree using parent, child, and sibling relationships.</p>
+            <div class="code-block">
+// Parent relationships
+element.parentNode          // Direct parent
+element.parentElement       // Parent element (excludes text nodes)
+
+// Child relationships
+element.childNodes          // All child nodes (includes text)
+element.children            // Only element children
+element.firstChild          // First child node
+element.firstElementChild   // First child element
+element.lastChild           // Last child node
+element.lastElementChild    // Last child element
+
+// Sibling relationships
+element.nextSibling         // Next sibling node
+element.nextElementSibling  // Next sibling element
+element.previousSibling     // Previous sibling node
+element.previousElementSibling // Previous sibling element
+            </div>
+            <div class="demo-area" id="traversal-demo">
+                <div class="element-item" id="parent-elem">
+                    Parent Element
+                    <div class="element-item" id="child1">Child 1</div>
+                    <div class="element-item" id="child2" style="background-color: #28a745;">Child 2 (Target)</div>
+                    <div class="element-item" id="child3">Child 3</div>
+                </div>
+            </div>
+            <button onclick="highlightParent()">Highlight Parent</button>
+            <button onclick="highlightSiblings()">Highlight Siblings</button>
+            <button onclick="highlightChildren()">Highlight All Children</button>
+            <button onclick="resetTraversal()">Reset Highlights</button>
+            <div id="traversal-info" style="margin: 10px 0; padding: 10px; background-color: #e9ecef; border-radius: 4px;"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>8. innerHTML vs createElement Performance</h2>
+        <div class="example-box">
+            <p>Compare different methods of creating multiple elements and their performance.</p>
+            <div class="code-block">
+// Method 1: innerHTML (can be slower for large amounts)
+container.innerHTML = '&lt;div&gt;New content&lt;/div&gt;';
+
+// Method 2: createElement (often faster, more control)
+let div = document.createElement('div');
+div.textContent = 'New content';
+container.appendChild(div);
+
+// Method 3: Document Fragment (fastest for multiple elements)
+let fragment = document.createDocumentFragment();
+for (let i = 0; i &lt; 100; i++) {
+    let div = document.createElement('div');
+    div.textContent = `Item ${i}`;
+    fragment.appendChild(div);
+}
+container.appendChild(fragment);
+            </div>
+            <button onclick="testInnerHTML()">Test innerHTML (100 items)</button>
+            <button onclick="testCreateElement()">Test createElement (100 items)</button>
+            <button onclick="testDocumentFragment()">Test DocumentFragment (100 items)</button>
+            <div class="demo-area" id="performance-demo"></div>
+            <div id="performance-results" style="margin: 10px 0; padding: 10px; background-color: #e9ecef; border-radius: 4px;"></div>
+            <button onclick="clearArea('performance-demo')" class="danger-btn">Clear Test Area</button>
+        </div>
+    </div>
+
+    <script>
+        // Helper function to clear demo areas
+        function clearArea(areaId) {
+            const area = document.getElementById(areaId);
+            area.innerHTML = area.id === 'creation-demo' ? '<p>Dynamic elements will appear here:</p>' :
+                           area.id === 'clone-area' ? '<p>Cloned items will appear here:</p>' : '';
+        }
+
+        // 1. Creating and Adding Elements
+        function createDiv() {
+            const area = document.getElementById('creation-demo');
+            const newDiv = document.createElement('div');
+            newDiv.className = 'element-item';
+            newDiv.textContent = `Div created at ${new Date().toLocaleTimeString()}`;
+            newDiv.addEventListener('click', function() {
+                this.style.backgroundColor = this.style.backgroundColor === 'red' ? '#007bff' : 'red';
+            });
+            area.appendChild(newDiv);
+        }
+
+        function createButton() {
+            const area = document.getElementById('creation-demo');
+            const newButton = document.createElement('button');
+            newButton.textContent = 'Dynamic Button';
+            newButton.onclick = function() {
+                alert('Dynamic button clicked!');
+            };
+            area.appendChild(newButton);
+        }
+
+        function createList() {
+            const area = document.getElementById('creation-demo');
+            const ul = document.createElement('ul');
+            ul.style.margin = '10px';
+            
+            for (let i = 1; i <= 3; i++) {
+                const li = document.createElement('li');
+                li.textContent = `List item ${i}`;
+                li.style.margin = '5px 0';
+                ul.appendChild(li);
+            }
+            area.appendChild(ul);
+        }
+
+        function insertAtBeginning() {
+            const area = document.getElementById('creation-demo');
+            const newDiv = document.createElement('div');
+            newDiv.className = 'element-item';
+            newDiv.style.backgroundColor = '#28a745';
+            newDiv.textContent = 'Inserted at beginning';
+            
+            const firstChild = area.firstElementChild.nextElementSibling; // Skip the <p> tag
+            if (firstChild) {
+                area.insertBefore(newDiv, firstChild);
+            } else {
+                area.appendChild(newDiv);
+            }
+        }
+
+        // 2. Removing Elements
+        function removeThis(element) {
+            element.style.opacity = '0.5';
+            setTimeout(() => element.remove(), 300);
+        }
+
+        function addRemovableElement() {
+            const area = document.getElementById('removal-demo');
+            const newDiv = document.createElement('div');
+            newDiv.className = 'element-item animated';
+            newDiv.textContent = 'Click to remove me';
+            newDiv.onclick = function() { removeThis(this); };
+            area.appendChild(newDiv);
+        }
+
+        function removeAllElements() {
+            const area = document.getElementById('removal-demo');
+            while (area.firstChild) {
+                area.removeChild(area.firstChild);
+            }
+        }
+
+        // 3. Modifying Element Properties and Styles
+        const styleDemo = document.getElementById('style-demo');
+        let colorIndex = 0;
+        const colors = ['#ffc107', '#007bff', '#28a745', '#dc3545', '#6f42c1'];
+
+        function changeColor() {
+            colorIndex = (colorIndex + 1) % colors.length;
+            styleDemo.style.backgroundColor = colors[colorIndex];
+        }
+
+        function changeSize() {
+            const currentWidth = parseInt(styleDemo.style.width) || 150;
+            const newWidth = currentWidth === 150 ? 200 : 150;
+            styleDemo.style.width = newWidth + 'px';
+            styleDemo.style.height = (newWidth * 0.67) + 'px';
+        }
+
+        function addBorder() {
+            const currentBorder = styleDemo.style.border;
+            styleDemo.style.border = currentBorder ? '' : '5px dashed #fd7e14';
+        }
+
+        function animateElement() {
+            styleDemo.style.transform = 'rotate(360deg) scale(1.2)';
+            setTimeout(() => {
+                styleDemo.style.transform = '';
+            }, 500);
+        }
+
+        function resetStyles() {
+            styleDemo.style = '';
+            styleDemo.className = 'style-demo';
+        }
+
+        // 4. Working with CSS Classes
+        function addClass() {
+            const target = document.getElementById('class-target');
+            target.classList.add('highlight');
+            updateClassInfo();
+        }
+
+        function removeClass() {
+            const target = document.getElementById('class-target');
+            target.classList.remove('highlight');
+            updateClassInfo();
+        }
+
+        function toggleClass() {
+            const target = document.getElementById('class-target');
+            target.classList.toggle('highlight');
+            updateClassInfo();
+        }
+
+        function checkClass() {
+            const target = document.getElementById('class-target');
+            const hasClass = target.classList.contains('highlight');
+            alert(`Element ${hasClass ? 'has' : 'does not have'} the 'highlight' class`);
+        }
+
+        function updateClassInfo() {
+            const target = document.getElementById('class-target');
+            const info = document.getElementById('class-info');
+            info.innerHTML = `
+                <strong>Current classes:</strong> ${target.className}<br>
+                <strong>Class list:</strong> ${Array.from(target.classList).join(', ')}<br>
+                <strong>Has 'highlight':</strong> ${target.classList.contains('highlight')}
+            `;
+        }
+
+        // Initialize class info
+        updateClassInfo();
+
+        // 5. Cloning and Copying Elements
+        function cloneShallow() {
+            const original = document.getElementById('original-item');
+            const clone = original.cloneNode(false); // Shallow clone
+            clone.id = 'shallow-clone-' + Date.now();
+            clone.style.backgroundColor = '#fd7e14';
+            clone.innerHTML = '<h4>Shallow Clone</h4><p>Only the element was cloned, not the children.</p>';
+            document.getElementById('clone-area').appendChild(clone);
+        }
+
+        function cloneDeep() {
+            const original = document.getElementById('original-item');
+            const clone = original.cloneNode(true); // Deep clone
+            clone.id = 'deep-clone-' + Date.now();
+            clone.style.backgroundColor = '#20c997';
+            
+            // Update content to show it's a clone
+            const h4 = clone.querySelector('h4');
+            const p = clone.querySelector('p');
+            if (h4) h4.textContent = 'Deep Clone';
+            if (p) p.textContent = 'Element and all children were cloned.';
+            
+            document.getElementById('clone-area').appendChild(clone);
+        }
+
+        // 6. Dynamic List Management
+        function addListItem() {
+            const input = document.getElementById('item-input');
+            const text = input.value.trim();
+            
+            if (text === '') {
+                alert('Please enter some text');
+                return;
+            }
+
+            const listArea = document.getElementById('dynamic-list');
+            const listItem = document.createElement('div');
+            listItem.className = 'list-item animated';
+            listItem.innerHTML = `
+                <span class="item-text">${text}</span>
+                <div>
+                    <button onclick="editListItem(this)" class="success-btn">Edit</button>
+                    <button onclick="deleteListItem(this)" class="danger-btn">Delete</button>
+                </div>
+            `;
+            
+            listArea.appendChild(listItem);
+            input.value = '';
+        }
+
+        function editListItem(button) {
+            const listItem = button.closest('.list-item');
+            const textSpan = listItem.querySelector('.item-text');
+            const currentText = textSpan.textContent;
+            
+            const newText = prompt('Edit item:', currentText);
+            if (newText !== null && newText.trim() !== '') {
+                textSpan.textContent = newText.trim();
+            }
+        }
+
+        function deleteListItem(button) {
+            const listItem = button.closest('.list-item');
+            listItem.style.opacity = '0.5';
+            listItem.style.transform = 'translateX(-100px)';
+            setTimeout(() => listItem.remove(), 300);
+        }
+
+        // Allow Enter key to add items
+        document.getElementById('item-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addListItem();
+            }
+        });
+
+        // 7. DOM Traversal and Navigation
+        function highlightParent() {
+            resetTraversal();
+            const child2 = document.getElementById('child2');
+            const parent = child2.parentElement;
+            parent.style.outline = '3px solid red';
+            
+            document.getElementById('traversal-info').innerHTML = `
+                <strong>Parent highlighted:</strong> ${parent.tagName} with id="${parent.id}"
+            `;
+        }
+
+        function highlightSiblings() {
+            resetTraversal();
+            const child2 = document.getElementById('child2');
+            const prevSibling = child2.previousElementSibling;
+            const nextSibling = child2.nextElementSibling;
+            
+            if (prevSibling) prevSibling.style.outline = '3px solid blue';
+            if (nextSibling) nextSibling.style.outline = '3px solid blue';
+            
+            document.getElementById('traversal-info').innerHTML = `
+                <strong>Siblings highlighted:</strong><br>
+                Previous: ${prevSibling ? prevSibling.id : 'none'}<br>
+                Next: ${nextSibling ? nextSibling.id : 'none'}
+            `;
+        }
+
+        function highlightChildren() {
+            resetTraversal();
+            const parent = document.getElementById('parent-elem');
+            const children = parent.children;
+            
+            for (let child of children) {
+                child.style.outline = '3px solid green';
+            }
+            
+            document.getElementById('traversal-info').innerHTML = `
+                <strong>All children highlighted:</strong> ${children.length} elements
+            `;
+        }
+
+        function resetTraversal() {
+            const elements = document.querySelectorAll('#traversal-demo .element-item');
+            elements.forEach(el => el.style.outline = '');
+            document.getElementById('traversal-info').innerHTML = '';
+        }
+
+        // 8. Performance Testing
+        function testInnerHTML() {
+            const area = document.getElementById('performance-demo');
+            const start = performance.now();
+            
+            let html = '';
+            for (let i = 0; i < 100; i++) {
+                html += `<div class="element-item">innerHTML Item ${i}</div>`;
+            }
+            area.innerHTML = html;
+            
+            const end = performance.now();
+            showPerformanceResult('innerHTML', end - start);
+        }
+
+        function testCreateElement() {
+            const area = document.getElementById('performance-demo');
+            area.innerHTML = '';
+            const start = performance.now();
+            
+            for (let i = 0; i < 100; i++) {
+                const div = document.createElement('div');
+                div.className = 'element-item';
+                div.textContent = `createElement Item ${i}`;
+                area.appendChild(div);
+            }
+            
+            const end = performance.now();
+            showPerformanceResult('createElement', end - start);
+        }
+
+        function testDocumentFragment() {
+            const area = document.getElementById('performance-demo');
+            area.innerHTML = '';
+            const start = performance.now();
+            
+            const fragment = document.createDocumentFragment();
+            for (let i = 0; i < 100; i++) {
+                const div = document.createElement('div');
+                div.className = 'element-item';
+                div.textContent = `Fragment Item ${i}`;
+                fragment.appendChild(div);
+            }
+            area.appendChild(fragment);
+            
+            const end = performance.now();
+            showPerformanceResult('DocumentFragment', end - start);
+        }
+
+        function showPerformanceResult(method, time) {
+            const results = document.getElementById('performance-results');
+            const existingContent = results.innerHTML;
+            results.innerHTML = existingContent + 
+                `<div><strong>${method}:</strong> ${time.toFixed(2)}ms</div>`;
+        }
+    </script>
+</body>
+</html>

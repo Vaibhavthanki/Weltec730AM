@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced DOM Methods - Advanced Level</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .example-box {
+            border: 2px solid #e0e0e0;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        button:hover {
+            background-color: #c82333;
+        }
+        .primary-btn {
+            background-color: #007bff;
+        }
+        .primary-btn:hover {
+            background-color: #0056b3;
+        }
+        .success-btn {
+            background-color: #28a745;
+        }
+        .success-btn:hover {
+            background-color: #218838;
+        }
+        .warning-btn {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        .warning-btn:hover {
+            background-color: #e0a800;
+        }
+        .code-block {
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 10px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        .demo-area {
+            min-height: 100px;
+            border: 2px dashed #ccc;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+        }
+        .observer-item {
+            background-color: #e9ecef;
+            border: 1px solid #dee2e6;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .highlighted {
+            background-color: #fff3cd !important;
+            border-color: #ffeaa7 !important;
+        }
+        .virtual-item {
+            height: 50px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            background-color: white;
+        }
+        .virtual-container {
+            height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .canvas-demo {
+            border: 2px solid #007bff;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .performance-meter {
+            width: 100%;
+            height: 20px;
+            background-color: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        .performance-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #ffc107, #dc3545);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .shadow-host {
+            padding: 20px;
+            border: 2px solid #6f42c1;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .form-group {
+            margin: 15px 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .log-output {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            margin: 10px 0;
+            max-height: 200px;
+            overflow-y: auto;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Advanced DOM Methods - Advanced Level</h1>
+        <p>Explore advanced DOM APIs and modern JavaScript techniques for complex web applications.</p>
+    </div>
+
+    <div class="container">
+        <h2>1. Mutation Observer API</h2>
+        <div class="example-box">
+            <p>Monitor changes to the DOM tree and react to mutations in real-time.</p>
+            <div class="code-block">
+// Create a MutationObserver
+const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+        console.log('Mutation type:', mutation.type);
+        console.log('Target:', mutation.target);
+        console.log('Added nodes:', mutation.addedNodes);
+        console.log('Removed nodes:', mutation.removedNodes);
+    });
+});
+
+// Start observing
+observer.observe(targetElement, {
+    childList: true,       // Watch for child additions/removals
+    attributes: true,      // Watch for attribute changes
+    subtree: true,         // Watch entire subtree
+    attributeOldValue: true // Track old attribute values
+});
+            </div>
+            <div class="demo-area" id="mutation-demo">
+                <div class="observer-item">Original Item 1</div>
+                <div class="observer-item">Original Item 2</div>
+            </div>
+            <button onclick="addObserverItem()" class="success-btn">Add Item</button>
+            <button onclick="removeObserverItem()">Remove Item</button>
+            <button onclick="modifyObserverItem()" class="warning-btn">Modify Item</button>
+            <button onclick="startObserving()" class="primary-btn">Start Observer</button>
+            <button onclick="stopObserving()">Stop Observer</button>
+            <div class="log-output" id="mutation-log"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>2. Intersection Observer API</h2>
+        <div class="example-box">
+            <p>Efficiently observe when elements enter or leave the viewport.</p>
+            <div class="code-block">
+// Create an Intersection Observer
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            console.log('Element is visible');
+            entry.target.classList.add('visible');
+        } else {
+            console.log('Element is hidden');
+            entry.target.classList.remove('visible');
+        }
+    });
+}, {
+    threshold: 0.1,  // Trigger when 10% visible
+    rootMargin: '50px' // Expand root margin
+});
+
+// Observe elements
+observer.observe(element);
+            </div>
+            <div style="height: 200px; overflow-y: auto; border: 1px solid #ddd; border-radius: 4px;" id="scroll-container">
+                <div style="height: 100px; background-color: #e9ecef; margin: 10px; border-radius: 4px; display: flex; align-items: center; justify-content: center;">Scroll down to see intersection observer in action</div>
+                <div class="observer-item intersection-target">Target 1 - Watch me!</div>
+                <div style="height: 200px; background-color: #f8f9fa;"></div>
+                <div class="observer-item intersection-target">Target 2 - I'm further down!</div>
+                <div style="height: 200px; background-color: #f8f9fa;"></div>
+                <div class="observer-item intersection-target">Target 3 - Keep scrolling!</div>
+                <div style="height: 100px; background-color: #e9ecef;"></div>
+            </div>
+            <button onclick="startIntersectionObserver()" class="primary-btn">Start Intersection Observer</button>
+            <button onclick="stopIntersectionObserver()">Stop Observer</button>
+            <div class="log-output" id="intersection-log"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>3. Resize Observer API</h2>
+        <div class="example-box">
+            <p>Monitor element size changes without polling or window resize events.</p>
+            <div class="code-block">
+// Create a ResizeObserver
+const resizeObserver = new ResizeObserver(entries => {
+    entries.forEach(entry => {
+        const { width, height } = entry.contentRect;
+        console.log(`Element resized: ${width}x${height}`);
+    });
+});
+
+// Observe element
+resizeObserver.observe(element);
+            </div>
+            <div class="demo-area">
+                <div id="resize-target" style="width: 200px; height: 100px; background-color: #007bff; color: white; display: flex; align-items: center; justify-content: center; resize: both; overflow: auto; border-radius: 8px;">
+                    Drag to resize me!
+                </div>
+                <button onclick="startResizeObserver()" class="primary-btn">Start Resize Observer</button>
+                <button onclick="stopResizeObserver()">Stop Observer</button>
+                <button onclick="changeSize()" class="warning-btn">Change Size Programmatically</button>
+            </div>
+            <div class="log-output" id="resize-log"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>4. Web Components and Shadow DOM</h2>
+        <div class="example-box">
+            <p>Create encapsulated custom elements with Shadow DOM.</p>
+            <div class="code-block">
+// Define a custom element
+class CustomCard extends HTMLElement {
+    constructor() {
+        super();
+        
+        // Create shadow root
+        this.attachShadow({ mode: 'open' });
+        
+        // Add HTML and CSS
+        this.shadowRoot.innerHTML = `
+            &lt;style&gt;
+                :host {
+                    display: block;
+                    border: 1px solid #ccc;
+                    border-radius: 8px;
+                    padding: 16px;
+                    margin: 8px 0;
+                }
+                .title { font-weight: bold; color: #333; }
+                .content { margin-top: 8px; }
+            &lt;/style&gt;
+            &lt;div class="title"&gt;&lt;slot name="title"&gt;&lt;/slot&gt;&lt;/div&gt;
+            &lt;div class="content"&gt;&lt;slot&gt;&lt;/slot&gt;&lt;/div&gt;
+        `;
+    }
+}
+
+// Register the custom element
+customElements.define('custom-card', CustomCard);
+            </div>
+            <div class="demo-area" id="shadow-demo">
+                <!-- Custom elements will be added here -->
+            </div>
+            <button onclick="createCustomElement()" class="success-btn">Create Custom Element</button>
+            <button onclick="inspectShadowDOM()" class="primary-btn">Inspect Shadow DOM</button>
+            <div class="log-output" id="shadow-log"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>5. Virtual Scrolling Implementation</h2>
+        <div class="example-box">
+            <p>Efficiently handle large lists by only rendering visible items.</p>
+            <div class="code-block">
+class VirtualScroller {
+    constructor(container, itemHeight, totalItems, renderItem) {
+        this.container = container;
+        this.itemHeight = itemHeight;
+        this.totalItems = totalItems;
+        this.renderItem = renderItem;
+        
+        // Calculate visible items
+        this.visibleItems = Math.ceil(container.clientHeight / itemHeight);
+        this.startIndex = 0;
+        
+        this.render();
+        this.container.addEventListener('scroll', () => this.onScroll());
+    }
+    
+    onScroll() {
+        const scrollTop = this.container.scrollTop;
+        this.startIndex = Math.floor(scrollTop / this.itemHeight);
+        this.render();
+    }
+    
+    render() {
+        // Clear and re-render visible items
+        this.container.innerHTML = '';
+        
+        // Add spacer for items above viewport
+        const topSpacer = document.createElement('div');
+        topSpacer.style.height = `${this.startIndex * this.itemHeight}px`;
+        this.container.appendChild(topSpacer);
+        
+        // Render visible items
+        for (let i = 0; i < this.visibleItems + 2; i++) {
+            const index = this.startIndex + i;
+            if (index >= this.totalItems) break;
+            
+            const item = this.renderItem(index);
+            this.container.appendChild(item);
+        }
+        
+        // Add spacer for items below viewport
+        const bottomSpacer = document.createElement('div');
+        const remainingItems = this.totalItems - (this.startIndex + this.visibleItems + 2);
+        bottomSpacer.style.height = `${Math.max(0, remainingItems) * this.itemHeight}px`;
+        this.container.appendChild(bottomSpacer);
+    }
+}
+            </div>
+            <div class="virtual-container" id="virtual-scroll-container"></div>
+            <button onclick="initializeVirtualScroll()" class="primary-btn">Initialize Virtual Scroll (10,000 items)</button>
+            <button onclick="destroyVirtualScroll()">Destroy Virtual Scroll</button>
+            <div id="virtual-performance"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>6. Performance Monitoring</h2>
+        <div class="example-box">
+            <p>Monitor DOM performance using Performance API and custom metrics.</p>
+            <div class="code-block">
+// Performance measurement
+function measureDOMOperation(name, operation) {
+    performance.mark(`${name}-start`);
+    operation();
+    performance.mark(`${name}-end`);
+    performance.measure(name, `${name}-start`, `${name}-end`);
+    
+    const measure = performance.getEntriesByName(name)[0];
+    console.log(`${name} took ${measure.duration}ms`);
+    return measure.duration;
+}
+
+// Frame rate monitoring
+let frameCount = 0;
+let startTime = Date.now();
+
+function measureFPS() {
+    frameCount++;
+    requestAnimationFrame(measureFPS);
+    
+    if (frameCount % 60 === 0) {
+        const now = Date.now();
+        const fps = Math.round((frameCount / (now - startTime)) * 1000);
+        console.log(`FPS: ${fps}`);
+    }
+}
+            </div>
+            <button onclick="measureDOMPerformance()" class="primary-btn">Measure DOM Operations</button>
+            <button onclick="startFPSMonitoring()" class="success-btn">Start FPS Monitoring</button>
+            <button onclick="stopFPSMonitoring()">Stop FPS Monitoring</button>
+            <button onclick="stressTest()" class="warning-btn">DOM Stress Test</button>
+            
+            <div class="performance-meter">
+                <div class="performance-bar" id="performance-bar"></div>
+            </div>
+            <div class="log-output" id="performance-log"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>7. Advanced Event Patterns</h2>
+        <div class="example-box">
+            <p>Implement advanced event handling patterns like debouncing, throttling, and custom events.</p>
+            <div class="code-block">
+// Debounce function
+function debounce(func, delay) {
+    let timeoutId;
+    return function (...args) {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => func.apply(this, args), delay);
+    };
+}
+
+// Throttle function
+function throttle(func, limit) {
+    let inThrottle;
+    return function (...args) {
+        if (!inThrottle) {
+            func.apply(this, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    };
+}
+
+// Custom events
+const customEvent = new CustomEvent('myCustomEvent', {
+    detail: { message: 'Hello from custom event!' },
+    bubbles: true,
+    cancelable: true
+});
+element.dispatchEvent(customEvent);
+            </div>
+            <div class="form-group">
+                <label for="debounce-input">Debounced Input (300ms delay):</label>
+                <input type="text" id="debounce-input" placeholder="Type to see debouncing...">
+            </div>
+            <div class="form-group">
+                <label for="throttle-input">Throttled Input (100ms limit):</label>
+                <input type="text" id="throttle-input" placeholder="Type to see throttling...">
+            </div>
+            <button onclick="dispatchCustomEvent()" class="success-btn">Dispatch Custom Event</button>
+            <button onclick="setupAdvancedEventListeners()" class="primary-btn">Setup Event Listeners</button>
+            <div class="log-output" id="events-log"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>8. Canvas and WebGL Integration</h2>
+        <div class="example-box">
+            <p>Integrate Canvas API with DOM manipulation for advanced graphics.</p>
+            <div class="code-block">
+// Canvas manipulation
+const canvas = document.createElement('canvas');
+canvas.width = 400;
+canvas.height = 300;
+const ctx = canvas.getContext('2d');
+
+// Draw and animate
+function drawFrame() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Draw dynamic content based on DOM state
+    const time = Date.now() * 0.001;
+    const x = Math.sin(time) * 100 + 200;
+    const y = Math.cos(time) * 50 + 150;
+    
+    ctx.fillStyle = '#007bff';
+    ctx.beginPath();
+    ctx.arc(x, y, 20, 0, Math.PI * 2);
+    ctx.fill();
+    
+    requestAnimationFrame(drawFrame);
+}
+            </div>
+            <div class="demo-area">
+                <canvas class="canvas-demo" id="demo-canvas" width="400" height="200"></canvas>
+            </div>
+            <button onclick="startCanvasAnimation()" class="success-btn">Start Animation</button>
+            <button onclick="stopCanvasAnimation()">Stop Animation</button>
+            <button onclick="interactiveCanvas()" class="primary-btn">Make Interactive</button>
+            <div class="log-output" id="canvas-log"></div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables for observers and animations
+        let mutationObserver = null;
+        let intersectionObserver = null;
+        let resizeObserver = null;
+        let virtualScroller = null;
+        let fpsMonitoring = false;
+        let canvasAnimation = null;
+        let frameCount = 0;
+        let startTime = Date.now();
+
+        // Helper function for logging
+        function logToElement(elementId, message) {
+            const log = document.getElementById(elementId);
+            const timestamp = new Date().toLocaleTimeString();
+            log.innerHTML += `<div>[${timestamp}] ${message}</div>`;
+            log.scrollTop = log.scrollHeight;
+        }
+
+        // 1. Mutation Observer
+        function startObserving() {
+            if (mutationObserver) {
+                mutationObserver.disconnect();
+            }
+
+            mutationObserver = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    switch (mutation.type) {
+                        case 'childList':
+                            if (mutation.addedNodes.length > 0) {
+                                logToElement('mutation-log', `Added ${mutation.addedNodes.length} node(s)`);
+                            }
+                            if (mutation.removedNodes.length > 0) {
+                                logToElement('mutation-log', `Removed ${mutation.removedNodes.length} node(s)`);
+                            }
+                            break;
+                        case 'attributes':
+                            logToElement('mutation-log', `Attribute "${mutation.attributeName}" changed on ${mutation.target.tagName}`);
+                            break;
+                    }
+                });
+            });
+
+            const target = document.getElementById('mutation-demo');
+            mutationObserver.observe(target, {
+                childList: true,
+                attributes: true,
+                subtree: true,
+                attributeOldValue: true
+            });
+
+            logToElement('mutation-log', 'Mutation Observer started');
+        }
+
+        function stopObserving() {
+            if (mutationObserver) {
+                mutationObserver.disconnect();
+                mutationObserver = null;
+                logToElement('mutation-log', 'Mutation Observer stopped');
+            }
+        }
+
+        function addObserverItem() {
+            const demo = document.getElementById('mutation-demo');
+            const item = document.createElement('div');
+            item.className = 'observer-item';
+            item.textContent = `New Item ${demo.children.length + 1}`;
+            demo.appendChild(item);
+        }
+
+        function removeObserverItem() {
+            const demo = document.getElementById('mutation-demo');
+            if (demo.children.length > 0) {
+                demo.removeChild(demo.lastElementChild);
+            }
+        }
+
+        function modifyObserverItem() {
+            const demo = document.getElementById('mutation-demo');
+            if (demo.children.length > 0) {
+                const item = demo.children[0];
+                item.classList.toggle('highlighted');
+                item.setAttribute('data-modified', Date.now());
+            }
+        }
+
+        // 2. Intersection Observer
+        function startIntersectionObserver() {
+            if (intersectionObserver) {
+                intersectionObserver.disconnect();
+            }
+
+            intersectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const target = entry.target;
+                    if (entry.isIntersecting) {
+                        target.classList.add('highlighted');
+                        logToElement('intersection-log', `Element "${target.textContent.substring(0, 20)}..." is visible (${Math.round(entry.intersectionRatio * 100)}% visible)`);
+                    } else {
+                        target.classList.remove('highlighted');
+                        logToElement('intersection-log', `Element "${target.textContent.substring(0, 20)}..." is hidden`);
+                    }
+                });
+            }, {
+                root: document.getElementById('scroll-container'),
+                threshold: [0, 0.1, 0.5, 1.0],
+                rootMargin: '10px'
+            });
+
+            const targets = document.querySelectorAll('.intersection-target');
+            targets.forEach(target => {
+                intersectionObserver.observe(target);
+            });
+
+            logToElement('intersection-log', 'Intersection Observer started');
+        }
+
+        function stopIntersectionObserver() {
+            if (intersectionObserver) {
+                intersectionObserver.disconnect();
+                intersectionObserver = null;
+                logToElement('intersection-log', 'Intersection Observer stopped');
+            }
+        }
+
+        // 3. Resize Observer
+        function startResizeObserver() {
+            if (resizeObserver) {
+                resizeObserver.disconnect();
+            }
+
+            resizeObserver = new ResizeObserver(entries => {
+                entries.forEach(entry => {
+                    const { width, height } = entry.contentRect;
+                    logToElement('resize-log', `Element resized: ${Math.round(width)}x${Math.round(height)}px`);
+                });
+            });
+
+            const target = document.getElementById('resize-target');
+            resizeObserver.observe(target);
+            logToElement('resize-log', 'Resize Observer started');
+        }
+
+        function stopResizeObserver() {
+            if (resizeObserver) {
+                resizeObserver.disconnect();
+                resizeObserver = null;
+                logToElement('resize-log', 'Resize Observer stopped');
+            }
+        }
+
+        function changeSize() {
+            const target = document.getElementById('resize-target');
+            const newWidth = Math.random() * 300 + 100;
+            const newHeight = Math.random() * 150 + 50;
+            target.style.width = newWidth + 'px';
+            target.style.height = newHeight + 'px';
+        }
+
+        // 4. Web Components and Shadow DOM
+        class CustomCard extends HTMLElement {
+            constructor() {
+                super();
+                this.attachShadow({ mode: 'open' });
+                this.shadowRoot.innerHTML = `
+                    <style>
+                        :host {
+                            display: block;
+                            border: 2px solid #007bff;
+                            border-radius: 8px;
+                            padding: 16px;
+                            margin: 8px 0;
+                            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+                        }
+                        .title {
+                            font-weight: bold;
+                            color: #007bff;
+                            font-size: 18px;
+                            margin-bottom: 8px;
+                        }
+                        .content {
+                            color: #333;
+                            line-height: 1.5;
+                        }
+                        button {
+                            background-color: #28a745;
+                            color: white;
+                            border: none;
+                            padding: 5px 10px;
+                            border-radius: 4px;
+                            cursor: pointer;
+                            margin-top: 10px;
+                        }
+                    </style>
+                    <div class="title"><slot name="title"></slot></div>
+                    <div class="content"><slot></slot></div>
+                    <button onclick="this.getRootNode().host.handleClick()">Shadow Button</button>
+                `;
+            }
+
+            handleClick() {
+                logToElement('shadow-log', 'Shadow DOM button clicked!');
+                this.dispatchEvent(new CustomEvent('card-clicked', {
+                    detail: { timestamp: Date.now() },
+                    bubbles: true
+                }));
+            }
+        }
+
+        customElements.define('custom-card', CustomCard);
+
+        function createCustomElement() {
+            const demo = document.getElementById('shadow-demo');
+            const card = document.createElement('custom-card');
+            card.innerHTML = `
+                <span slot="title">Custom Card ${demo.children.length + 1}</span>
+                This is a custom element with Shadow DOM encapsulation. 
+                The styles and behavior are isolated from the main document.
+            `;
+            
+            card.addEventListener('card-clicked', (e) => {
+                logToElement('shadow-log', `Card clicked event received: ${JSON.stringify(e.detail)}`);
+            });
+            
+            demo.appendChild(card);
+            logToElement('shadow-log', 'Custom element created');
+        }
+
+        function inspectShadowDOM() {
+            const cards = document.querySelectorAll('custom-card');
+            if (cards.length > 0) {
+                const card = cards[0];
+                const shadowRoot = card.shadowRoot;
+                logToElement('shadow-log', `Shadow DOM children: ${shadowRoot.children.length}`);
+                logToElement('shadow-log', `Shadow DOM innerHTML length: ${shadowRoot.innerHTML.length}`);
+            } else {
+                logToElement('shadow-log', 'No custom elements found');
+            }
+        }
+
+        // 5. Virtual Scrolling
+        class VirtualScroller {
+            constructor(container, itemHeight, totalItems, renderItem) {
+                this.container = container;
+                this.itemHeight = itemHeight;
+                this.totalItems = totalItems;
+                this.renderItem = renderItem;
+                this.visibleItems = Math.ceil(container.clientHeight / itemHeight);
+                this.startIndex = 0;
+                
+                this.container.style.height = `${totalItems * itemHeight}px`;
+                this.render();
+                this.container.addEventListener('scroll', () => this.onScroll());
+            }
+            
+            onScroll() {
+                const scrollTop = this.container.scrollTop;
+                this.startIndex = Math.floor(scrollTop / this.itemHeight);
+                this.render();
+            }
+            
+            render() {
+                const fragment = document.createDocumentFragment();
+                
+                // Calculate which items to render
+                const endIndex = Math.min(this.startIndex + this.visibleItems + 2, this.totalItems);
+                
+                // Clear container
+                this.container.innerHTML = '';
+                
+                // Add offset for scrolled content
+                if (this.startIndex > 0) {
+                    const spacer = document.createElement('div');
+                    spacer.style.height = `${this.startIndex * this.itemHeight}px`;
+                    fragment.appendChild(spacer);
+                }
+                
+                // Render visible items
+                for (let i = this.startIndex; i < endIndex; i++) {
+                    const item = this.renderItem(i);
+                    fragment.appendChild(item);
+                }
+                
+                // Add spacer for remaining content
+                const remainingItems = this.totalItems - endIndex;
+                if (remainingItems > 0) {
+                    const spacer = document.createElement('div');
+                    spacer.style.height = `${remainingItems * this.itemHeight}px`;
+                    fragment.appendChild(spacer);
+                }
+                
+                this.container.appendChild(fragment);
+            }
+            
+            destroy() {
+                this.container.removeEventListener('scroll', this.onScroll);
+                this.container.innerHTML = '';
+            }
+        }
+
+        function initializeVirtualScroll() {
+            const container = document.getElementById('virtual-scroll-container');
+            
+            virtualScroller = new VirtualScroller(container, 50, 10000, (index) => {
+                const item = document.createElement('div');
+                item.className = 'virtual-item';
+                item.textContent = `Virtual Item ${index + 1} - This is efficiently rendered content`;
+                item.style.backgroundColor = index % 2 === 0 ? '#f8f9fa' : '#ffffff';
+                return item;
+            });
+            
+            document.getElementById('virtual-performance').innerHTML = 
+                `<p><strong>Performance:</strong> Rendering 10,000 items with virtual scrolling. Only ~${virtualScroller.visibleItems + 2} DOM elements are created.</p>`;
+        }
+
+        function destroyVirtualScroll() {
+            if (virtualScroller) {
+                virtualScroller.destroy();
+                virtualScroller = null;
+                document.getElementById('virtual-performance').innerHTML = '';
+            }
+        }
+
+        // 6. Performance Monitoring
+        function measureDOMPerformance() {
+            const operations = [
+                {
+                    name: 'createElement-1000',
+                    operation: () => {
+                        for (let i = 0; i < 1000; i++) {
+                            document.createElement('div');
+                        }
+                    }
+                },
+                {
+                    name: 'appendChild-100',
+                    operation: () => {
+                        const fragment = document.createDocumentFragment();
+                        for (let i = 0; i < 100; i++) {
+                            const div = document.createElement('div');
+                            div.textContent = `Performance test ${i}`;
+                            fragment.appendChild(div);
+                        }
+                        // Create temporary container
+                        const temp = document.createElement('div');
+                        temp.appendChild(fragment);
+                        temp.remove(); // Clean up
+                    }
+                },
+                {
+                    name: 'querySelector-100',
+                    operation: () => {
+                        for (let i = 0; i < 100; i++) {
+                            document.querySelector('body');
+                        }
+                    }
+                }
+            ];
+
+            operations.forEach(({ name, operation }) => {
+                const startTime = performance.now();
+                operation();
+                const endTime = performance.now();
+                const duration = endTime - startTime;
+                
+                logToElement('performance-log', `${name}: ${duration.toFixed(2)}ms`);
+                
+                // Update performance bar
+                const bar = document.getElementById('performance-bar');
+                const percentage = Math.min((duration / 10) * 100, 100); // Scale to 10ms = 100%
+                bar.style.width = percentage + '%';
+            });
+        }
+
+        function startFPSMonitoring() {
+            if (fpsMonitoring) return;
+            
+            fpsMonitoring = true;
+            frameCount = 0;
+            startTime = Date.now();
+            
+            function measureFPS() {
+                if (!fpsMonitoring) return;
+                
+                frameCount++;
+                requestAnimationFrame(measureFPS);
+                
+                if (frameCount % 60 === 0) {
+                    const now = Date.now();
+                    const fps = Math.round((60 / (now - startTime)) * 1000);
+                    logToElement('performance-log', `FPS: ${fps}`);
+                    startTime = now;
+                    frameCount = 0;
+                }
+            }
+            
+            measureFPS();
+            logToElement('performance-log', 'FPS monitoring started');
+        }
+
+        function stopFPSMonitoring() {
+            fpsMonitoring = false;
+            logToElement('performance-log', 'FPS monitoring stopped');
+        }
+
+        function stressTest() {
+            const startTime = performance.now();
+            
+            // Create many elements
+            const container = document.createElement('div');
+            for (let i = 0; i < 5000; i++) {
+                const div = document.createElement('div');
+                div.textContent = `Stress test element ${i}`;
+                div.style.backgroundColor = `hsl(${i % 360}, 50%, 90%)`;
+                container.appendChild(div);
+            }
+            
+            // Add to DOM briefly then remove
+            document.body.appendChild(container);
+            setTimeout(() => {
+                container.remove();
+                const endTime = performance.now();
+                logToElement('performance-log', `Stress test completed: ${(endTime - startTime).toFixed(2)}ms`);
+            }, 100);
+        }
+
+        // 7. Advanced Event Patterns
+        function debounce(func, delay) {
+            let timeoutId;
+            return function (...args) {
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(() => func.apply(this, args), delay);
+            };
+        }
+
+        function throttle(func, limit) {
+            let inThrottle;
+            return function (...args) {
+                if (!inThrottle) {
+                    func.apply(this, args);
+                    inThrottle = true;
+                    setTimeout(() => inThrottle = false, limit);
+                }
+            };
+        }
+
+        function setupAdvancedEventListeners() {
+            const debounceInput = document.getElementById('debounce-input');
+            const throttleInput = document.getElementById('throttle-input');
+            
+            // Debounced input
+            const debouncedHandler = debounce((e) => {
+                logToElement('events-log', `Debounced: "${e.target.value}"`);
+            }, 300);
+            
+            debounceInput.addEventListener('input', debouncedHandler);
+            
+            // Throttled input
+            const throttledHandler = throttle((e) => {
+                logToElement('events-log', `Throttled: "${e.target.value}"`);
+            }, 100);
+            
+            throttleInput.addEventListener('input', throttledHandler);
+            
+            // Custom event listener
+            document.addEventListener('myCustomEvent', (e) => {
+                logToElement('events-log', `Custom event received: ${e.detail.message}`);
+            });
+            
+            logToElement('events-log', 'Advanced event listeners setup complete');
+        }
+
+        function dispatchCustomEvent() {
+            const customEvent = new CustomEvent('myCustomEvent', {
+                detail: { 
+                    message: 'Hello from custom event!',
+                    timestamp: Date.now()
+                },
+                bubbles: true,
+                cancelable: true
+            });
+            
+            document.dispatchEvent(customEvent);
+        }
+
+        // 8. Canvas Animation
+        function startCanvasAnimation() {
+            const canvas = document.getElementById('demo-canvas');
+            const ctx = canvas.getContext('2d');
+            let animationId;
+            
+            function drawFrame() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                const time = Date.now() * 0.001;
+                const x = Math.sin(time) * 150 + 200;
+                const y = Math.cos(time * 0.7) * 50 + 100;
+                
+                // Draw animated circle
+                ctx.fillStyle = '#007bff';
+                ctx.beginPath();
+                ctx.arc(x, y, 20, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Draw trail
+                ctx.strokeStyle = 'rgba(0, 123, 255, 0.3)';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                for (let i = 0; i < 50; i++) {
+                    const t = time - i * 0.02;
+                    const trailX = Math.sin(t) * 150 + 200;
+                    const trailY = Math.cos(t * 0.7) * 50 + 100;
+                    if (i === 0) {
+                        ctx.moveTo(trailX, trailY);
+                    } else {
+                        ctx.lineTo(trailX, trailY);
+                    }
+                }
+                ctx.stroke();
+                
+                animationId = requestAnimationFrame(drawFrame);
+            }
+            
+            canvasAnimation = animationId;
+            drawFrame();
+            logToElement('canvas-log', 'Canvas animation started');
+        }
+
+        function stopCanvasAnimation() {
+            if (canvasAnimation) {
+                cancelAnimationFrame(canvasAnimation);
+                canvasAnimation = null;
+                
+                const canvas = document.getElementById('demo-canvas');
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                logToElement('canvas-log', 'Canvas animation stopped');
+            }
+        }
+
+        function interactiveCanvas() {
+            const canvas = document.getElementById('demo-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.addEventListener('mousemove', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                ctx.fillStyle = 'rgba(220, 53, 69, 0.1)';
+                ctx.fillRect(x - 5, y - 5, 10, 10);
+            });
+            
+            canvas.addEventListener('click', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                ctx.fillStyle = '#28a745';
+                ctx.beginPath();
+                ctx.arc(x, y, 15, 0, Math.PI * 2);
+                ctx.fill();
+                
+                logToElement('canvas-log', `Clicked at (${Math.round(x)}, ${Math.round(y)})`);
+            });
+            
+            logToElement('canvas-log', 'Canvas is now interactive - move mouse and click!');
+        }
+    </script>
+</body>
+</html>

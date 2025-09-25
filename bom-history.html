@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>History Object - BOM</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        line-height: 1.6;
+      }
+      .example {
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin: 10px 0;
+      }
+      button {
+        background: #007acc;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        cursor: pointer;
+        margin: 5px;
+      }
+      .output {
+        background: #e8f4f8;
+        padding: 10px;
+        margin: 10px 0;
+        border-left: 4px solid #007acc;
+      }
+      .page {
+        display: none;
+        background: #fff3cd;
+        padding: 20px;
+        border: 2px solid #ffc107;
+        margin: 10px 0;
+      }
+      .active {
+        display: block;
+      }
+      input {
+        padding: 5px;
+        margin: 5px;
+        width: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>History Object in BOM</h1>
+
+    <p>
+      The <strong>history</strong> object represents the browser's session
+      history and provides methods to navigate through it.
+    </p>
+
+    <div class="example">
+      <h3>History Information</h3>
+      <button onclick="showHistoryInfo()">Show History Info</button>
+      <div id="historyInfo" class="output"></div>
+    </div>
+
+    <div class="example">
+      <h3>Basic Navigation</h3>
+      <button onclick="goBack()">Go Back (history.back())</button>
+      <button onclick="goForward()">Go Forward (history.forward())</button>
+      <button onclick="goSteps(-2)">Go Back 2 Steps</button>
+      <button onclick="goSteps(1)">Go Forward 1 Step</button>
+    </div>
+
+    <div class="example">
+      <h3>HTML5 History API - Push/Replace State</h3>
+      <input type="text" id="pageTitle" placeholder="Page Title" />
+      <input type="text" id="pageUrl" placeholder="URL (e.g., /page1)" />
+      <br />
+      <button onclick="pushState()">Push New State</button>
+      <button onclick="replaceState()">Replace Current State</button>
+    </div>
+
+    <div class="example">
+      <h3>Simulate Multiple Pages (SPA style)</h3>
+      <button onclick="showPage('home')">Home</button>
+      <button onclick="showPage('about')">About</button>
+      <button onclick="showPage('contact')">Contact</button>
+
+      <div id="home" class="page active">
+        <h3>Home Page</h3>
+        <p>Welcome to the Home page!</p>
+      </div>
+
+      <div id="about" class="page">
+        <h3>About Page</h3>
+        <p>This is the About page.</p>
+      </div>
+
+      <div id="contact" class="page">
+        <h3>Contact Page</h3>
+        <p>Contact us here!</p>
+      </div>
+    </div>
+
+    <div class="example">
+      <h3>PopState Event Demo</h3>
+      <p>
+        Navigate using browser back/forward buttons to see popstate events in
+        console.
+      </p>
+      <div id="popstateInfo" class="output">
+        <p>PopState events will appear here...</p>
+      </div>
+    </div>
+
+    <script>
+      let currentPage = "home";
+      let historyCounter = 1;
+
+      function showHistoryInfo() {
+        const info = document.getElementById("historyInfo");
+        info.innerHTML = `
+                <h4>History Object Properties:</h4>
+                <p><strong>Length:</strong> ${
+                  history.length
+                } (number of entries)</p>
+                <p><strong>ScrollRestoration:</strong> ${
+                  history.scrollRestoration
+                }</p>
+                <p><strong>State:</strong> ${JSON.stringify(history.state)}</p>
+                <p><em>Note: For security reasons, you cannot access the actual URLs in the history.</em></p>
+            `;
+      }
+
+      function goBack() {
+        history.back();
+      }
+
+      function goForward() {
+        history.forward();
+      }
+
+      function goSteps(steps) {
+        history.go(steps);
+      }
+
+      function pushState() {
+        const title =
+          document.getElementById("pageTitle").value ||
+          `Page ${historyCounter}`;
+        const url =
+          document.getElementById("pageUrl").value || `/page${historyCounter}`;
+
+        const state = {
+          page: historyCounter,
+          title: title,
+          timestamp: new Date().toISOString(),
+        };
+
+        history.pushState(state, title, url);
+        historyCounter++;
+
+        alert(`Pushed state: ${title} at ${url}`);
+        showHistoryInfo();
+      }
+
+      function replaceState() {
+        const title =
+          document.getElementById("pageTitle").value || "Replaced Page";
+        const url = document.getElementById("pageUrl").value || "/replaced";
+
+        const state = {
+          page: "replaced",
+          title: title,
+          timestamp: new Date().toISOString(),
+        };
+
+        history.replaceState(state, title, url);
+
+        alert(`Replaced state: ${title} at ${url}`);
+        showHistoryInfo();
+      }
+
+      function showPage(pageId) {
+        // Hide all pages
+        const pages = document.querySelectorAll(".page");
+        pages.forEach((page) => page.classList.remove("active"));
+
+        // Show selected page
+        document.getElementById(pageId).classList.add("active");
+        currentPage = pageId;
+
+        // Push state to history
+        const state = {
+          page: pageId,
+          timestamp: new Date().toISOString(),
+        };
+
+        history.pushState(
+          state,
+          `${pageId.charAt(0).toUpperCase() + pageId.slice(1)} Page`,
+          `/${pageId}`
+        );
+
+        console.log(`Navigated to ${pageId} page`);
+      }
+
+      // Listen for popstate events (back/forward button)
+      window.addEventListener("popstate", function (event) {
+        console.log("PopState event triggered:", event.state);
+
+        const info = document.getElementById("popstateInfo");
+        const timestamp = new Date().toLocaleTimeString();
+
+        info.innerHTML = `
+                <h4>PopState Event Detected:</h4>
+                <p><strong>Time:</strong> ${timestamp}</p>
+                <p><strong>State:</strong> ${JSON.stringify(event.state)}</p>
+                <p><strong>URL:</strong> ${location.pathname}</p>
+            `;
+
+        // Handle page navigation on back/forward
+        if (event.state && event.state.page) {
+          const pageId = event.state.page;
+          if (document.getElementById(pageId)) {
+            // Hide all pages
+            const pages = document.querySelectorAll(".page");
+            pages.forEach((page) => page.classList.remove("active"));
+
+            // Show the page from history
+            document.getElementById(pageId).classList.add("active");
+            currentPage = pageId;
+          }
+        }
+      });
+
+      // Console examples for students
+      console.log("=== History Object Examples ===");
+      console.log("History length:", history.length);
+      console.log("Current state:", history.state);
+
+      // Initial state
+      history.replaceState(
+        {
+          page: "home",
+          title: "Home Page",
+          timestamp: new Date().toISOString(),
+        },
+        "Home Page",
+        "/home"
+      );
+
+      console.log(
+        "Try using browser back/forward buttons to see popstate events!"
+      );
+    </script>
+  </body>
+</html>

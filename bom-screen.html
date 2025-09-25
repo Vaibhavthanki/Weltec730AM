@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Screen Object - BOM</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        line-height: 1.6;
+      }
+      .example {
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin: 10px 0;
+      }
+      button {
+        background: #007acc;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        cursor: pointer;
+        margin: 5px;
+      }
+      .output {
+        background: #e8f4f8;
+        padding: 10px;
+        margin: 10px 0;
+        border-left: 4px solid #007acc;
+      }
+      .screen-visual {
+        border: 2px solid #333;
+        background: #f0f0f0;
+        padding: 10px;
+        margin: 10px 0;
+        text-align: center;
+      }
+      .window-box {
+        background: #007acc;
+        color: white;
+        padding: 20px;
+        margin: 10px auto;
+        width: 60%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Screen Object in BOM</h1>
+
+    <p>
+      The <strong>screen</strong> object contains information about the user's
+      screen/monitor. This is useful for responsive design and display
+      optimization.
+    </p>
+
+    <div class="example">
+      <h3>Basic Screen Information</h3>
+      <button onclick="showBasicScreenInfo()">Show Screen Properties</button>
+      <div id="basicScreenInfo" class="output"></div>
+    </div>
+
+    <div class="example">
+      <h3>Screen vs Window Comparison</h3>
+      <button onclick="compareScreenWindow()">Compare Screen vs Window</button>
+      <div id="screenWindowComparison" class="output"></div>
+    </div>
+
+    <div class="example">
+      <h3>Available Screen Space</h3>
+      <button onclick="showAvailableSpace()">
+        Show Available Screen Space
+      </button>
+      <div id="availableSpace" class="output"></div>
+      <p><em>Available space excludes taskbars, docks, and system UI</em></p>
+    </div>
+
+    <div class="example">
+      <h3>Color Depth and Pixel Ratio</h3>
+      <button onclick="showDisplayDetails()">Show Display Details</button>
+      <div id="displayDetails" class="output"></div>
+    </div>
+
+    <div class="example">
+      <h3>Screen Orientation (if supported)</h3>
+      <button onclick="showOrientation()">Show Screen Orientation</button>
+      <div id="orientationInfo" class="output"></div>
+    </div>
+
+    <div class="example">
+      <h3>Visual Representation</h3>
+      <button onclick="createScreenVisual()">Create Screen Visual</button>
+      <div id="screenVisual"></div>
+    </div>
+
+    <div class="example">
+      <h3>Responsive Design Helper</h3>
+      <button onclick="analyzeScreen()">Analyze for Responsive Design</button>
+      <div id="responsiveAnalysis" class="output"></div>
+    </div>
+
+    <script>
+      function showBasicScreenInfo() {
+        const info = document.getElementById("basicScreenInfo");
+        info.innerHTML = `
+                <h4>Basic Screen Properties:</h4>
+                <p><strong>Total Width:</strong> ${screen.width}px</p>
+                <p><strong>Total Height:</strong> ${screen.height}px</p>
+                <p><strong>Available Width:</strong> ${screen.availWidth}px</p>
+                <p><strong>Available Height:</strong> ${screen.availHeight}px</p>
+                <p><strong>Color Depth:</strong> ${screen.colorDepth} bits</p>
+                <p><strong>Pixel Depth:</strong> ${screen.pixelDepth} bits</p>
+            `;
+      }
+
+      function compareScreenWindow() {
+        const info = document.getElementById("screenWindowComparison");
+        info.innerHTML = `
+                <h4>Screen vs Window Dimensions:</h4>
+                <table style="width:100%; border-collapse: collapse;">
+                    <tr style="background: #f0f0f0;">
+                        <th style="border: 1px solid #ddd; padding: 8px;">Property</th>
+                        <th style="border: 1px solid #ddd; padding: 8px;">Screen</th>
+                        <th style="border: 1px solid #ddd; padding: 8px;">Window</th>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px;"><strong>Width</strong></td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${screen.width}px</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${window.innerWidth}px</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px;"><strong>Height</strong></td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${screen.height}px</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${window.innerHeight}px</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px;"><strong>Available Width</strong></td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${screen.availWidth}px</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${window.outerWidth}px (outer)</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px;"><strong>Available Height</strong></td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${screen.availHeight}px</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${window.outerHeight}px (outer)</td>
+                    </tr>
+                </table>
+            `;
+      }
+
+      function showAvailableSpace() {
+        const info = document.getElementById("availableSpace");
+        const totalArea = screen.width * screen.height;
+        const availableArea = screen.availWidth * screen.availHeight;
+        const percentageAvailable = ((availableArea / totalArea) * 100).toFixed(
+          1
+        );
+
+        info.innerHTML = `
+                <h4>Available Screen Space:</h4>
+                <p><strong>Total Screen Area:</strong> ${totalArea.toLocaleString()} pixels</p>
+                <p><strong>Available Area:</strong> ${availableArea.toLocaleString()} pixels</p>
+                <p><strong>Percentage Available:</strong> ${percentageAvailable}%</p>
+                <p><strong>Left Position:</strong> ${
+                  screen.availLeft || 0
+                }px</p>
+                <p><strong>Top Position:</strong> ${screen.availTop || 0}px</p>
+            `;
+      }
+
+      function showDisplayDetails() {
+        const info = document.getElementById("displayDetails");
+        const pixelRatio = window.devicePixelRatio || 1;
+
+        info.innerHTML = `
+                <h4>Display Technical Details:</h4>
+                <p><strong>Color Depth:</strong> ${
+                  screen.colorDepth
+                } bits (${Math.pow(
+          2,
+          screen.colorDepth
+        ).toLocaleString()} colors)</p>
+                <p><strong>Pixel Depth:</strong> ${screen.pixelDepth} bits</p>
+                <p><strong>Device Pixel Ratio:</strong> ${pixelRatio} (${
+          pixelRatio > 1 ? "High DPI/Retina" : "Standard DPI"
+        })</p>
+                <p><strong>Logical Resolution:</strong> ${screen.width} x ${
+          screen.height
+        }</p>
+                <p><strong>Physical Resolution:</strong> ${Math.round(
+                  screen.width * pixelRatio
+                )} x ${Math.round(screen.height * pixelRatio)}</p>
+            `;
+      }
+
+      function showOrientation() {
+        const info = document.getElementById("orientationInfo");
+        let orientationInfo = "";
+
+        // Check for Screen Orientation API
+        if (screen.orientation) {
+          orientationInfo = `
+                    <h4>Screen Orientation (API):</h4>
+                    <p><strong>Angle:</strong> ${screen.orientation.angle}°</p>
+                    <p><strong>Type:</strong> ${screen.orientation.type}</p>
+                `;
+        } else if (window.orientation !== undefined) {
+          // Fallback for older browsers
+          orientationInfo = `
+                    <h4>Window Orientation (Legacy):</h4>
+                    <p><strong>Angle:</strong> ${window.orientation}°</p>
+                `;
+        } else {
+          orientationInfo = "<p>Screen Orientation API not supported</p>";
+        }
+
+        // Simple orientation detection based on dimensions
+        const orientation =
+          screen.width > screen.height ? "Landscape" : "Portrait";
+        orientationInfo += `
+                <p><strong>Detected Orientation:</strong> ${orientation}</p>
+                <p><strong>Aspect Ratio:</strong> ${(
+                  screen.width / screen.height
+                ).toFixed(2)}:1</p>
+            `;
+
+        info.innerHTML = orientationInfo;
+      }
+
+      function createScreenVisual() {
+        const visual = document.getElementById("screenVisual");
+        const screenRatio = screen.width / screen.height;
+        const visualWidth = 300;
+        const visualHeight = visualWidth / screenRatio;
+
+        const windowWidthPercent = (window.innerWidth / screen.width) * 100;
+        const windowHeightPercent = (window.innerHeight / screen.height) * 100;
+
+        visual.innerHTML = `
+                <div class="screen-visual" style="width: ${visualWidth}px; height: ${visualHeight}px;">
+                    <p><strong>Your Screen (${screen.width} x ${screen.height})</strong></p>
+                    <div class="window-box" style="width: ${windowWidthPercent}%; height: ${windowHeightPercent}%;">
+                        Browser Window<br>
+                        (${window.innerWidth} x ${window.innerHeight})
+                    </div>
+                </div>
+                <p><em>Proportional representation of your screen and browser window</em></p>
+            `;
+      }
+
+      function analyzeScreen() {
+        const info = document.getElementById("responsiveAnalysis");
+        const width = screen.width;
+        let deviceCategory = "";
+        let recommendations = "";
+
+        if (width <= 480) {
+          deviceCategory = "Small Mobile";
+          recommendations = "Single column layout, large touch targets";
+        } else if (width <= 768) {
+          deviceCategory = "Mobile/Small Tablet";
+          recommendations = "Responsive grid, collapsible navigation";
+        } else if (width <= 1024) {
+          deviceCategory = "Tablet/Small Desktop";
+          recommendations = "Multi-column layout, sidebar navigation";
+        } else if (width <= 1440) {
+          deviceCategory = "Desktop";
+          recommendations = "Full desktop layout, multiple columns";
+        } else {
+          deviceCategory = "Large Desktop/4K";
+          recommendations = "Wide layout, consider max-width container";
+        }
+
+        const pixelRatio = window.devicePixelRatio || 1;
+        const isHighDPI = pixelRatio > 1;
+
+        info.innerHTML = `
+                <h4>Responsive Design Analysis:</h4>
+                <p><strong>Device Category:</strong> ${deviceCategory}</p>
+                <p><strong>Screen Size:</strong> ${width} x ${
+          screen.height
+        }px</p>
+                <p><strong>Pixel Ratio:</strong> ${pixelRatio}x ${
+          isHighDPI ? "(High DPI)" : "(Standard DPI)"
+        }</p>
+                <p><strong>Recommendations:</strong> ${recommendations}</p>
+                <p><strong>CSS Media Query:</strong> @media (max-width: ${width}px)</p>
+                ${
+                  isHighDPI
+                    ? "<p><strong>Note:</strong> Optimize images for high DPI displays</p>"
+                    : ""
+                }
+            `;
+      }
+
+      // Monitor orientation changes
+      if (screen.orientation) {
+        screen.orientation.addEventListener("change", function () {
+          console.log(
+            "Screen orientation changed to:",
+            screen.orientation.angle + "°"
+          );
+          if (
+            document
+              .getElementById("orientationInfo")
+              .innerHTML.includes("Screen Orientation")
+          ) {
+            showOrientation();
+          }
+        });
+      }
+
+      // Monitor window resize
+      window.addEventListener("resize", function () {
+        // Update visual if it exists
+        if (
+          document
+            .getElementById("screenVisual")
+            .innerHTML.includes("Your Screen")
+        ) {
+          createScreenVisual();
+        }
+        // Update comparison if it exists
+        if (
+          document
+            .getElementById("screenWindowComparison")
+            .innerHTML.includes("Screen vs Window")
+        ) {
+          compareScreenWindow();
+        }
+      });
+
+      // Console examples for students
+      console.log("=== Screen Object Examples ===");
+      console.log("Screen dimensions:", screen.width + "x" + screen.height);
+      console.log(
+        "Available dimensions:",
+        screen.availWidth + "x" + screen.availHeight
+      );
+      console.log("Color depth:", screen.colorDepth + " bits");
+      console.log("Device pixel ratio:", window.devicePixelRatio || 1);
+
+      // Show initial screen info
+      showBasicScreenInfo();
+    </script>
+  </body>
+</html>

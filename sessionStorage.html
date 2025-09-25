@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Session Storage Example</h1>
+    <script>
+      // Store data in session storage
+      sessionStorage.setItem("username", "JohnDoe");
+      sessionStorage.setItem("currentTime", new Date().toLocaleTimeString());
+      localStorage.setItem("currentTime", new Date().toLocaleTimeString());
+
+      const username = sessionStorage.getItem("username");
+      sessionStorage.removeItem("username");
+      sessionStorage.clear(); // Uncomment to clear all session storage
+      // sessionStorage.clear(); // Uncomment to clear all session storage
+    </script>
+  </body>
+</html>

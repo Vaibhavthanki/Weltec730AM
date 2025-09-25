@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <p id="demo"></p>
+    <button id="btn" onclick="setData()">Click Me</button>
+    <script>
+      function setData() {
+        let count = localStorage.getItem("clickCount");
+        console.log(count, "check14");
+        if (!count) {
+          localStorage.setItem("clickCount", 1);
+        } else {
+          count = parseInt(count);
+          localStorage.setItem("clickCount", count + 1);
+        }
+        document.getElementById("demo").innerHTML = count;
+      }
+      const myObj = {
+        name: "John",
+        age: 30,
+        city: "New York",
+      };
+      console.log(myObj, "check15");
+      console.log(JSON.stringify(myObj), "check16");
+      localStorage.setItem("currentTime", new Date());
+      localStorage.setItem("booleanValue", true);
+      localStorage.setItem("myData", JSON.stringify(myObj));
+      localStorage.setItem("myData2", myObj); // it will convert to string [object Object]
+
+      const data = localStorage.getItem("myData");
+      const data1 = localStorage.getItem("currentTime");
+      const data3 = localStorage.getItem("booleanValue");
+      //   const data2 = localStorage.getItem("myData2");
+      console.log(data, "check17");
+      //   console.log(data2, "check18");
+      console.log(JSON.parse(data), "check18", data1, data3);
+      //   localStorage.removeItem("booleanValue");
+      //   localStorage.clear();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BOM Introduction - Browser Object Model</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        line-height: 1.6;
+      }
+      .concept {
+        background: #f4f4f4;
+        padding: 15px;
+        margin: 10px 0;
+        border-left: 4px solid #007acc;
+      }
+      .example {
+        background: #fff;
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin: 10px 0;
+      }
+      button {
+        background: #007acc;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        cursor: pointer;
+        margin: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Browser Object Model (BOM)</h1>
+
+    <div class="concept">
+      <h2>What is BOM?</h2>
+      <p>
+        <strong>Browser Object Model (BOM)</strong> represents the browser
+        window and provides objects to interact with the browser itself (not the
+        document content).
+      </p>
+      <p>
+        Unlike DOM which deals with the document content, BOM deals with the
+        browser window, location, history, etc.
+      </p>
+    </div>
+
+    <div class="concept">
+      <h2>Main BOM Objects</h2>
+      <ul>
+        <li>
+          <strong>window</strong> - The global object, represents browser window
+        </li>
+        <li><strong>location</strong> - Information about current URL</li>
+        <li><strong>history</strong> - Browser history</li>
+        <li><strong>navigator</strong> - Information about the browser</li>
+        <li><strong>screen</strong> - Information about user's screen</li>
+      </ul>
+    </div>
+
+    <div class="example">
+      <h3>Quick BOM Demo</h3>
+      <button onclick="showBOMInfo()">Show BOM Information</button>
+      <div id="bomInfo"></div>
+    </div>
+
+    <script>
+      function showBOMInfo() {
+        const info = document.getElementById("bomInfo");
+        info.innerHTML = `
+                <h4>Current BOM Information:</h4>
+                <p><strong>URL:</strong> ${location.href}</p>
+                <p><strong>Screen Size:</strong> ${screen.width} x ${screen.height}</p>
+                <p><strong>Window Size:</strong> ${window.innerWidth} x ${window.innerHeight}</p>
+            `;
+      }
+
+      // Console examples for students to try
+      console.log("=== BOM Objects Available ===");
+      console.log("window:", typeof window);
+      console.log("location:", typeof location);
+      console.log("history:", typeof history);
+      console.log("navigator:", typeof navigator);
+      console.log("screen:", typeof screen);
+    </script>
+
+    <div class="concept">
+      <h2>Key Points to Remember</h2>
+      <ul>
+        <li>BOM is not standardized (unlike DOM)</li>
+        <li>window is the global object in browsers</li>
+        <li>All global variables become properties of window</li>
+        <li>BOM objects help interact with browser features</li>
+      </ul>
+    </div>
+  </body>
+</html>

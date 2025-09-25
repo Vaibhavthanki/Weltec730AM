@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Browser Dialogs - BOM</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        line-height: 1.6;
+      }
+      .example {
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin: 10px 0;
+      }
+      button {
+        background: #007acc;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        cursor: pointer;
+        margin: 5px;
+      }
+      .warning {
+        background: #007acc;
+        color: white;
+      }
+      .danger {
+        background: #dc3545;
+        color: white;
+      }
+      .success {
+        background: #28a745;
+        color: white;
+      }
+      .output {
+        background: #e8f4f8;
+        padding: 10px;
+        margin: 10px 0;
+        border-left: 4px solid #007acc;
+      }
+      .note {
+        background: #fff3cd;
+        padding: 10px;
+        border: 1px solid #ffc107;
+        margin: 10px 0;
+      }
+      input {
+        padding: 5px;
+        margin: 5px;
+        width: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Browser Dialog Methods - BOM</h1>
+
+    <p>
+      Browser provides three main dialog methods: <strong>alert()</strong>,
+      <strong>confirm()</strong>, and <strong>prompt()</strong>. These are
+      simple ways to interact with users.
+    </p>
+
+    <div class="note">
+      <strong>Important:</strong> These dialogs block the browser and may be
+      annoying to users. Modern web development prefers custom modal dialogs.
+    </div>
+
+    <div class="example">
+      <h3>Alert Dialog - Information Messages</h3>
+      <p>alert() shows a message with an OK button.</p>
+      <button onclick="showBasicAlert()">Basic Alert</button>
+      <button onclick="showWarningAlert()" class="warning">
+        Warning Alert
+      </button>
+      <button onclick="showErrorAlert()" class="danger">Error Alert</button>
+      <button onclick="showSuccessAlert()" class="success">
+        Success Alert
+      </button>
+    </div>
+
+    <div class="example">
+      <h3>Confirm Dialog - Yes/No Questions</h3>
+      <p>
+        confirm() shows a message with OK and Cancel buttons. Returns
+        true/false.
+      </p>
+      <button onclick="askConfirmation()">Ask Confirmation</button>
+      <button onclick="deleteConfirmation()" class="danger">
+        Delete Item (Confirm)
+      </button>
+      <button onclick="saveConfirmation()" class="success">
+        Save Changes (Confirm)
+      </button>
+      <div id="confirmResult" class="output" style="display: none"></div>
+    </div>
+
+    <div class="example">
+      <h3>Prompt Dialog - User Input</h3>
+      <p>prompt() shows a message with an input field and OK/Cancel buttons.</p>
+      <button onclick="getName()">Get User Name</button>
+      <button onclick="getAge()">Get User Age</button>
+      <button onclick="getEmail()">Get Email Address</button>
+      <button onclick="getPassword()">Get Password</button>
+      <div id="promptResult" class="output" style="display: none"></div>
+    </div>
+
+    <div class="example">
+      <h3>Advanced Dialog Examples</h3>
+      <p>Combining dialogs for more complex interactions.</p>
+      <button onclick="userRegistration()">User Registration Flow</button>
+      <button onclick="calculatorDialog()">Simple Calculator</button>
+      <button onclick="surveyDialog()">Quick Survey</button>
+    </div>
+
+    <div class="example">
+      <h3>Dialog Best Practices</h3>
+      <button onclick="demonstrateBestPractices()">Show Best Practices</button>
+      <div id="bestPractices" class="output" style="display: none"></div>
+    </div>
+
+    <div class="example">
+      <h3>Modern Alternative - Custom Modal</h3>
+      <p>Better user experience with custom modals:</p>
+      <button onclick="showCustomModal()">Show Custom Modal</button>
+    </div>
+
+    <!-- Custom Modal -->
+    <div
+      id="customModal"
+      style="
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+      "
+    >
+      <div
+        style="
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: white;
+          padding: 20px;
+          border-radius: 5px;
+          min-width: 300px;
+        "
+      >
+        <h3>Custom Modal Dialog</h3>
+        <p>This is a better alternative to browser alerts!</p>
+        <button onclick="closeCustomModal()" style="background: #28a745">
+          OK
+        </button>
+        <button onclick="closeCustomModal()" style="background: #6c757d">
+          Cancel
+        </button>
+      </div>
+    </div>
+
+    <script>
+      // Alert Examples
+      function showBasicAlert() {
+        alert("This is a basic alert message!");
+      }
+
+      function showWarningAlert() {
+        alert("⚠️ Warning: Your session will expire in 5 minutes!");
+      }
+
+      function showErrorAlert() {
+        alert("❌ Error: Unable to save your changes. Please try again.");
+      }
+
+      function showSuccessAlert() {
+        alert("✅ Success: Your data has been saved successfully!");
+      }
+
+      // Confirm Examples
+      function askConfirmation() {
+        const result = confirm("Do you want to continue?");
+        const output = document.getElementById("confirmResult");
+        output.style.display = "block";
+        output.innerHTML = `
+                <h4>Confirmation Result:</h4>
+                <p>User clicked: <strong>${
+                  result ? "OK (true)" : "Cancel (false)"
+                }</strong></p>
+                <p>JavaScript returned: <strong>${result}</strong></p>
+            `;
+      }
+
+      function deleteConfirmation() {
+        const result = confirm(
+          "⚠️ Are you sure you want to delete this item?\n\nThis action cannot be undone."
+        );
+        const output = document.getElementById("confirmResult");
+        output.style.display = "block";
+
+        if (result) {
+          output.innerHTML = `
+                    <h4>Delete Confirmed:</h4>
+                    <p>✅ Item would be deleted (in a real app)</p>
+                `;
+        } else {
+          output.innerHTML = `
+                    <h4>Delete Cancelled:</h4>
+                    <p>❌ Delete operation was cancelled by user</p>
+                `;
+        }
+      }
+
+      function saveConfirmation() {
+        const result = confirm("Save changes to the document?");
+        const output = document.getElementById("confirmResult");
+        output.style.display = "block";
+
+        if (result) {
+          output.innerHTML = `
+                    <h4>Save Confirmed:</h4>
+                    <p>💾 Changes would be saved (in a real app)</p>
+                `;
+          // Simulate save success
+          setTimeout(() => alert("✅ Document saved successfully!"), 500);
+        } else {
+          output.innerHTML = `
+                    <h4>Save Cancelled:</h4>
+                    <p>📝 Changes were not saved</p>
+                `;
+        }
+      }
+
+      // Prompt Examples
+      function getName() {
+        const name = prompt("What is your name?", "Enter your name here");
+        showPromptResult("Name Input", name);
+      }
+
+      function getAge() {
+        const age = prompt("How old are you?", "");
+        showPromptResult("Age Input", age, age ? parseInt(age) : null);
+      }
+
+      function getEmail() {
+        const email = prompt("Enter your email address:", "user@example.com");
+        showPromptResult("Email Input", email);
+      }
+
+      function getPassword() {
+        const password = prompt("Enter password:", "");
+        showPromptResult(
+          "Password Input",
+          password ? "*".repeat(password.length) : null,
+          password
+        );
+      }
+
+      function showPromptResult(title, displayValue, actualValue = null) {
+        const output = document.getElementById("promptResult");
+        output.style.display = "block";
+
+        if (displayValue === null) {
+          output.innerHTML = `
+                    <h4>${title} - Cancelled:</h4>
+                    <p>❌ User clicked Cancel or pressed Escape</p>
+                    <p>prompt() returned: <strong>null</strong></p>
+                `;
+        } else if (displayValue === "") {
+          output.innerHTML = `
+                    <h4>${title} - Empty:</h4>
+                    <p>📝 User entered nothing but clicked OK</p>
+                    <p>prompt() returned: <strong>""</strong> (empty string)</p>
+                `;
+        } else {
+          output.innerHTML = `
+                    <h4>${title} - Success:</h4>
+                    <p>📝 User entered: <strong>${displayValue}</strong></p>
+                    <p>prompt() returned: <strong>"${
+                      actualValue || displayValue
+                    }"</strong></p>
+                    ${
+                      actualValue && actualValue !== displayValue
+                        ? `<p>Actual value: ${actualValue}</p>`
+                        : ""
+                    }
+                `;
+        }
+      }
+
+      // Advanced Examples
+      function userRegistration() {
+        const name = prompt("Enter your full name:");
+        if (name === null) return; // User cancelled
+
+        const email = prompt("Enter your email address:");
+        if (email === null) return;
+
+        const age = prompt("Enter your age:");
+        if (age === null) return;
+
+        if (
+          confirm(
+            `Please confirm your details:\n\nName: ${name}\nEmail: ${email}\nAge: ${age}\n\nIs this correct?`
+          )
+        ) {
+          alert("✅ Registration completed successfully!");
+        } else {
+          alert("❌ Registration cancelled.");
+        }
+      }
+
+      function calculatorDialog() {
+        const num1 = prompt("Enter first number:");
+        if (num1 === null) return;
+
+        const operator = prompt("Enter operator (+, -, *, /):");
+        if (operator === null) return;
+
+        const num2 = prompt("Enter second number:");
+        if (num2 === null) return;
+
+        let result;
+        const n1 = parseFloat(num1);
+        const n2 = parseFloat(num2);
+
+        switch (operator) {
+          case "+":
+            result = n1 + n2;
+            break;
+          case "-":
+            result = n1 - n2;
+            break;
+          case "*":
+            result = n1 * n2;
+            break;
+          case "/":
+            result = n2 !== 0 ? n1 / n2 : "Error: Division by zero";
+            break;
+          default:
+            result = "Error: Invalid operator";
+        }
+
+        alert(`Calculation Result:\n${num1} ${operator} ${num2} = ${result}`);
+      }
+
+      function surveyDialog() {
+        if (!confirm("Would you like to participate in a quick survey?")) {
+          alert("Thank you for your time!");
+          return;
+        }
+
+        const satisfaction = prompt("Rate your satisfaction (1-5):", "5");
+        if (satisfaction === null) return;
+
+        const feedback = prompt("Any feedback or suggestions?", "");
+        if (feedback === null) return;
+
+        alert(
+          `Survey Complete!\n\nSatisfaction: ${satisfaction}/5\nFeedback: ${
+            feedback || "No feedback provided"
+          }\n\nThank you for your participation!`
+        );
+      }
+
+      function demonstrateBestPractices() {
+        const output = document.getElementById("bestPractices");
+        output.style.display = "block";
+        output.innerHTML = `
+                <h4>Dialog Best Practices:</h4>
+                <ul>
+                    <li><strong>Use sparingly:</strong> Dialogs interrupt user flow</li>
+                    <li><strong>Clear messages:</strong> Be concise and specific</li>
+                    <li><strong>Confirm destructive actions:</strong> Always confirm deletes</li>
+                    <li><strong>Validate input:</strong> Check prompt() results</li>
+                    <li><strong>Handle cancellation:</strong> Always check for null</li>
+                    <li><strong>Provide defaults:</strong> Use meaningful default values</li>
+                    <li><strong>Consider alternatives:</strong> Custom modals are often better</li>
+                </ul>
+                <h4>What to Avoid:</h4>
+                <ul>
+                    <li>❌ Overusing alerts for non-critical information</li>
+                    <li>❌ Using prompts for sensitive data (passwords)</li>
+                    <li>❌ Long messages in alerts</li>
+                    <li>❌ Not handling cancellation (null values)</li>
+                </ul>
+            `;
+      }
+
+      // Custom Modal
+      function showCustomModal() {
+        document.getElementById("customModal").style.display = "block";
+      }
+
+      function closeCustomModal() {
+        document.getElementById("customModal").style.display = "none";
+      }
+
+      // Console examples for students
+      console.log("=== Browser Dialog Examples ===");
+      console.log("Try these in console:");
+      console.log("alert('Hello World!')");
+      console.log("confirm('Are you sure?')");
+      console.log("prompt('Your name?', 'Default Name')");
+
+      // Demonstrate that dialogs block execution
+      console.log("Dialogs are synchronous and block JavaScript execution");
+    </script>
+  </body>
+</html>

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript DOM Methods - Complete Learning Guide</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        .main-container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        h1 {
+            text-align: center;
+            color: #4a5568;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        .intro {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-left: 5px solid #007bff;
+        }
+        .level-section {
+            margin: 30px 0;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .beginner {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            border-left: 5px solid #28a745;
+        }
+        .intermediate {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            border-left: 5px solid #ffc107;
+        }
+        .advanced {
+            background: linear-gradient(135deg, #f8d7da, #f1b0b7);
+            border-left: 5px solid #dc3545;
+        }
+        h2 {
+            color: #2d3748;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+        .file-link {
+            display: inline-block;
+            padding: 12px 25px;
+            margin: 10px;
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,123,255,0.3);
+        }
+        .file-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+            background: linear-gradient(135deg, #0056b3, #004085);
+        }
+        .topics-list {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .topics-list h3 {
+            color: #495057;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        .topics-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .topics-list li {
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+        .topics-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+        .usage-tips {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #2196f3;
+        }
+        .usage-tips h3 {
+            color: #1565c0;
+            margin-bottom: 15px;
+        }
+        .code-example {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin: 10px 0;
+            overflow-x: auto;
+            border-left: 4px solid #6c757d;
+        }
+        .progress-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        .progress-step {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            margin: 0 5px;
+            border-radius: 8px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .progress-step.active {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        @media (max-width: 768px) {
+            .progress-indicator {
+                flex-direction: column;
+            }
+            .progress-step {
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <h1>🚀 JavaScript DOM Methods</h1>
+        <h1>Complete Learning Guide</h1>
+        
+        <div class="intro">
+            <h2>📚 Welcome to DOM Mastery!</h2>
+            <p>This comprehensive guide will take you from DOM basics to advanced techniques. Each level builds upon the previous one, providing hands-on examples and interactive demonstrations.</p>
+            <p><strong>Perfect for:</strong> Students learning web development, instructors teaching JavaScript, and developers wanting to master DOM manipulation.</p>
+        </div>
+
+        <div class="progress-indicator">
+            <div class="progress-step active">
+                <h3>🌱 Beginner</h3>
+                <p>Foundation</p>
+            </div>
+            <div class="progress-step">
+                <h3>🔧 Intermediate</h3>
+                <p>Interactive</p>
+            </div>
+            <div class="progress-step">
+                <h3>🚀 Advanced</h3>
+                <p>Performance</p>
+            </div>
+        </div>
+
+        <div class="level-section beginner">
+            <h2>🌱 Beginner Level - DOM Basics</h2>
+            
+            <div class="topics-list">
+                <h3>What You'll Learn:</h3>
+                <ul>
+                    <li>Understanding the Document Object Model (DOM)</li>
+                    <li>Selecting elements by ID, class name, and tag name</li>
+                    <li>Modern query selectors (querySelector, querySelectorAll)</li>
+                    <li>Changing element content (innerHTML, textContent, innerText)</li>
+                    <li>Working with element attributes</li>
+                    <li>Basic DOM navigation</li>
+                </ul>
+            </div>
+
+            <div class="code-example">
+// Example from this level
+document.getElementById('myElement').textContent = 'New content';
+document.querySelector('.my-class').style.color = 'red';
+element.setAttribute('data-value', '123');
+            </div>
+
+            <a href="dom-basics.html" class="file-link">📖 Open DOM Basics Tutorial</a>
+        </div>
+
+        <div class="level-section intermediate">
+            <h2>🔧 Intermediate Level - Events & Manipulation</h2>
+            
+            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 300px;">
+                    <div class="topics-list">
+                        <h3>DOM Events:</h3>
+                        <ul>
+                            <li>Event handling methods (onclick, addEventListener)</li>
+                            <li>Mouse events (click, hover, drag)</li>
+                            <li>Keyboard events (keydown, keyup, keypress)</li>
+                            <li>Form events (submit, change, input, focus, blur)</li>
+                            <li>Event object and properties</li>
+                            <li>Event bubbling and capturing</li>
+                            <li>Event delegation patterns</li>
+                            <li>Drag and drop API</li>
+                        </ul>
+                    </div>
+                    <a href="dom-events.html" class="file-link">🎯 Learn DOM Events</a>
+                </div>
+
+                <div style="flex: 1; min-width: 300px;">
+                    <div class="topics-list">
+                        <h3>DOM Manipulation:</h3>
+                        <ul>
+                            <li>Creating and adding elements (createElement, appendChild)</li>
+                            <li>Removing elements (removeChild, remove)</li>
+                            <li>Modifying element properties and styles</li>
+                            <li>Working with CSS classes (classList methods)</li>
+                            <li>Cloning elements (cloneNode)</li>
+                            <li>Dynamic list management</li>
+                            <li>DOM traversal and navigation</li>
+                            <li>Performance comparison (innerHTML vs createElement)</li>
+                        </ul>
+                    </div>
+                    <a href="dom-manipulation.html" class="file-link">🛠️ Master DOM Manipulation</a>
+                </div>
+            </div>
+
+            <div class="code-example">
+// Examples from this level
+element.addEventListener('click', function(event) {
+    console.log('Clicked at:', event.clientX, event.clientY);
+});
+
+const newElement = document.createElement('div');
+newElement.classList.add('my-class');
+parent.appendChild(newElement);
+            </div>
+        </div>
+
+        <div class="level-section advanced">
+            <h2>🚀 Advanced Level - Modern APIs & Performance</h2>
+            
+            <div class="topics-list">
+                <h3>Advanced DOM Concepts:</h3>
+                <ul>
+                    <li>Mutation Observer API - Monitor DOM changes</li>
+                    <li>Intersection Observer API - Efficient viewport detection</li>
+                    <li>Resize Observer API - Element size monitoring</li>
+                    <li>Web Components and Shadow DOM</li>
+                    <li>Virtual Scrolling implementation</li>
+                    <li>Performance monitoring and optimization</li>
+                    <li>Advanced event patterns (debouncing, throttling)</li>
+                    <li>Canvas and WebGL integration</li>
+                </ul>
+            </div>
+
+            <div class="code-example">
+// Examples from this level
+const observer = new MutationObserver(mutations => {
+    mutations.forEach(mutation => {
+        console.log('DOM changed:', mutation.type);
+    });
+});
+
+const intersectionObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+});
+            </div>
+
+            <a href="dom-advanced.html" class="file-link">🎓 Explore Advanced DOM</a>
+        </div>
+
+        <div class="usage-tips">
+            <h3>📋 How to Use These Files for Teaching</h3>
+            <ul>
+                <li><strong>Start with Basics:</strong> Begin with dom-basics.html to establish fundamental concepts</li>
+                <li><strong>Interactive Learning:</strong> Each file includes live demonstrations students can interact with</li>
+                <li><strong>Hands-on Practice:</strong> Code examples are immediately testable in the browser</li>
+                <li><strong>Progressive Difficulty:</strong> Concepts build upon each other logically</li>
+                <li><strong>Real-world Examples:</strong> Practical scenarios students will encounter in projects</li>
+                <li><strong>Performance Awareness:</strong> Advanced level covers optimization techniques</li>
+            </ul>
+        </div>
+
+        <div class="usage-tips">
+            <h3>🎯 Recommended Teaching Sequence</h3>
+            <ol style="padding-left: 20px;">
+                <li><strong>Week 1-2:</strong> DOM Basics - Selection and basic manipulation</li>
+                <li><strong>Week 3-4:</strong> Event Handling - Making pages interactive</li>
+                <li><strong>Week 5-6:</strong> DOM Manipulation - Dynamic content creation</li>
+                <li><strong>Week 7-8:</strong> Advanced Topics - Modern APIs and performance</li>
+            </ol>
+        </div>
+
+        <div class="usage-tips">
+            <h3>💡 Additional Resources Included</h3>
+            <ul>
+                <li><strong>Live Code Examples:</strong> Every concept demonstrated with working code</li>
+                <li><strong>Interactive Demos:</strong> Students can experiment and see immediate results</li>
+                <li><strong>Performance Comparisons:</strong> See the difference between various approaches</li>
+                <li><strong>Best Practices:</strong> Modern, recommended methods highlighted</li>
+                <li><strong>Browser Compatibility:</strong> Focus on current web standards</li>
+                <li><strong>Debugging Tips:</strong> Console logging and inspection techniques</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <h3>🎉 Ready to Start Learning?</h3>
+            <p>Begin with the <strong>DOM Basics</strong> file and work your way through each level. Each file is self-contained but builds on previous concepts.</p>
+            <p><em>Happy coding and teaching! 🚀</em></p>
+        </div>
+    </div>
+
+    <script>
+        // Add some interactive elements to this index page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate progress steps on scroll
+            const progressSteps = document.querySelectorAll('.progress-step');
+            
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'slideIn 0.6s ease-out';
+                    }
+                });
+            });
+            
+            progressSteps.forEach(step => observer.observe(step));
+            
+            // Add hover effects to file links
+            const fileLinks = document.querySelectorAll('.file-link');
+            fileLinks.forEach(link => {
+                link.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-3px) scale(1.02)';
+                });
+                
+                link.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(-2px) scale(1)';
+                });
+            });
+        });
+        
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            .level-section {
+                animation: fadeIn 0.8s ease-out;
+            }
+            
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

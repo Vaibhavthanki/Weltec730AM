@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      document.cookie =
+        "username=John Doe; expires=Thu, 23 Sep 2025 12:40:00 UTC";
+
+      let x = document.cookie;
+      console.log(x, "check14");
+      document.cookie =
+        "username=John Smith; expires=Thu, 23 Sep 2025 12:40:00 UTC";
+      let y = document.cookie;
+      console.log(y, "check15");
+      document.cookie =
+        "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      let z = document.cookie;
+      console.log(z, "check16");
+    </script>
+  </body>
+</html>

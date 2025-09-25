@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Timing Functions - BOM</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        line-height: 1.6;
+      }
+      .example {
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin: 10px 0;
+      }
+      button {
+        background: #007acc;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        cursor: pointer;
+        margin: 5px;
+      }
+      .stop-btn {
+        background: #dc3545;
+      }
+      .reset-btn {
+        background: #6c757d;
+      }
+      .output {
+        background: #e8f4f8;
+        padding: 10px;
+        margin: 10px 0;
+        border-left: 4px solid #007acc;
+        min-height: 40px;
+      }
+      .timer-display {
+        background: #000;
+        color: #0f0;
+        font-family: "Courier New", monospace;
+        font-size: 24px;
+        text-align: center;
+        padding: 15px;
+        margin: 10px 0;
+      }
+      .progress-bar {
+        width: 100%;
+        height: 20px;
+        background: #f0f0f0;
+        border: 1px solid #ddd;
+        margin: 10px 0;
+      }
+      .progress-fill {
+        height: 100%;
+        background: #007acc;
+        width: 0%;
+        transition: width 0.1s;
+      }
+      input {
+        padding: 5px;
+        margin: 5px;
+        width: 100px;
+      }
+      .log {
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+        padding: 10px;
+        margin: 10px 0;
+        max-height: 200px;
+        overflow-y: auto;
+        font-family: "Courier New", monospace;
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Timing Functions in BOM</h1>
+
+    <p>
+      JavaScript provides timing functions to execute code after a delay or
+      repeatedly: <strong>setTimeout()</strong>, <strong>setInterval()</strong>,
+      and their clear counterparts.
+    </p>
+
+    <div class="example">
+      <h3>setTimeout() - Execute After Delay</h3>
+      <p>setTimeout() executes code once after a specified delay.</p>
+      <input type="number" id="timeoutDelay" value="3" min="1" /> seconds
+      <button onclick="startTimeout()">Start Timeout</button>
+      <button onclick="clearCurrentTimeout()" class="stop-btn">
+        Cancel Timeout
+      </button>
+      <div id="timeoutOutput" class="output">
+        Click "Start Timeout" to begin...
+      </div>
+    </div>
+
+    <div class="example">
+      <h3>setInterval() - Execute Repeatedly</h3>
+      <p>setInterval() executes code repeatedly at specified intervals.</p>
+      <input type="number" id="intervalDelay" value="1" min="0.1" step="0.1" />
+      seconds
+      <button onclick="startInterval()">Start Interval</button>
+      <button onclick="clearCurrentInterval()" class="stop-btn">
+        Stop Interval
+      </button>
+      <button onclick="resetInterval()" class="reset-btn">Reset</button>
+      <div id="intervalOutput" class="output">
+        Click "Start Interval" to begin...
+      </div>
+    </div>
+
+    <div class="example">
+      <h3>Digital Clock Example</h3>
+      <button onclick="startClock()">Start Clock</button>
+      <button onclick="stopClock()" class="stop-btn">Stop Clock</button>
+      <div id="clockDisplay" class="timer-display">--:--:-- --</div>
+    </div>
+
+    <div class="example">
+      <h3>Countdown Timer</h3>
+      <input type="number" id="countdownMinutes" value="1" min="1" /> minutes
+      <button onclick="startCountdown()">Start Countdown</button>
+      <button onclick="stopCountdown()" class="stop-btn">Stop Countdown</button>
+      <div id="countdownDisplay" class="timer-display">00:00</div>
+      <div class="progress-bar">
+        <div id="countdownProgress" class="progress-fill"></div>
+      </div>
+    </div>
+
+    <div class="example">
+      <h3>Animation with setInterval</h3>
+      <button onclick="startAnimation()">Start Animation</button>
+      <button onclick="stopAnimation()" class="stop-btn">Stop Animation</button>
+      <div
+        id="animationBox"
+        style="
+          width: 50px;
+          height: 50px;
+          background: #007acc;
+          position: relative;
+          transition: none;
+        "
+      ></div>
+    </div>
+
+    <div class="example">
+      <h3>Delayed Message Chain</h3>
+      <button onclick="startMessageChain()">Start Message Chain</button>
+      <button onclick="clearMessageChain()" class="stop-btn">Clear All</button>
+      <div id="messageChain" class="log">
+        Click "Start Message Chain" to begin...
+      </div>
+    </div>
+
+    <div class="example">
+      <h3>Performance Testing</h3>
+      <p>Compare setTimeout vs setInterval accuracy:</p>
+      <button onclick="testTimingAccuracy()">Test Timing Accuracy</button>
+      <div id="performanceResults" class="output"></div>
+    </div>
+
+    <script>
+      // Global variables to store timer IDs
+      let currentTimeout = null;
+      let currentInterval = null;
+      let clockInterval = null;
+      let countdownInterval = null;
+      let animationInterval = null;
+      let messageTimeouts = [];
+
+      // setTimeout Examples
+      function startTimeout() {
+        const delay =
+          parseInt(document.getElementById("timeoutDelay").value) * 1000;
+        const output = document.getElementById("timeoutOutput");
+
+        // Clear any existing timeout
+        clearCurrentTimeout();
+
+        output.innerHTML = `⏳ Timeout started! Waiting ${
+          delay / 1000
+        } seconds...`;
+
+        currentTimeout = setTimeout(function () {
+          output.innerHTML = `✅ Timeout completed! This message appeared after ${
+            delay / 1000
+          } seconds.`;
+          currentTimeout = null;
+        }, delay);
+
+        console.log(
+          `setTimeout set with ID: ${currentTimeout}, delay: ${delay}ms`
+        );
+      }
+
+      function clearCurrentTimeout() {
+        if (currentTimeout) {
+          clearTimeout(currentTimeout);
+          document.getElementById(
+            "timeoutOutput"
+          ).innerHTML = `❌ Timeout cancelled (ID: ${currentTimeout})`;
+          console.log(`Timeout cleared: ${currentTimeout}`);
+          currentTimeout = null;
+        }
+      }
+
+      // setInterval Examples
+      let intervalCounter = 0;
+      function startInterval() {
+        const delay =
+          parseFloat(document.getElementById("intervalDelay").value) * 1000;
+        const output = document.getElementById("intervalOutput");
+
+        // Clear any existing interval
+        clearCurrentInterval();
+        intervalCounter = 0;
+
+        currentInterval = setInterval(function () {
+          intervalCounter++;
+          output.innerHTML = `🔄 Interval running... Count: ${intervalCounter} (Every ${
+            delay / 1000
+          }s)`;
+          console.log(`Interval tick: ${intervalCounter}`);
+        }, delay);
+
+        console.log(
+          `setInterval started with ID: ${currentInterval}, delay: ${delay}ms`
+        );
+      }
+
+      function clearCurrentInterval() {
+        if (currentInterval) {
+          clearInterval(currentInterval);
+          console.log(`Interval cleared: ${currentInterval}`);
+          currentInterval = null;
+        }
+      }
+
+      function resetInterval() {
+        clearCurrentInterval();
+        intervalCounter = 0;
+        document.getElementById(
+          "intervalOutput"
+        ).innerHTML = `🔄 Interval reset. Click "Start Interval" to begin...`;
+      }
+
+      // Digital Clock
+      function startClock() {
+        stopClock(); // Stop any existing clock
+
+        function updateClock() {
+          const now = new Date();
+          const timeString = now.toLocaleTimeString();
+          document.getElementById("clockDisplay").textContent = timeString;
+        }
+
+        updateClock(); // Show time immediately
+        clockInterval = setInterval(updateClock, 1000);
+        console.log("Clock started");
+      }
+
+      function stopClock() {
+        if (clockInterval) {
+          clearInterval(clockInterval);
+          clockInterval = null;
+          document.getElementById("clockDisplay").textContent = "--:--:-- --";
+          console.log("Clock stopped");
+        }
+      }
+
+      // Countdown Timer
+      let countdownSeconds = 0;
+      let totalSeconds = 0;
+
+      function startCountdown() {
+        stopCountdown();
+
+        const minutes = parseInt(
+          document.getElementById("countdownMinutes").value
+        );
+        countdownSeconds = minutes * 60;
+        totalSeconds = countdownSeconds;
+
+        const display = document.getElementById("countdownDisplay");
+        const progress = document.getElementById("countdownProgress");
+
+        function updateCountdown() {
+          const mins = Math.floor(countdownSeconds / 60);
+          const secs = countdownSeconds % 60;
+          display.textContent = `${mins.toString().padStart(2, "0")}:${secs
+            .toString()
+            .padStart(2, "0")}`;
+
+          const progressPercent =
+            ((totalSeconds - countdownSeconds) / totalSeconds) * 100;
+          progress.style.width = progressPercent + "%";
+
+          if (countdownSeconds <= 0) {
+            stopCountdown();
+            alert("⏰ Time's up!");
+            display.textContent = "00:00";
+            progress.style.width = "100%";
+            return;
+          }
+
+          countdownSeconds--;
+        }
+
+        updateCountdown();
+        countdownInterval = setInterval(updateCountdown, 1000);
+      }
+
+      function stopCountdown() {
+        if (countdownInterval) {
+          clearInterval(countdownInterval);
+          countdownInterval = null;
+        }
+      }
+
+      // Animation
+      let animationPosition = 0;
+      let animationDirection = 1;
+
+      function startAnimation() {
+        stopAnimation();
+
+        const box = document.getElementById("animationBox");
+        animationPosition = 0;
+        animationDirection = 1;
+
+        animationInterval = setInterval(function () {
+          animationPosition += animationDirection * 5;
+
+          if (animationPosition >= 300 || animationPosition <= 0) {
+            animationDirection *= -1;
+          }
+
+          box.style.left = animationPosition + "px";
+        }, 50); // 20 FPS
+      }
+
+      function stopAnimation() {
+        if (animationInterval) {
+          clearInterval(animationInterval);
+          animationInterval = null;
+          document.getElementById("animationBox").style.left = "0px";
+        }
+      }
+
+      // Message Chain
+      function startMessageChain() {
+        clearMessageChain();
+
+        const log = document.getElementById("messageChain");
+        log.innerHTML = "";
+
+        const messages = [
+          { delay: 1000, text: "1️⃣ First message (1 second)" },
+          { delay: 2000, text: "2️⃣ Second message (2 seconds)" },
+          { delay: 3500, text: "3️⃣ Third message (3.5 seconds)" },
+          { delay: 5000, text: "4️⃣ Fourth message (5 seconds)" },
+          { delay: 6000, text: "✅ Message chain complete!" },
+        ];
+
+        messages.forEach((message, index) => {
+          const timeoutId = setTimeout(() => {
+            const timestamp = new Date().toLocaleTimeString();
+            log.innerHTML += `[${timestamp}] ${message.text}<br>`;
+            log.scrollTop = log.scrollHeight;
+          }, message.delay);
+
+          messageTimeouts.push(timeoutId);
+        });
+      }
+
+      function clearMessageChain() {
+        messageTimeouts.forEach((timeoutId) => clearTimeout(timeoutId));
+        messageTimeouts = [];
+        document.getElementById("messageChain").innerHTML =
+          "All messages cleared.";
+      }
+
+      // Performance Testing
+      function testTimingAccuracy() {
+        const results = document.getElementById("performanceResults");
+        results.innerHTML = "🔄 Testing timing accuracy...";
+
+        const startTime = performance.now();
+        const targetDelay = 1000; // 1 second
+        let timeoutResults = [];
+        let intervalResults = [];
+        let intervalCount = 0;
+
+        // Test setTimeout accuracy
+        for (let i = 1; i <= 5; i++) {
+          setTimeout(() => {
+            const actualDelay = performance.now() - startTime - i * targetDelay;
+            timeoutResults.push(actualDelay);
+
+            if (timeoutResults.length === 5) {
+              // Test setInterval accuracy
+              const intervalStart = performance.now();
+              const testInterval = setInterval(() => {
+                intervalCount++;
+                const expectedTime = intervalCount * targetDelay;
+                const actualTime = performance.now() - intervalStart;
+                const error = actualTime - expectedTime;
+                intervalResults.push(error);
+
+                if (intervalCount >= 5) {
+                  clearInterval(testInterval);
+                  displayResults();
+                }
+              }, targetDelay);
+            }
+          }, i * targetDelay);
+        }
+
+        function displayResults() {
+          const avgTimeoutError =
+            timeoutResults.reduce((a, b) => a + b, 0) / timeoutResults.length;
+          const avgIntervalError =
+            intervalResults.reduce((a, b) => a + b, 0) / intervalResults.length;
+
+          results.innerHTML = `
+                    <h4>Timing Accuracy Results:</h4>
+                    <p><strong>setTimeout average error:</strong> ${avgTimeoutError.toFixed(
+                      2
+                    )}ms</p>
+                    <p><strong>setInterval average error:</strong> ${avgIntervalError.toFixed(
+                      2
+                    )}ms</p>
+                    <p><strong>setTimeout results:</strong> [${timeoutResults
+                      .map((r) => r.toFixed(1))
+                      .join(", ")}]ms</p>
+                    <p><strong>setInterval results:</strong> [${intervalResults
+                      .map((r) => r.toFixed(1))
+                      .join(", ")}]ms</p>
+                    <p><em>Note: Negative values mean the timer fired early, positive values mean it fired late.</em></p>
+                `;
+        }
+      }
+
+      // Cleanup function for when page is unloaded
+      window.addEventListener("beforeunload", function () {
+        clearCurrentTimeout();
+        clearCurrentInterval();
+        stopClock();
+        stopCountdown();
+        stopAnimation();
+        clearMessageChain();
+      });
+
+      // Console examples for students
+      console.log("=== Timing Functions Examples ===");
+      console.log(
+        "setTimeout(() => console.log('Hello after 2 seconds'), 2000);"
+      );
+      console.log(
+        "const intervalId = setInterval(() => console.log('Every second'), 1000);"
+      );
+      console.log("clearInterval(intervalId); // to stop the interval");
+
+      // Demonstrate the difference between setTimeout and setInterval
+      console.log("setTimeout executes ONCE after delay");
+      console.log("setInterval executes REPEATEDLY at intervals");
+    </script>
+  </body>
+</html>

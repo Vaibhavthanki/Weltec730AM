@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM Events - Intermediate Level</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
+      .container {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+      h1,
+      h2 {
+        color: #333;
+      }
+      .example-box {
+        border: 2px solid #e0e0e0;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+      }
+      button {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin: 5px;
+        font-size: 14px;
+      }
+      button:hover {
+        background-color: #218838;
+      }
+      .danger-btn {
+        background-color: #dc3545;
+      }
+      .danger-btn:hover {
+        background-color: #c82333;
+      }
+      .info-btn {
+        background-color: #17a2b8;
+      }
+      .info-btn:hover {
+        background-color: #138496;
+      }
+      input,
+      textarea,
+      select {
+        width: 100%;
+        padding: 8px;
+        margin: 5px 0;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+      }
+      .event-log {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        padding: 10px;
+        margin: 10px 0;
+        max-height: 200px;
+        overflow-y: auto;
+        border-radius: 4px;
+      }
+      .code-block {
+        background-color: #f4f4f4;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 15px;
+        margin: 10px 0;
+        overflow-x: auto;
+      }
+      .draggable {
+        width: 100px;
+        height: 100px;
+        background-color: #007bff;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 10px;
+        cursor: move;
+        border-radius: 8px;
+      }
+      .drop-zone {
+        width: 300px;
+        height: 150px;
+        border: 2px dashed #ccc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 10px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+      .drop-zone.dragover {
+        border-color: #007bff;
+        background-color: #e3f2fd;
+      }
+      .form-group {
+        margin: 15px 0;
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+      .highlight-box {
+        padding: 20px;
+        margin: 10px 0;
+        border: 2px solid #007bff;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>DOM Events - Intermediate Level</h1>
+      <p>
+        Learn how to handle user interactions and DOM events to make your web
+        pages interactive.
+      </p>
+    </div>
+
+    <div class="container">
+      <h2>1. Event Handling Methods</h2>
+      <div class="example-box">
+        <p>There are three main ways to handle events in JavaScript:</p>
+        <div class="code-block">
+          // Method 1: HTML onclick attribute &lt;button
+          onclick="myFunction()"&gt;Click me&lt;/button&gt; // Method 2: Element
+          event properties element.onclick = function() { /* code */ }; //
+          Method 3: addEventListener (Recommended)
+          element.addEventListener('click', function() { /* code */ });
+        </div>
+        <button onclick="method1Click()">Method 1: HTML onclick</button>
+        <button id="method2-btn">Method 2: onclick property</button>
+        <button id="method3-btn">Method 3: addEventListener</button>
+        <div class="event-log" id="method-log"></div>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2>2. Mouse Events</h2>
+      <div class="example-box">
+        <p>
+          Common mouse events: click, dblclick, mousedown, mouseup, mouseover,
+          mouseout, mousemove
+        </p>
+        <div class="code-block">
+          element.addEventListener('mouseover', function() { console.log('Mouse
+          entered the element'); }); element.addEventListener('mouseout',
+          function() { console.log('Mouse left the element'); });
+        </div>
+        <div class="highlight-box" id="mouse-demo">
+          Hover over this box and click to see mouse events in action!
+        </div>
+        <div class="event-log" id="mouse-log"></div>
+        <button onclick="clearLog('mouse-log')">Clear Log</button>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2>3. Keyboard Events</h2>
+      <div class="example-box">
+        <p>Keyboard events: keydown, keyup, keypress</p>
+        <div class="code-block">
+          element.addEventListener('keydown', function(event) { console.log('Key
+          pressed:', event.key); console.log('Key code:', event.keyCode); });
+        </div>
+        <div class="form-group">
+          <label for="keyboard-input">Type in this input field:</label>
+          <input
+            type="text"
+            id="keyboard-input"
+            placeholder="Start typing..."
+          />
+        </div>
+        <div class="event-log" id="keyboard-log"></div>
+        <button onclick="clearLog('keyboard-log')">Clear Log</button>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2>4. Form Events</h2>
+      <div class="example-box">
+        <p>Form events: submit, change, input, focus, blur</p>
+        <div class="code-block">
+          form.addEventListener('submit', function(event) {
+          event.preventDefault(); // Prevent form submission // Handle form data
+          });
+        </div>
+        <form id="demo-form">
+          <div class="form-group">
+            <label for="name-input">Name:</label>
+            <input type="text" id="name-input" name="name" required />
+          </div>
+          <div class="form-group">
+            <label for="email-input">Email:</label>
+            <input type="email" id="email-input" name="email" required />
+          </div>
+          <div class="form-group">
+            <label for="country-select">Country:</label>
+            <select id="country-select" name="country">
+              <option value="">Select a country</option>
+              <option value="us">United States</option>
+              <option value="uk">United Kingdom</option>
+              <option value="ca">Canada</option>
+              <option value="au">Australia</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="comments-textarea">Comments:</label>
+            <textarea
+              id="comments-textarea"
+              name="comments"
+              rows="4"
+            ></textarea>
+          </div>
+          <button type="submit">Submit Form</button>
+        </form>
+        <div class="event-log" id="form-log"></div>
+        <button onclick="clearLog('form-log')">Clear Log</button>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2>5. Event Object and Properties</h2>
+      <div class="example-box">
+        <p>
+          The event object contains useful information about the event that
+          occurred.
+        </p>
+        <div class="code-block">
+          element.addEventListener('click', function(event) { console.log('Event
+          type:', event.type); console.log('Target element:', event.target);
+          console.log('Current target:', event.currentTarget);
+          console.log('Mouse coordinates:', event.clientX, event.clientY); });
+        </div>
+        <button id="event-info-btn" class="info-btn">
+          Click for Event Info
+        </button>
+        <div class="event-log" id="event-info-log"></div>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2>6. Event Bubbling and Capturing</h2>
+      <div class="example-box">
+        <p>
+          Events bubble up from child to parent elements. You can control this
+          behavior.
+        </p>
+        <div class="code-block">
+          // Event bubbling (default) element.addEventListener('click',
+          handler); // Event capturing element.addEventListener('click',
+          handler, true); // Stop event propagation event.stopPropagation();
+        </div>
+        <div
+          id="outer-div"
+          style="padding: 20px; background-color: lightblue; border-radius: 8px"
+        >
+          <strong>Outer Div (Parent)</strong>
+          <div
+            id="inner-div"
+            style="
+              padding: 20px;
+              margin: 10px;
+              background-color: lightgreen;
+              border-radius: 8px;
+            "
+          >
+            <strong>Inner Div (Child)</strong>
+            <button id="nested-btn">Click Me!</button>
+          </div>
+        </div>
+        <div class="event-log" id="bubble-log"></div>
+        <button onclick="clearLog('bubble-log')">Clear Log</button>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2>7. Event Delegation</h2>
+      <div class="example-box">
+        <p>
+          Handle events for multiple elements using a single event listener on a
+          parent element.
+        </p>
+        <div class="code-block">
+          // Instead of adding listeners to each button individually
+          parent.addEventListener('click', function(event) { if
+          (event.target.matches('button')) { // Handle button click } });
+        </div>
+        <div id="delegation-container">
+          <h4>Dynamic Button Container:</h4>
+          <button class="dynamic-btn" data-value="1">Button 1</button>
+          <button class="dynamic-btn" data-value="2">Button 2</button>
+          <button class="dynamic-btn" data-value="3">Button 3</button>
+        </div>
+        <button onclick="addNewButton()">Add New Button</button>
+        <div class="event-log" id="delegation-log"></div>
+        <button onclick="clearLog('delegation-log')">Clear Log</button>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2>8. Drag and Drop Events</h2>
+      <div class="example-box">
+        <p>
+          HTML5 drag and drop API events: dragstart, drag, dragenter, dragover,
+          dragleave, drop, dragend
+        </p>
+        <div class="code-block">
+          element.addEventListener('dragstart', function(event) {
+          event.dataTransfer.setData('text/plain', element.id); });
+          dropZone.addEventListener('drop', function(event) {
+          event.preventDefault(); const data =
+          event.dataTransfer.getData('text/plain'); });
+        </div>
+        <div class="draggable" draggable="true" id="drag-item">Drag Me!</div>
+        <div class="drop-zone" id="drop-zone">Drop items here</div>
+        <div class="event-log" id="drag-log"></div>
+        <button onclick="clearLog('drag-log')">Clear Log</button>
+      </div>
+    </div>
+
+    <script>
+      // Initialize event logging
+      function logEvent(logId, message) {
+        const log = document.getElementById(logId);
+        const timestamp = new Date().toLocaleTimeString();
+        log.innerHTML += `<div>[${timestamp}] ${message}</div>`;
+        log.scrollTop = log.scrollHeight;
+      }
+
+      function clearLog(logId) {
+        document.getElementById(logId).innerHTML = "";
+      }
+
+      // 1. Event Handling Methods
+      function method1Click() {
+        logEvent("method-log", "Method 1: HTML onclick attribute called");
+      }
+
+      // Method 2: onclick property
+      document.getElementById("method2-btn").onclick = function () {
+        logEvent("method-log", "Method 2: onclick property called");
+      };
+
+      // Method 3: addEventListener
+      document
+        .getElementById("method3-btn")
+        .addEventListener("click", function () {
+          logEvent(
+            "method-log",
+            "Method 3: addEventListener called (Recommended!)"
+          );
+        });
+
+      // 2. Mouse Events
+      const mouseDemo = document.getElementById("mouse-demo");
+
+      mouseDemo.addEventListener("click", function (event) {
+        logEvent(
+          "mouse-log",
+          `Mouse clicked at (${event.clientX}, ${event.clientY})`
+        );
+      });
+
+      mouseDemo.addEventListener("dblclick", function () {
+        logEvent("mouse-log", "Mouse double-clicked!");
+      });
+
+      mouseDemo.addEventListener("mouseover", function () {
+        logEvent("mouse-log", "Mouse entered the box");
+        this.style.backgroundColor = "red";
+      });
+
+      mouseDemo.addEventListener("mouseout", function () {
+        logEvent("mouse-log", "Mouse left the box");
+        this.style.backgroundColor = "";
+      });
+
+      mouseDemo.addEventListener("mousedown", function () {
+        logEvent("mouse-log", "Mouse button pressed down");
+      });
+
+      mouseDemo.addEventListener("mouseup", function () {
+        logEvent("mouse-log", "Mouse button released");
+      });
+
+      // 3. Keyboard Events
+      const keyboardInput = document.getElementById("keyboard-input");
+
+      keyboardInput.addEventListener("keydown", function (event) {
+        logEvent(
+          "keyboard-log",
+          `Key down: "${event.key}" (Code: ${event.keyCode})`
+        );
+      });
+
+      keyboardInput.addEventListener("keyup", function (event) {
+        logEvent("keyboard-log", `Key up: "${event.key}"`);
+      });
+
+      keyboardInput.addEventListener("input", function (event) {
+        logEvent(
+          "keyboard-log",
+          `Input value changed: "${event.target.value}"`
+        );
+      });
+
+      keyboardInput.addEventListener("blur", function () {
+        keyboardInput.value = keyboardInput.value.toUpperCase();
+        logEvent("keyboard-log", "Input field lost focus");
+      });
+
+      // 4. Form Events
+      const demoForm = document.getElementById("demo-form");
+      const nameInput = document.getElementById("name-input");
+      const emailInput = document.getElementById("email-input");
+      const countrySelect = document.getElementById("country-select");
+      const commentsTextarea = document.getElementById("comments-textarea");
+
+      demoForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        logEvent(
+          "form-log",
+          "Form submission prevented and handled by JavaScript"
+        );
+
+        const formData = new FormData(demoForm);
+        logEvent(
+          "form-log",
+          `Form data: Name="${formData.get("name")}", Email="${formData.get(
+            "email"
+          )}"`
+        );
+      });
+
+      nameInput.addEventListener("focus", function () {
+        logEvent("form-log", "Name input focused");
+      });
+
+      nameInput.addEventListener("blur", function () {
+        logEvent("form-log", "Name input lost focus");
+      });
+
+      emailInput.addEventListener("change", function () {
+        logEvent("form-log", `Email changed to: ${this.value}`);
+      });
+
+      countrySelect.addEventListener("change", function () {
+        logEvent("form-log", `Country selected: ${this.value}`);
+      });
+
+      commentsTextarea.addEventListener("input", function () {
+        logEvent(
+          "form-log",
+          `Comments length: ${this.value.length} characters`
+        );
+      });
+
+      // 5. Event Object and Properties
+      document
+        .getElementById("event-info-btn")
+        .addEventListener("click", function (event) {
+          const info = `
+                Event Type: ${event.type}<br>
+                Target: ${event.target.tagName} (${
+            event.target.id || "no id"
+          })<br>
+                Current Target: ${event.currentTarget.tagName}<br>
+                Mouse Position: (${event.clientX}, ${event.clientY})<br>
+                Timestamp: ${event.timeStamp}<br>
+                Bubbles: ${event.bubbles}<br>
+                Cancelable: ${event.cancelable}
+            `;
+          document.getElementById("event-info-log").innerHTML = info;
+        });
+
+      // 6. Event Bubbling and Capturing
+      const outerDiv = document.getElementById("outer-div");
+      const innerDiv = document.getElementById("inner-div");
+      const nestedBtn = document.getElementById("nested-btn");
+
+      outerDiv.addEventListener("click", function () {
+        logEvent("bubble-log", "Outer div clicked (bubbling)");
+      });
+
+      innerDiv.addEventListener("click", function () {
+        logEvent("bubble-log", "Inner div clicked (bubbling)");
+      });
+
+      nestedBtn.addEventListener("click", function (event) {
+        logEvent("bubble-log", "Button clicked (bubbling)");
+        // Uncomment the next line to stop event propagation
+        // event.stopPropagation();
+      });
+
+      // Add capturing listeners
+      outerDiv.addEventListener(
+        "click",
+        function () {
+          logEvent("bubble-log", "Outer div clicked (capturing)");
+        },
+        true
+      );
+
+      innerDiv.addEventListener(
+        "click",
+        function () {
+          logEvent("bubble-log", "Inner div clicked (capturing)");
+        },
+        true
+      );
+
+      // 7. Event Delegation
+      const delegationContainer = document.getElementById(
+        "delegation-container"
+      );
+      let buttonCount = 3;
+
+      delegationContainer.addEventListener("click", function (event) {
+        if (event.target.matches(".dynamic-btn")) {
+          const value = event.target.getAttribute("data-value");
+          logEvent(
+            "delegation-log",
+            `Button ${value} clicked via event delegation!`
+          );
+        }
+      });
+
+      function addNewButton() {
+        buttonCount++;
+        const newButton = document.createElement("button");
+        newButton.className = "dynamic-btn";
+        newButton.setAttribute("data-value", buttonCount);
+        newButton.textContent = `Button ${buttonCount}`;
+        delegationContainer.appendChild(newButton);
+        logEvent(
+          "delegation-log",
+          `New button ${buttonCount} added dynamically`
+        );
+      }
+
+      // 8. Drag and Drop Events
+      const dragItem = document.getElementById("drag-item");
+      const dropZone = document.getElementById("drop-zone");
+
+      dragItem.addEventListener("dragstart", function (event) {
+        event.dataTransfer.setData("text/plain", this.id);
+        logEvent("drag-log", "Drag started");
+      });
+
+      dragItem.addEventListener("drag", function () {
+        // This fires continuously during drag
+      });
+
+      dragItem.addEventListener("dragend", function () {
+        logEvent("drag-log", "Drag ended");
+      });
+
+      dropZone.addEventListener("dragenter", function (event) {
+        event.preventDefault();
+        this.classList.add("dragover");
+        logEvent("drag-log", "Drag entered drop zone");
+      });
+
+      dropZone.addEventListener("dragover", function (event) {
+        event.preventDefault(); // Allow drop
+      });
+
+      dropZone.addEventListener("dragleave", function () {
+        this.classList.remove("dragover");
+        logEvent("drag-log", "Drag left drop zone");
+      });
+
+      dropZone.addEventListener("drop", function (event) {
+        event.preventDefault();
+        const data = event.dataTransfer.getData("text/plain");
+        const draggedElement = document.getElementById(data);
+
+        this.classList.remove("dragover");
+        this.appendChild(draggedElement);
+        logEvent("drag-log", "Item dropped successfully!");
+      });
+    </script>
+  </body>
+</html>

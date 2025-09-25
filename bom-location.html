@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Location Object - BOM</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        line-height: 1.6;
+      }
+      .example {
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin: 10px 0;
+      }
+      button {
+        background: #007acc;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        cursor: pointer;
+        margin: 5px;
+      }
+      .output {
+        background: #e8f4f8;
+        padding: 10px;
+        margin: 10px 0;
+        border-left: 4px solid #007acc;
+      }
+      input {
+        padding: 5px;
+        width: 300px;
+        margin: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Location Object in BOM</h1>
+
+    <p>
+      The <strong>location</strong> object contains information about the
+      current URL and provides methods to navigate to different pages.
+    </p>
+
+    <div class="example">
+      <h3>Current Location Properties</h3>
+      <button onclick="showLocationInfo()">Show Location Information</button>
+      <div id="locationInfo" class="output"></div>
+    </div>
+
+    <div class="example">
+      <h3>Navigate to URL</h3>
+      <input
+        type="url"
+        id="urlInput"
+        placeholder="Enter URL (e.g., https://www.google.com)"
+      />
+      <br />
+      <button onclick="navigateToUrl()">Navigate (location.href)</button>
+      <button onclick="assignUrl()">Assign URL (location.assign())</button>
+      <button onclick="replaceUrl()">Replace URL (location.replace())</button>
+    </div>
+
+    <div class="example">
+      <h3>Reload Page</h3>
+      <button onclick="reloadPage()">Reload Page (location.reload())</button>
+      <button onclick="forceReload()">Force Reload (bypass cache)</button>
+    </div>
+
+    <div class="example">
+      <h3>URL Parts Manipulation</h3>
+      <p>Current Hash: <span id="currentHash">#</span></p>
+      <button onclick="addHash()">Add Hash (#section1)</button>
+      <button onclick="removeHash()">Remove Hash</button>
+      <br /><br />
+      <button onclick="changeSearch()">
+        Add Search Params (?name=john&age=25)
+      </button>
+      <button onclick="clearSearch()">Clear Search Params</button>
+    </div>
+
+    <div class="example">
+      <h3>URL Construction Example</h3>
+      <p>Build a URL step by step:</p>
+      <button onclick="buildURL()">Build URL</button>
+      <div id="urlBuilder" class="output"></div>
+    </div>
+
+    <script>
+      function showLocationInfo() {
+        const info = document.getElementById("locationInfo");
+        info.innerHTML = `
+                <h4>Location Object Properties:</h4>
+                <p><strong>href:</strong> ${location.href}</p>
+                <p><strong>protocol:</strong> ${location.protocol}</p>
+                <p><strong>host:</strong> ${location.host}</p>
+                <p><strong>hostname:</strong> ${location.hostname}</p>
+                <p><strong>port:</strong> ${location.port}</p>
+                <p><strong>pathname:</strong> ${location.pathname}</p>
+                <p><strong>search:</strong> ${location.search}</p>
+                <p><strong>hash:</strong> ${location.hash}</p>
+                <p><strong>origin:</strong> ${location.origin}</p>
+            `;
+      }
+
+      function navigateToUrl() {
+        const url = document.getElementById("urlInput").value;
+        if (url) {
+          if (confirm(`Navigate to ${url}?`)) {
+            location.href = url;
+          }
+        } else {
+          alert("Please enter a URL");
+        }
+      }
+
+      function assignUrl() {
+        const url = document.getElementById("urlInput").value;
+        if (url) {
+          if (confirm(`Navigate to ${url} using assign()?`)) {
+            location.assign(url);
+          }
+        } else {
+          alert("Please enter a URL");
+        }
+      }
+
+      function replaceUrl() {
+        const url = document.getElementById("urlInput").value;
+        if (url) {
+          if (confirm(`Replace current page with ${url}? (Cannot go back)`)) {
+            location.replace(url);
+          }
+        } else {
+          alert("Please enter a URL");
+        }
+      }
+
+      function reloadPage() {
+        if (confirm("Reload the page?")) {
+          location.reload();
+        }
+      }
+
+      function forceReload() {
+        if (confirm("Force reload the page (bypass cache)?")) {
+          location.reload(true);
+        }
+      }
+
+      function addHash() {
+        location.hash = "#section1";
+        updateHashDisplay();
+      }
+
+      function removeHash() {
+        location.hash = "";
+        updateHashDisplay();
+      }
+
+      function updateHashDisplay() {
+        document.getElementById("currentHash").textContent =
+          location.hash || "(none)";
+      }
+
+      function changeSearch() {
+        // Create new URL with search parameters
+        const newUrl =
+          location.protocol +
+          "//" +
+          location.host +
+          location.pathname +
+          "?name=john&age=25" +
+          location.hash;
+        history.replaceState(null, "", newUrl);
+        showLocationInfo(); // Refresh the display
+      }
+
+      function clearSearch() {
+        const newUrl =
+          location.protocol +
+          "//" +
+          location.host +
+          location.pathname +
+          location.hash;
+        history.replaceState(null, "", newUrl);
+        showLocationInfo(); // Refresh the display
+      }
+
+      function buildURL() {
+        const builder = document.getElementById("urlBuilder");
+        const baseUrl = "https://example.com";
+        const path = "/search";
+        const params = "?q=javascript&category=programming";
+        const hash = "#results";
+
+        builder.innerHTML = `
+                <h4>Building URL Step by Step:</h4>
+                <p><strong>Base:</strong> ${baseUrl}</p>
+                <p><strong>+ Path:</strong> ${baseUrl + path}</p>
+                <p><strong>+ Parameters:</strong> ${baseUrl + path + params}</p>
+                <p><strong>+ Hash:</strong> ${
+                  baseUrl + path + params + hash
+                }</p>
+                <p><em>Final URL:</em> <strong>${
+                  baseUrl + path + params + hash
+                }</strong></p>
+            `;
+      }
+
+      // Initialize hash display
+      updateHashDisplay();
+
+      // Console examples for students
+      console.log("=== Location Object Examples ===");
+      console.log("Current URL:", location.href);
+      console.log("Protocol:", location.protocol);
+      console.log("Hostname:", location.hostname);
+      console.log("Pathname:", location.pathname);
+
+      // Monitor hash changes
+      window.addEventListener("hashchange", function () {
+        console.log("Hash changed to:", location.hash);
+        updateHashDisplay();
+      });
+    </script>
+  </body>
+</html>

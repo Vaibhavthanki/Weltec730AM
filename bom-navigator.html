@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Navigator Object - BOM</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        line-height: 1.6;
+      }
+      .example {
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin: 10px 0;
+      }
+      button {
+        background: #007acc;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        cursor: pointer;
+        margin: 5px;
+      }
+      .output {
+        background: #e8f4f8;
+        padding: 10px;
+        margin: 10px 0;
+        border-left: 4px solid #007acc;
+      }
+      .browser-info {
+        background: #f0f8f0;
+        padding: 15px;
+        border: 1px solid #4caf50;
+        margin: 10px 0;
+      }
+      .warning {
+        background: #fff3cd;
+        padding: 10px;
+        border: 1px solid #ffc107;
+        margin: 10px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Navigator Object in BOM</h1>
+
+    <p>
+      The <strong>navigator</strong> object contains information about the
+      browser and system. It's useful for feature detection and browser
+      compatibility.
+    </p>
+
+    <div class="example">
+      <h3>Basic Browser Information</h3>
+      <button onclick="showBasicInfo()">Show Basic Browser Info</button>
+      <div id="basicInfo" class="output"></div>
+    </div>
+
+    <div class="example">
+      <h3>Detailed Navigator Properties</h3>
+      <button onclick="showDetailedInfo()">
+        Show All Navigator Properties
+      </button>
+      <div id="detailedInfo" class="output"></div>
+    </div>
+
+    <div class="example">
+      <h3>Browser Detection (Not Recommended)</h3>
+      <button onclick="detectBrowser()">Detect Browser (User Agent)</button>
+      <div id="browserDetection" class="output"></div>
+      <div class="warning">
+        <strong>Note:</strong> User Agent sniffing is unreliable. Use feature
+        detection instead!
+      </div>
+    </div>
+
+    <div class="example">
+      <h3>Feature Detection (Recommended)</h3>
+      <button onclick="detectFeatures()">Check Browser Features</button>
+      <div id="featureDetection" class="browser-info"></div>
+    </div>
+
+    <div class="example">
+      <h3>Geolocation API</h3>
+      <button onclick="checkGeolocation()">Check Geolocation Support</button>
+      <button onclick="getLocation()">Get Current Location</button>
+      <div id="geoInfo" class="output"></div>
+    </div>
+
+    <div class="example">
+      <h3>Network Information</h3>
+      <button onclick="checkConnection()">Check Network Status</button>
+      <div id="networkInfo" class="output"></div>
+    </div>
+
+    <script>
+      function showBasicInfo() {
+        const info = document.getElementById("basicInfo");
+        info.innerHTML = `
+                <h4>Basic Browser Information:</h4>
+                <p><strong>App Name:</strong> ${navigator.appName}</p>
+                <p><strong>App Version:</strong> ${navigator.appVersion}</p>
+                <p><strong>Platform:</strong> ${navigator.platform}</p>
+                <p><strong>Language:</strong> ${navigator.language}</p>
+                <p><strong>Languages:</strong> ${navigator.languages.join(
+                  ", "
+                )}</p>
+                <p><strong>Online:</strong> ${
+                  navigator.onLine ? "Yes" : "No"
+                }</p>
+                <p><strong>Cookies Enabled:</strong> ${
+                  navigator.cookieEnabled ? "Yes" : "No"
+                }</p>
+            `;
+      }
+
+      function showDetailedInfo() {
+        const info = document.getElementById("detailedInfo");
+        info.innerHTML = `
+                <h4>Detailed Navigator Properties:</h4>
+                <p><strong>User Agent:</strong> ${navigator.userAgent}</p>
+                <p><strong>Vendor:</strong> ${navigator.vendor}</p>
+                <p><strong>Product:</strong> ${navigator.product}</p>
+                <p><strong>Hardware Concurrency:</strong> ${
+                  navigator.hardwareConcurrency
+                } cores</p>
+                <p><strong>Max Touch Points:</strong> ${
+                  navigator.maxTouchPoints
+                }</p>
+                <p><strong>PDF Viewer Enabled:</strong> ${
+                  navigator.pdfViewerEnabled || "Unknown"
+                }</p>
+                <p><strong>Do Not Track:</strong> ${
+                  navigator.doNotTrack || "Not set"
+                }</p>
+            `;
+      }
+
+      function detectBrowser() {
+        const ua = navigator.userAgent;
+        let browser = "Unknown";
+
+        if (ua.includes("Chrome") && !ua.includes("Edg")) {
+          browser = "Google Chrome";
+        } else if (ua.includes("Firefox")) {
+          browser = "Mozilla Firefox";
+        } else if (ua.includes("Safari") && !ua.includes("Chrome")) {
+          browser = "Apple Safari";
+        } else if (ua.includes("Edg")) {
+          browser = "Microsoft Edge";
+        } else if (ua.includes("Opera") || ua.includes("OPR")) {
+          browser = "Opera";
+        }
+
+        const info = document.getElementById("browserDetection");
+        info.innerHTML = `
+                <h4>Browser Detection Result:</h4>
+                <p><strong>Detected Browser:</strong> ${browser}</p>
+                <p><strong>User Agent String:</strong> ${ua}</p>
+                <div class="warning">
+                    <p><strong>Warning:</strong> This method is unreliable because user agents can be spoofed!</p>
+                </div>
+            `;
+      }
+
+      function detectFeatures() {
+        const info = document.getElementById("featureDetection");
+
+        // Check for various Web APIs and features
+        const features = {
+          "Local Storage": typeof Storage !== "undefined",
+          Geolocation: "geolocation" in navigator,
+          "Web Workers": typeof Worker !== "undefined",
+          Canvas: !!document.createElement("canvas").getContext,
+          WebGL: !!window.WebGLRenderingContext,
+          "Touch Events": "ontouchstart" in window,
+          "Service Workers": "serviceWorker" in navigator,
+          "Push Notifications": "PushManager" in window,
+          "Web Bluetooth": "bluetooth" in navigator,
+          MediaDevices: "mediaDevices" in navigator,
+          "Clipboard API": "clipboard" in navigator,
+          "Share API": "share" in navigator,
+        };
+
+        let html = "<h4>Browser Feature Support:</h4><ul>";
+        for (let [feature, supported] of Object.entries(features)) {
+          const status = supported ? "✅ Supported" : "❌ Not Supported";
+          html += `<li><strong>${feature}:</strong> ${status}</li>`;
+        }
+        html += "</ul>";
+
+        info.innerHTML = html;
+      }
+
+      function checkGeolocation() {
+        const info = document.getElementById("geoInfo");
+
+        if ("geolocation" in navigator) {
+          info.innerHTML = `
+                    <h4>Geolocation Support:</h4>
+                    <p>✅ Geolocation is supported by this browser.</p>
+                    <p>Click "Get Current Location" to request your location.</p>
+                `;
+        } else {
+          info.innerHTML = `
+                    <h4>Geolocation Support:</h4>
+                    <p>❌ Geolocation is not supported by this browser.</p>
+                `;
+        }
+      }
+
+      function getLocation() {
+        const info = document.getElementById("geoInfo");
+
+        if ("geolocation" in navigator) {
+          info.innerHTML = "<p>🔄 Getting your location...</p>";
+
+          navigator.geolocation.getCurrentPosition(
+            function (position) {
+              info.innerHTML = `
+                            <h4>Your Location:</h4>
+                            <p><strong>Latitude:</strong> ${
+                              position.coords.latitude
+                            }</p>
+                            <p><strong>Longitude:</strong> ${
+                              position.coords.longitude
+                            }</p>
+                            <p><strong>Accuracy:</strong> ${
+                              position.coords.accuracy
+                            } meters</p>
+                            <p><strong>Timestamp:</strong> ${new Date(
+                              position.timestamp
+                            ).toLocaleString()}</p>
+                        `;
+            },
+            function (error) {
+              info.innerHTML = `
+                            <h4>Location Error:</h4>
+                            <p>❌ ${error.message}</p>
+                            <p>Error code: ${error.code}</p>
+                        `;
+            }
+          );
+        }
+      }
+
+      function checkConnection() {
+        const info = document.getElementById("networkInfo");
+
+        let html = `
+                <h4>Network Status:</h4>
+                <p><strong>Online Status:</strong> ${
+                  navigator.onLine ? "🟢 Online" : "🔴 Offline"
+                }</p>
+            `;
+
+        // Check for Network Information API (experimental)
+        if (
+          "connection" in navigator ||
+          "mozConnection" in navigator ||
+          "webkitConnection" in navigator
+        ) {
+          const connection =
+            navigator.connection ||
+            navigator.mozConnection ||
+            navigator.webkitConnection;
+
+          html += `
+                    <p><strong>Connection Type:</strong> ${
+                      connection.effectiveType || "Unknown"
+                    }</p>
+                    <p><strong>Downlink:</strong> ${
+                      connection.downlink || "Unknown"
+                    } Mbps</p>
+                    <p><strong>RTT:</strong> ${
+                      connection.rtt || "Unknown"
+                    } ms</p>
+                    <p><strong>Save Data:</strong> ${
+                      connection.saveData ? "Enabled" : "Disabled"
+                    }</p>
+                `;
+        } else {
+          html += "<p><em>Network Information API not supported</em></p>";
+        }
+
+        info.innerHTML = html;
+      }
+
+      // Monitor online/offline status
+      window.addEventListener("online", function () {
+        console.log("Browser is now online");
+        if (
+          document
+            .getElementById("networkInfo")
+            .innerHTML.includes("Network Status")
+        ) {
+          checkConnection();
+        }
+      });
+
+      window.addEventListener("offline", function () {
+        console.log("Browser is now offline");
+        if (
+          document
+            .getElementById("networkInfo")
+            .innerHTML.includes("Network Status")
+        ) {
+          checkConnection();
+        }
+      });
+
+      // Console examples for students
+      console.log("=== Navigator Object Examples ===");
+      console.log("User Agent:", navigator.userAgent);
+      console.log("Platform:", navigator.platform);
+      console.log("Language:", navigator.language);
+      console.log("Online status:", navigator.onLine);
+      console.log("Hardware concurrency:", navigator.hardwareConcurrency);
+
+      // Show initial basic info
+      showBasicInfo();
+    </script>
+  </body>
+</html>

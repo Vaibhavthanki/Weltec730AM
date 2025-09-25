@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Append & Remove Child Example</title>
+    <style>
+      table,
+      th,
+      td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        padding: 8px;
+      }
+      th {
+        background-color: #f4f4f4;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>User Form</h2>
+    <form id="userForm">
+      <label>
+        Name:
+        <input type="text" id="name" required />
+      </label>
+      <label>
+        Email:
+        <input type="email" id="email" required />
+      </label>
+      <button type="submit">Submit</button>
+    </form>
+
+    <h3>Users List</h3>
+    <table id="userTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+
+    <script>
+      const userForm = document.getElementById("userForm");
+      const tableBody = document.getElementById("tableBody");
+
+      // Load existing data from localStorage
+      let users = JSON.parse(localStorage.getItem("users")) || [];
+
+      // Function to render table
+      function renderTable() {
+        tableBody.innerHTML = ""; // clear table before rendering
+        users.forEach((user, index) => {
+          const row = document.createElement("tr");
+
+          const nameCell = document.createElement("td");
+          nameCell.textContent = user.name;
+
+          const emailCell = document.createElement("td");
+          emailCell.textContent = user.email;
+
+          const actionCell = document.createElement("td");
+          const deleteBtn = document.createElement("button");
+          deleteBtn.textContent = "Delete";
+
+          // Delete row and update localStorage
+          deleteBtn.addEventListener("click", () => {
+            tableBody.removeChild(row); // remove row from DOM
+            users.splice(index, 1); // remove from array
+            localStorage.setItem("users", JSON.stringify(users));
+          });
+
+          actionCell.appendChild(deleteBtn);
+
+          row.appendChild(nameCell);
+          row.appendChild(emailCell);
+          row.appendChild(actionCell);
+
+          tableBody.appendChild(row);
+        });
+      }
+
+      // Handle form submit
+      userForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+
+        if (name && email) {
+          users.push({ name, email });
+          localStorage.setItem("users", JSON.stringify(users));
+          renderTable();
+          userForm.reset();
+        }
+      });
+
+      // Initial render
+      renderTable();
+    </script>
+  </body>
+</html>
