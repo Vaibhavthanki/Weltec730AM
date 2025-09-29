@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Form</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>User Form</h1>
+
+      <form id="userForm">
+        <div>
+          <label for="name">Name:</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            onchange="handleChange(event)"
+            onblur="handleBlur(event)"
+          />
+        </div>
+
+        <div>
+          <label for="email">Email:</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            onchange="handleChange(event)"
+            onblur="handleBlur(event)"
+          />
+        </div>
+
+        <div>
+          <label for="age">Age:</label>
+          <input
+            type="number"
+            id="age"
+            name="age"
+            required
+            onchange="handleChange(event)"
+            onblur="handleBlur(event)"
+          />
+        </div>
+
+        <div>
+          <label for="gender">Gender:</label>
+          <select
+            id="gender"
+            name="gender"
+            required
+            onchange="handleChange(event)"
+            onblur="handleBlur(event)"
+          >
+            <option value="">Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="terms">
+            <input
+              type="checkbox"
+              id="terms"
+              name="terms"
+              onchange="handleChange(event)"
+              onblur="handleBlur(event)"
+            />
+            Accept Terms and Conditions
+          </label>
+        </div>
+
+        <div>
+          <label for="newsletter">
+            <input
+              type="radio"
+              id="newsletter"
+              name="subscription"
+              value="yes"
+              onchange="handleChange(event)"
+              onblur="handleBlur(event)"
+            />
+            Subscribe to Newsletter
+          </label>
+          <label for="no-newsletter">
+            <input
+              type="radio"
+              id="no-newsletter"
+              name="subscription"
+              value="no"
+              onchange="handleChange(event)"
+              onblur="handleBlur(event)"
+            />
+            No Newsletter
+          </label>
+        </div>
+
+        <button type="submit">Submit</button>
+      </form>
+
+      <h2>Stored Users</h2>
+      <table id="userTable">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Subscription</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Dynamic Rows will be added here -->
+        </tbody>
+      </table>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

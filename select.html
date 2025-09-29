@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="container">
+      <select>
+        <option value="" default>Select an option</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+    </div>
+
+    <script>
+      const select = document.querySelector("select");
+      select.addEventListener("change", function (event) {
+        console.log(event.target.value);
+        const errorElement = document.querySelector("p");
+        if (errorElement) {
+          errorElement.remove();
+        }
+      });
+
+      select.addEventListener("blur", function (event) {
+        console.log("Blur event:", event.target.value);
+        if (event.target.value === "") {
+          const errorElement = document.createElement("p");
+          errorElement.style.color = "red";
+          errorElement.style.margin = "100px";
+          errorElement.textContent = "Please select an option.";
+          if (!document.querySelector("p")) {
+            console.log("check35");
+            document.getElementById("container").appendChild(errorElement);
+          }
+        }
+      });
+
+      select.addEventListener("focus", function (event) {
+        console.log("Focus event:", event.target.value);
+        const errorElement = document.querySelector("p");
+        if (errorElement) {
+          errorElement.remove();
+        }
+      });
+    </script>
+  </body>
+</html>

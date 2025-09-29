@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Registration Form</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      .header {
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        color: white;
+        padding: 30px;
+        text-align: center;
+      }
+
+      .header h1 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        padding: 30px;
+      }
+
+      .form-section,
+      .data-section {
+        background: #f8f9fa;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      }
+
+      .form-section h2,
+      .data-section h2 {
+        color: #333;
+        margin-bottom: 20px;
+        font-size: 1.5em;
+        border-bottom: 3px solid #667eea;
+        padding-bottom: 10px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #555;
+      }
+
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #e1e5e9;
+        border-radius: 10px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        background: white;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        transform: translateY(-2px);
+      }
+
+      .checkbox-group,
+      .radio-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 10px;
+      }
+
+      .checkbox-item,
+      .radio-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+      }
+
+      .checkbox-item:hover,
+      .radio-item:hover {
+        transform: scale(1.05);
+      }
+
+      .checkbox-item input,
+      .radio-item input {
+        width: auto;
+        margin: 0;
+        transform: scale(1.2);
+      }
+
+      .btn {
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        color: white;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+      }
+
+      .btn:active {
+        transform: translateY(-1px);
+      }
+
+      .table-container {
+        overflow-x: auto;
+        margin-top: 20px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      }
+
+      th,
+      td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #e1e5e9;
+      }
+
+      th {
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        color: white;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      tr:hover {
+        background: #f8f9fa;
+        transform: scale(1.01);
+        transition: all 0.2s ease;
+      }
+
+      .action-btn {
+        padding: 8px 15px;
+        margin: 2px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .edit-btn {
+        background: #28a745;
+        color: white;
+      }
+
+      .delete-btn {
+        background: #dc3545;
+        color: white;
+      }
+
+      .action-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .error {
+        color: #dc3545;
+        font-size: 14px;
+        margin-top: 5px;
+      }
+
+      .success {
+        color: #28a745;
+        font-size: 14px;
+        margin-top: 10px;
+      }
+
+      @media (max-width: 768px) {
+        .content {
+          grid-template-columns: 1fr;
+        }
+
+        .header h1 {
+          font-size: 2em;
+        }
+      }
+
+      .form-validation {
+        border-color: #dc3545 !important;
+        box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1) !important;
+      }
+
+      .loading {
+        opacity: 0.7;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>User Registration System</h1>
+        <p>Complete form with validation and data management</p>
+      </div>
+
+      <div class="content">
+        <div class="form-section">
+          <h2>Registration Form</h2>
+          <form id="userForm">
+            <div class="form-group">
+              <label for="name">Full Name * (minimum 3 characters)</label>
+              <input type="text" id="name" name="name" required minlength="3" />
+              <div class="error" id="nameError"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address *</label>
+              <input type="email" id="email" name="email" required />
+              <div class="error" id="emailError"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="age">Age *</label>
+              <input
+                type="number"
+                id="age"
+                name="age"
+                min="1"
+                max="120"
+                required
+              />
+              <div class="error" id="ageError"></div>
+            </div>
+
+            <div class="form-group">
+              <label>Gender *</label>
+              <div class="radio-group">
+                <div class="radio-item">
+                  <input
+                    type="radio"
+                    id="male"
+                    name="gender"
+                    value="male"
+                    required
+                  />
+                  <label for="male">Male</label>
+                </div>
+                <div class="radio-item">
+                  <input
+                    type="radio"
+                    id="female"
+                    name="gender"
+                    value="female"
+                    required
+                  />
+                  <label for="female">Female</label>
+                </div>
+                <div class="radio-item">
+                  <input
+                    type="radio"
+                    id="other"
+                    name="gender"
+                    value="other"
+                    required
+                  />
+                  <label for="other">Other</label>
+                </div>
+              </div>
+              <div class="error" id="genderError"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="country">Country *</label>
+              <select id="country" name="country" required>
+                <option value="">Select Country</option>
+                <option value="india">India</option>
+                <option value="usa">United States</option>
+                <option value="uk">United Kingdom</option>
+                <option value="canada">Canada</option>
+                <option value="australia">Australia</option>
+                <option value="germany">Germany</option>
+                <option value="france">France</option>
+                <option value="japan">Japan</option>
+              </select>
+              <div class="error" id="countryError"></div>
+            </div>
+
+            <div class="form-group">
+              <label>Interests *</label>
+              <div class="checkbox-group">
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    id="tech"
+                    name="interests"
+                    value="technology"
+                  />
+                  <label for="tech">Technology</label>
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    id="sports"
+                    name="interests"
+                    value="sports"
+                  />
+                  <label for="sports">Sports</label>
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    id="music"
+                    name="interests"
+                    value="music"
+                  />
+                  <label for="music">Music</label>
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    id="travel"
+                    name="interests"
+                    value="travel"
+                  />
+                  <label for="travel">Travel</label>
+                </div>
+                <div class="checkbox-item">
+                  <input
+                    type="checkbox"
+                    id="reading"
+                    name="interests"
+                    value="reading"
+                  />
+                  <label for="reading">Reading</label>
+                </div>
+              </div>
+              <div class="error" id="interestsError"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone Number (10 digits)</label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="1234567890"
+                maxlength="10"
+              />
+              <div class="error" id="phoneError"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="bio">Bio/Description</label>
+              <textarea
+                id="bio"
+                name="bio"
+                rows="4"
+                placeholder="Tell us about yourself..."
+              ></textarea>
+            </div>
+
+            <button type="submit" class="btn">Register User</button>
+            <div class="success" id="successMessage"></div>
+          </form>
+        </div>
+
+        <div class="data-section">
+          <h2>Registered Users</h2>
+          <div class="table-container">
+            <table id="userTable">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Age</th>
+                  <th>Gender</th>
+                  <th>Country</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="userTableBody"></tbody>
+            </table>
+          </div>
+          <div
+            id="noData"
+            style="text-align: center; padding: 20px; color: #666"
+          >
+            No users registered yet.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // In-memory storage (replace with localStorage in your environment)
+      let userData = [];
+      let editingIndex = -1;
+
+      // Form elements
+      const form = document.getElementById("userForm");
+      const inputs = form.querySelectorAll("input, select, textarea");
+
+      // Add event listeners for all form inputs
+      inputs.forEach((input) => {
+        console.log(input, "check452");
+
+        // onChange event
+        input.addEventListener("change", function (e) {
+          console.log(e.target, "check453");
+          validateField(e.target);
+
+          // Special handling for interests checkboxes
+          if (e.target.name === "interests") {
+            const interestInputs = document.querySelectorAll(
+              'input[name="interests"]'
+            );
+            const isInterestSelected = Array.from(interestInputs).some(
+              (input) => input.checked
+            );
+            const errorElement = document.getElementById("interestsError");
+
+            if (isInterestSelected) {
+              errorElement.textContent = "";
+            } else {
+              errorElement.textContent = "Please select at least one interest";
+            }
+          }
+
+          console.log(`Field ${e.target.name} changed:`, e.target.value);
+        });
+
+        // onBlur event
+        input.addEventListener("blur", function (e) {
+          validateField(e.target);
+          console.log(`Field ${e.target.name} lost focus:`, e.target.value);
+        });
+      });
+
+      // Validation functions
+      function validateField(field) {
+        console.log(field.name, "check454");
+
+        const errorElement = document.getElementById(field.name + "Error");
+        let isValid = true;
+        let errorMessage = "";
+
+        // Clear previous error styling
+        field.classList.remove("form-validation");
+        if (errorElement) errorElement.textContent = "";
+
+        switch (field.name) {
+          case "name":
+            const nameRegex = /^[a-zA-Z\s]{3,}$/;
+            if (!field.value.trim()) {
+              errorMessage = "Name is required";
+              isValid = false;
+            } else if (!nameRegex.test(field.value.trim())) {
+              errorMessage =
+                "Name must be at least 3 characters and contain only letters and spaces";
+              isValid = false;
+            }
+            break;
+
+          case "email":
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!field.value.trim()) {
+              errorMessage = "Email is required";
+              isValid = false;
+            } else if (!emailRegex.test(field.value)) {
+              errorMessage = "Please enter a valid email address";
+              isValid = false;
+            }
+            break;
+
+          case "age":
+            const age = parseInt(field.value);
+            if (!field.value) {
+              errorMessage = "Age is required";
+              isValid = false;
+            } else if (age < 1 || age > 120) {
+              errorMessage = "Age must be between 1 and 120";
+              isValid = false;
+            }
+            break;
+
+          case "gender":
+            const genderInputs = document.querySelectorAll(
+              'input[name="gender"]'
+            );
+            const isGenderSelected = Array.from(genderInputs).some(
+              (input) => input.checked
+            );
+            if (!isGenderSelected) {
+              errorMessage = "Please select a gender";
+              isValid = false;
+            }
+            break;
+
+          case "country":
+            if (!field.value) {
+              errorMessage = "Please select a country";
+              isValid = false;
+            }
+            break;
+
+          case "interests":
+            const interestInputs = document.querySelectorAll(
+              'input[name="interests"]'
+            );
+            const isInterestSelected = Array.from(interestInputs).some(
+              (input) => input.checked
+            );
+            if (!isInterestSelected) {
+              errorMessage = "Please select at least one interest";
+              isValid = false;
+            }
+            break;
+
+          case "phone":
+            const phoneRegex = /^\d{10}$/;
+            if (field.value && !phoneRegex.test(field.value)) {
+              errorMessage =
+                "Phone number must be exactly 10 digits (numbers only)";
+              isValid = false;
+            }
+            break;
+        }
+
+        if (!isValid) {
+          field.classList.add("form-validation");
+          if (errorElement) errorElement.textContent = errorMessage;
+        }
+
+        return isValid;
+      }
+
+      function validateForm() {
+        let isValid = true;
+        inputs.forEach((input) => {
+          if (!validateField(input)) {
+            isValid = false;
+          }
+        });
+
+        // Special validation for gender radio buttons
+        const genderInputs = document.querySelectorAll('input[name="gender"]');
+        const isGenderSelected = Array.from(genderInputs).some(
+          (input) => input.checked
+        );
+        if (!isGenderSelected) {
+          document.getElementById("genderError").textContent =
+            "Please select a gender";
+          isValid = false;
+        }
+
+        // Special validation for interests checkboxes
+        const interestInputs = document.querySelectorAll(
+          'input[name="interests"]'
+        );
+        const isInterestSelected = Array.from(interestInputs).some(
+          (input) => input.checked
+        );
+        if (!isInterestSelected) {
+          document.getElementById("interestsError").textContent =
+            "Please select at least one interest";
+          isValid = false;
+        }
+
+        return isValid;
+      }
+
+      // Form submission
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        if (!validateForm()) {
+          return;
+        }
+
+        const formData = new FormData(form);
+        const user = {
+          id: editingIndex >= 0 ? userData[editingIndex].id : Date.now(),
+          name: formData.get("name"),
+          email: formData.get("email"),
+          age: formData.get("age"),
+          gender: formData.get("gender"),
+          country: formData.get("country"),
+          interests: formData.getAll("interests"),
+          phone: formData.get("phone") || "Not provided",
+          bio: formData.get("bio") || "No bio provided",
+          createdAt:
+            editingIndex >= 0
+              ? userData[editingIndex].createdAt
+              : new Date().toLocaleString(),
+        };
+
+        if (editingIndex >= 0) {
+          // Update existing user
+          userData[editingIndex] = user;
+          editingIndex = -1;
+          document.querySelector(".btn").textContent = "Register User";
+          showSuccess("User updated successfully!");
+        } else {
+          // Add new user
+          userData.push(user);
+          showSuccess("User registered successfully!");
+        }
+
+        // Save to storage (replace with localStorage.setItem('userData', JSON.stringify(userData)) in your environment)
+        console.log("Data saved:", userData);
+
+        form.reset();
+        displayUsers();
+      });
+
+      function showSuccess(message) {
+        const successElement = document.getElementById("successMessage");
+        successElement.textContent = message;
+        setTimeout(() => {
+          successElement.textContent = "";
+        }, 3000);
+      }
+
+      function displayUsers() {
+        const tbody = document.getElementById("userTableBody");
+        const noData = document.getElementById("noData");
+
+        if (userData.length === 0) {
+          tbody.innerHTML = "";
+          noData.style.display = "block";
+          return;
+        }
+
+        noData.style.display = "none";
+        tbody.innerHTML = userData
+          .map(
+            (user, index) => `
+                <tr>
+                    <td>${user.name}</td>
+                    <td>${user.email}</td>
+                    <td>${user.age}</td>
+                    <td>${user.gender}</td>
+                    <td>${user.country}</td>
+                    <td>
+                        <button class="action-btn edit-btn" onclick="editUser(${index})">Edit</button>
+                        <button class="action-btn delete-btn" onclick="deleteUser(${index})">Delete</button>
+                    </td>
+                </tr>
+            `
+          )
+          .join("");
+      }
+
+      function editUser(index) {
+        const user = userData[index];
+        editingIndex = index;
+
+        // Fill form with user data
+        document.getElementById("name").value = user.name;
+        document.getElementById("email").value = user.email;
+        document.getElementById("age").value = user.age;
+        document.querySelector(
+          `input[name="gender"][value="${user.gender}"]`
+        ).checked = true;
+        document.getElementById("country").value =
+          user.country === "Not specified" ? "" : user.country;
+        document.getElementById("phone").value =
+          user.phone === "Not provided" ? "" : user.phone;
+        document.getElementById("bio").value =
+          user.bio === "No bio provided" ? "" : user.bio;
+
+        // Set interests
+        document
+          .querySelectorAll('input[name="interests"]')
+          .forEach((checkbox) => {
+            checkbox.checked = user.interests.includes(checkbox.value);
+          });
+
+        // Change button text
+        document.querySelector(".btn").textContent = "Update User";
+
+        // Scroll to form
+        document
+          .querySelector(".form-section")
+          .scrollIntoView({ behavior: "smooth" });
+      }
+
+      function deleteUser(index) {
+        if (confirm("Are you sure you want to delete this user?")) {
+          userData.splice(index, 1);
+
+          // Update localStorage (replace in your environment)
+          console.log("User deleted, updated data:", userData);
+
+          displayUsers();
+          showSuccess("User deleted successfully!");
+
+          // Reset form if we were editing the deleted user
+          if (editingIndex === index) {
+            form.reset();
+            editingIndex = -1;
+            document.querySelector(".btn").textContent = "Register User";
+          }
+        }
+      }
+
+      // Load data on page load (replace with localStorage.getItem('userData') in your environment)
+      window.addEventListener("load", function () {
+        // In a real environment, you would load from localStorage:
+        // const saved = localStorage.getItem('userData');
+        // if (saved) userData = JSON.parse(saved);
+
+        displayUsers();
+      });
+
+      // Add some sample data for demonstration
+      userData = [
+        {
+          id: 1,
+          name: "John Doe",
+          email: "john@example.com",
+          age: "28",
+          gender: "male",
+          country: "usa",
+          interests: ["technology", "sports"],
+          phone: "+1234567890",
+          bio: "Software developer passionate about tech",
+          createdAt: "9/25/2025, 10:30:00 AM",
+        },
+      ];
+      displayUsers();
+    </script>
+  </body>
+</html>

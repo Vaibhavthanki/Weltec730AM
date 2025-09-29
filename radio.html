@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<inp lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="myForm">
+    <input type="radio" name="gender" value="male"> Male
+    <input type="radio" name="gender" value="female"> Female
+
+    <button id="submitBtn" type="submit">Submit</button>
+    </form>
+    <script>
+        const form = document.getElementById("myForm");
+        const radios = form.elements;
+        const submitBtn = document.getElementById("submitBtn");
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+            let selectedValue = null;
+            for (const radio of radios) {
+                console.log("check22",radio.checked);
+                if (radio.type === "radio" && radio.checked) {
+                    selectedValue = radio.value;
+                    break;
+                }
+            }
+            if (selectedValue) {
+                console.log("Selected value:", selectedValue);
+            } else {
+                console.log("No option selected.");
+            }
+        });
+    </script>
+</body>
+</html>
