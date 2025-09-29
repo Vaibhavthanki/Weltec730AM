@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // Case 1: Promise resolved
+      //   const myPromise = new Promise((resolve, reject) => {
+      //     const success = true; // Change to false to test rejection
+      //     if (success) {
+      //       resolve("Promise resolved successfully!");
+      //     } else {
+      //       reject("Promise rejected.");
+      //     }
+      //   });
+
+      //   myPromise
+      //     .then((message) => {
+      //       console.log(message);
+      //     })
+      //     .catch((error) => {
+      //       console.log(error);
+      //     });
+
+      //   Case 2: Simple Promise with async operation
+      //   function createSimplePromise() {
+      //     return new Promise((resolve, reject) => {
+      //       console.log("Promise created - operation starting... Check31");
+
+      //       setTimeout(() => {
+      //         resolve("Success! Operation completed after 2 seconds Check34");
+      //       }, 2000);
+      //     });
+      //   }
+      //   // Using the promise
+      //   createSimplePromise()
+      //     .then((result) => {
+      //       console.log(result); // "Success! Operation completed after 2 seconds"
+      //     })
+      //     .catch((error) => {
+      //       console.log("Error:", error);
+      //     });
+      //   console.log("This runs immediately - doesn't wait for promise Check39");
+
+      //   Case 3: Promise with random success/failure
+      //   function randomPromise() {
+      //     return new Promise((resolve, reject) => {
+      //       const randomNumber = Math.random();
+
+      //       setTimeout(() => {
+      //         if (randomNumber > 0.5) {
+      //           resolve(`Success! Random number was ${randomNumber}`);
+      //         } else {
+      //           reject(`Failed! Random number was ${randomNumber}`);
+      //         }
+      //       }, 1000);
+      //     });
+      //   }
+      //   // Using the promise
+      //   randomPromise()
+      //     .then((successMessage) => {
+      //       console.log("✓", successMessage);
+      //     })
+      //     .catch((errorMessage) => {
+      //       console.log("✗", errorMessage);
+      //     });
+
+      //   Case 4: Simulated API call with Promise
+      //   function fetchUserData(userId) {
+      //     return new Promise((resolve, reject) => {
+      //       console.log(`Fetching data for user ${userId}...`);
+
+      //       // Simulate network delay
+      //       setTimeout(() => {
+      //         if (userId > 0) {
+      //           const userData = {
+      //             id: userId,
+      //             name: `User ${userId}`,
+      //             email: `user${userId}@example.com`,
+      //           };
+      //           resolve(userData);
+      //         } else {
+      //           reject("Invalid user ID");
+      //         }
+      //       }, 1500);
+      //     });
+      //   }
+
+      //   fetchUserData()
+      //     .then((user) => {
+      //       console.log("User data received:", user);
+      //       console.log(`Welcome, ${user.name}!`);
+      //     })
+      //     .catch((error) => {
+      //       console.log("Failed to fetch user:", error);
+      //     });
+
+      // Case 5 : Chaining Promises
+
+      function step1() {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            console.log("Step 1 completed");
+            resolve("Data from step 1");
+          }, 1000);
+        });
+      }
+      function step2(dataFromStep1) {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            console.log("Step 2 completed with:", dataFromStep1);
+            resolve("Data from step 2");
+          }, 1000);
+        });
+      }
+
+      function step3(dataFromStep2) {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            console.log("Step 3 completed with:", dataFromStep2);
+            resolve("Final result");
+          }, 1000);
+        });
+      }
+      // Chaining promises
+      step1()
+        .then((result1) => {
+          return step2(result1);
+        })
+        .then((result2) => {
+          return step3(result2);
+        })
+        .then((finalResult) => {
+          console.log("All steps completed:", finalResult);
+        })
+        .catch((error) => {
+          console.log("Something went wrong:", error);
+        });
+
+      step1()
+        .then((result1) => {
+          step2(result1)
+            .then((result2) => {
+              step3(result2)
+                .then((finalResult) => {
+                  console.log("All steps completed:", finalResult);
+                })
+                .catch((error) => {
+                  console.log("Something went wrong:", error);
+                });
+            })
+            .catch((error) => {
+              console.log("Something went wrong:", error);
+            });
+        })
+        .catch((error) => {
+          console.log("Something went wrong:", error);
+        });
+    </script>
+  </body>
+</html>
