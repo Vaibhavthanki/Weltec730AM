@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // AJAX GET Request Example
+      //   const xhr = new XMLHttpRequest();
+      //   xhr.open("GET", "https://jsonplaceholder.typicode.com/posts", true);
+      //   xhr.setRequestHeader("Authorization", " Bearer your_token_here");
+      //   xhr.onreadystatechange = function () {
+      //     console.log("AJAX GET State:", xhr.readyState);
+      //     if (xhr.readyState === 4 && xhr.status === 200) {
+      //       const data = JSON.parse(xhr.responseText);
+      //       console.log("AJAX GET Response:", data);
+      //     }
+      //   };
+      //   xhr.send();
+
+      //   AJAX POST Request Example
+      //   const xhr = new XMLHttpRequest();
+      //   xhr.open("POST", "https://jsonplaceholder.typicode.com/posts", true);
+      //   xhr.setRequestHeader("Content-Type", "application/json");
+      //   xhr.setRequestHeader("Authorization", "Bearer your_token_here");
+      //   const requestData = JSON.stringify({
+      //     title: "foo",
+      //     body: "bar",
+      //     userId: 1,
+      //   });
+      //   xhr.onreadystatechange = function () {
+      //     console.log("AJAX POST State:", xhr.readyState);
+      //     if (xhr.readyState === 4 && xhr.status === 201) {
+      //       console.log("AJAX POST Response:", JSON.parse(xhr.responseText));
+      //     }
+      //   };
+      //   xhr.send(requestData);
+
+      //   AJAX PUT Request Example
+      //   const xhr = new XMLHttpRequest();
+      //   xhr.open("PUT", "https://jsonplaceholder.typicode.com/posts/1", true);
+      //   xhr.setRequestHeader("Content-Type", "application/json");
+      //   xhr.setRequestHeader("Authorization", "Bearer your_token_here");
+      //   const putRequestData = JSON.stringify({
+      //     id: 1,
+      //     title: "foo updated",
+      //     body: "bar updated",
+      //     userId: 1,
+      //   });
+      //   xhr.onreadystatechange = function () {
+      //     if (xhr.readyState === 4 && xhr.status === 200) {
+      //       console.log("AJAX PUT Response:", JSON.parse(xhr.responseText));
+      //     }
+      //   };
+      //   xhr.send(putRequestData);
+
+      //   AJAX DELETE Request Example
+      //   const xhr = new XMLHttpRequest();
+      //   xhr.open("DELETE", "https://jsonplaceholder.typicode.com/posts/1", true);
+      //   xhr.setRequestHeader("Authorization", "Bearer your_token_here");
+      //   xhr.onreadystatechange = function () {
+      //     if (xhr.readyState === 4 && xhr.status === 200) {
+      //       console.log("AJAX DELETE Response:", xhr.responseText);
+      //     }
+      //   };
+      //   xhr.send();
+
+      // AJAX PATCH Request Example
+      const xhr = new XMLHttpRequest();
+      xhr.open("PATCH", "https://jsonplaceholder.typicode.com/posts/1", true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      const requestData = JSON.stringify({
+        title: "foo updated partially",
+      });
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          console.log("AJAX PATCH Response:", JSON.parse(xhr.responseText));
+        }
+      };
+      xhr.send(requestData);
+    </script>
+  </body>
+</html>

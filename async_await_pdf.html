@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Async/Await & Advanced Promise Patterns</title>
+    <style>
+        @media print {
+            body { margin: 0; }
+            .page-break { page-break-before: always; }
+            pre { page-break-inside: avoid; }
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: #fff;
+        }
+        
+        h1 {
+            color: #2563eb;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #2563eb;
+        }
+        
+        h2 {
+            color: #1e40af;
+            font-size: 1.8em;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-top: 20px;
+        }
+        
+        h3 {
+            color: #1e40af;
+            font-size: 1.4em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        strong {
+            color: #1e40af;
+        }
+        
+        ul {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        code {
+            background: #f3f4f6;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #dc2626;
+        }
+        
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+        
+        pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+        
+        .keyword { color: #c792ea; }
+        .function { color: #82aaff; }
+        .string { color: #c3e88d; }
+        .comment { color: #697098; font-style: italic; }
+        .number { color: #f78c6c; }
+        
+        .output-box {
+            background: #f9fafb;
+            border-left: 4px solid #2563eb;
+            padding: 15px 20px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        .output-box strong {
+            color: #2563eb;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .takeaways {
+            background: #eff6ff;
+            border: 2px solid #2563eb;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+        
+        .takeaways h2 {
+            margin-top: 0;
+            color: #1e40af;
+        }
+        
+        .exercises {
+            background: #f0fdf4;
+            border: 2px solid #16a34a;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+        
+        .exercises h2 {
+            margin-top: 0;
+            color: #15803d;
+        }
+        
+        .exercises ol {
+            margin-left: 25px;
+        }
+        
+        .exercises li {
+            margin-bottom: 10px;
+            color: #166534;
+        }
+    </style>
+</head>
+<body>
+    <h1>Async/Await & Advanced Promise Patterns</h1>
+
+    <div class="section">
+        <h2>Part 1: Understanding Async/Await</h2>
+        
+        <h3>What is Async/Await?</h3>
+        <p>Async/await is a more readable way to work with Promises. It makes asynchronous code look and behave like synchronous code, making it easier to understand and maintain.</p>
+        
+        <p><strong>Key Points:</strong></p>
+        <ul>
+            <li><code>async</code> keyword makes a function return a Promise</li>
+            <li><code>await</code> keyword pauses execution until the Promise resolves</li>
+            <li>Can only use <code>await</code> inside an <code>async</code> function</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Example 1: Basic Async/Await</h2>
+        <pre><code>// Simulating an API call
+function getUserData(userId) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        id: userId,
+        name: `User ${userId}`,
+        email: `user${userId}@example.com`,
+      });
+    }, 1000);
+  });
+}
+
+// Traditional Promise way
+function getUserWithPromise(userId) {
+  return getUserData(userId)
+    .then((data) => {
+      console.log(data);
+      return data;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+// Async/Await way - Much cleaner!
+async function getUserWithAsync(userId) {
+  try {
+    const data = await getUserData(userId);
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Test it
+getUserWithAsync(123);</code></pre>
+    </div>
+
+    <div class="section">
+        <h2>Example 2: Simple Async Function</h2>
+        <pre><code>// Simulating a database query
+function queryDatabase(query) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(`Results for: ${query}`);
+    }, 1000);
+  });
+}
+
+// Using async/await
+async function searchDatabase() {
+  console.log("Starting search...");
+  const result = await queryDatabase("SELECT * FROM users");
+  console.log("Search complete:", result);
+  return result;
+}
+
+// Calling an async function
+searchDatabase().then((finalResult) => {
+  console.log("Final:", finalResult);
+});
+
+console.log("This runs immediately");</code></pre>
+
+        <div class="output-box">
+            <strong>Output:</strong>
+            <pre>Starting search...
+This runs immediately
+Search complete: Results for: SELECT * FROM users
+Final: Results for: SELECT * FROM users</pre>
+        </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <div class="section">
+        <h2>Example 3: Sequential Operations</h2>
+        <pre><code>function fetchUserData(userId) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({ id: userId, name: `User ${userId}` });
+    }, 1000);
+  });
+}
+
+function fetchUserPosts(userId) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve([
+        { id: 1, title: "Post 1" },
+        { id: 2, title: "Post 2" },
+      ]);
+    }, 1000);
+  });
+}
+
+function fetchPostComments(postId) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve([
+        { id: 1, text: "Great post!" },
+        { id: 2, text: "Thanks for sharing!" },
+      ]);
+    }, 1000);
+  });
+}
+
+// Sequential execution with async/await
+async function getUserCompleteData(userId) {
+  console.log("Step 1: Fetching user data...");
+  const user = await fetchUserData(userId);
+  console.log("User:", user);
+
+  console.log("Step 2: Fetching user posts...");
+  const posts = await fetchUserPosts(user.id);
+  console.log("Posts:", posts);
+
+  console.log("Step 3: Fetching comments for first post...");
+  const comments = await fetchPostComments(posts[0].id);
+  console.log("Comments:", comments);
+
+  return { user, posts, comments };
+}
+
+// Usage
+getUserCompleteData(123).then((allData) => {
+  console.log("All data loaded:", allData);
+});</code></pre>
+    </div>
+
+    <div class="section">
+        <h2>Example 4: Parallel Operations with Async/Await</h2>
+        <pre><code>function downloadFile(fileName, time) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      console.log(`${fileName} downloaded`);
+      resolve(`${fileName} content`);
+    }, time);
+  });
+}
+
+// Wrong way - Sequential (slower)
+async function downloadFilesSequential() {
+  console.log("Starting sequential downloads...");
+  const startTime = Date.now();
+
+  const file1 = await downloadFile("file1.pdf", 2000);
+  const file2 = await downloadFile("file2.jpg", 2000);
+  const file3 = await downloadFile("file3.mp4", 2000);
+
+  const endTime = Date.now();
+  console.log(`Sequential took: ${endTime - startTime}ms`);
+  return [file1, file2, file3];
+}
+
+// Right way - Parallel (faster)
+async function downloadFilesParallel() {
+  console.log("Starting parallel downloads...");
+  const startTime = Date.now();
+
+  // Start all downloads at once
+  const promise1 = downloadFile("file1.pdf", 2000);
+  const promise2 = downloadFile("file2.jpg", 2000);
+  const promise3 = downloadFile("file3.mp4", 2000);
+
+  // Wait for all to complete
+  const [file1, file2, file3] = await Promise.all([
+    promise1,
+    promise2,
+    promise3,
+  ]);
+
+  const endTime = Date.now();
+  console.log(`Parallel took: ${endTime - startTime}ms`);
+  return [file1, file2, file3];
+}
+
+// downloadFilesSequential(); // Takes ~6 seconds
+// downloadFilesParallel();    // Takes ~2 seconds</code></pre>
+    </div>
+
+    <div class="page-break"></div>
+
+    <div class="section">
+        <h2>Part 2: Error Handling Patterns</h2>
+        
+        <h3>Try-Catch Block (Recommended)</h3>
+        <pre><code>// Simulating data fetching
+function fetchData(url) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const success = Math.random() > 0.3;
+      if (success) {
+        resolve({ data: `Data from ${url}`, status: 200 });
+      } else {
+        reject(new Error(`Failed to fetch from ${url}`));
+      }
+    }, 1000);
+  });
+}
+
+async function fetchDataWithTryCatch(url) {
+  try {
+    console.log("Fetching data...");
+    const response = await fetchData(url);
+    console.log("Data received:", response);
+    return response;
+  } catch (error) {
+    console.error("Error fetching data:", error.message);
+    return null;
+  }
+}
+
+// Usage
+async function displayUserData() {
+  const data = await fetchDataWithTryCatch("api.example.com/user");
+  if (data) {
+    console.log("User data:", data);
+  } else {
+    console.log("Failed to load user data");
+  }
+}
+
+displayUserData();</code></pre>
+    </div>
+
+    <div class="section">
+        <h3>Pattern 2: Custom Error Classes</h3>
+        <pre><code>// Define custom error types
+class NetworkError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "NetworkError";
+  }
+}
+
+class ValidationError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "ValidationError";
+  }
+}
+
+class DatabaseError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "DatabaseError";
+  }
+}
+
+// Handle different error types
+async function registerUser(userData) {
+  try {
+    const user = await createUser(userData);
+    console.log("User created successfully:", user);
+    return user;
+  } catch (error) {
+    if (error instanceof ValidationError) {
+      console.error("Validation failed:", error.message);
+    } else if (error instanceof NetworkError) {
+      console.error("Network error:", error.message);
+    } else if (error instanceof DatabaseError) {
+      console.error("Database error:", error.message);
+    } else {
+      console.error("Unexpected error:", error);
+    }
+    return null;
+  }
+}</code></pre>
+    </div>
+
+    <div class="page-break"></div>
+
+    <div class="section">
+        <h2>Part 3: Promise.allSettled()</h2>
+        
+        <h3>What is Promise.allSettled()?</h3>
+        <p>Unlike <code>Promise.all()</code> which fails if ANY promise rejects, <code>Promise.allSettled()</code> waits for ALL promises to complete (either resolved or rejected) and returns the results of each.</p>
+    </div>
+
+    <div class="section">
+        <h3>Example 5: Promise.allSettled() Basic Usage</h3>
+        <pre><code>function fetchData(url, shouldSucceed) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (shouldSucceed) {
+        resolve({ data: `Data from ${url}`, url });
+      } else {
+        reject(new Error(`Failed to fetch from ${url}`));
+      }
+    }, 1000);
+  });
+}
+
+async function fetchMultipleResources() {
+  const promise1 = fetchData("api.example.com/users", true);
+  const promise2 = fetchData("api.example.com/posts", false);
+  const promise3 = fetchData("api.example.com/comments", true);
+
+  const results = await Promise.allSettled([promise1, promise2, promise3]);
+
+  console.log("All promises settled!");
+  results.forEach((result, index) => {
+    if (result.status === "fulfilled") {
+      console.log(`Promise ${index + 1} succeeded:`, result.value);
+    } else {
+      console.log(`Promise ${index + 1} failed:`, result.reason.message);
+    }
+  });
+
+  return results;
+}
+
+fetchMultipleResources();</code></pre>
+
+        <div class="output-box">
+            <strong>Output:</strong>
+            <pre>All promises settled!
+Promise 1 succeeded: { data: 'Data from api.example.com/users', url: '...' }
+Promise 2 failed: Failed to fetch from api.example.com/posts
+Promise 3 succeeded: { data: 'Data from api.example.com/comments', url: '...' }</pre>
+        </div>
+    </div>
+
+    <div class="section">
+        <h3>Example 6: Comparison of Promise Methods</h3>
+        <pre><code>async function comparePromiseMethods() {
+  // Promise.all() - Fails at first rejection
+  console.log("--- Testing Promise.all() ---");
+  try {
+    const allResults = await Promise.all(tasks);
+    console.log("All succeeded:", allResults);
+  } catch (error) {
+    console.log("Promise.all() failed:", error.message);
+  }
+
+  // Promise.allSettled() - Waits for all
+  console.log("--- Testing Promise.allSettled() ---");
+  const settledResults = await Promise.allSettled(tasks);
+  console.log("All settled (success and failures):");
+
+  // Promise.race() - First to complete
+  console.log("--- Testing Promise.race() ---");
+  const raceResult = await Promise.race(tasks);
+  console.log("First to complete:", raceResult);
+
+  // Promise.any() - First to succeed
+  console.log("--- Testing Promise.any() ---");
+  const anyResult = await Promise.any(tasks);
+  console.log("First to succeed:", anyResult);
+}</code></pre>
+    </div>
+
+    <div class="page-break"></div>
+
+    <div class="section">
+        <h3>Example 7: Real-world Use Case - Multiple API Calls</h3>
+        <pre><code>async function loadDashboardData() {
+  console.log("Loading dashboard data from multiple services...\n");
+
+  const services = [
+    fetchFromService("User Service", 1000, false),
+    fetchFromService("Analytics Service", 1500, true),
+    fetchFromService("Notification Service", 800, false),
+    fetchFromService("Payment Service", 1200, true),
+  ];
+
+  const results = await Promise.allSettled(services);
+
+  const successfulData = [];
+  const failedServices = [];
+
+  results.forEach((result) => {
+    if (result.status === "fulfilled") {
+      successfulData.push(result.value);
+      console.log(`✓ ${result.value.service} loaded successfully`);
+    } else {
+      failedServices.push(result.reason.message);
+      console.log(`✗ Service failed: ${result.reason.message}`);
+    }
+  });
+
+  return {
+    status: successfulData.length > 0 ? "partial" : "failed",
+    data: successfulData,
+    errors: failedServices,
+  };
+}</code></pre>
+    </div>
+
+    <div class="section">
+        <h3>Example 8: Retry Pattern with Error Handling</h3>
+        <pre><code>async function fetchWithRetry(url, maxRetries = 3) {
+  let lastError;
+
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      console.log(`Attempt ${attempt} of ${maxRetries}...`);
+      const data = await fetchUnreliableData(url, attempt);
+      console.log(`Success on attempt ${attempt}!`);
+      return data;
+    } catch (error) {
+      console.log(`Attempt ${attempt} failed:`, error.message);
+      lastError = error;
+
+      if (attempt < maxRetries) {
+        const delay = Math.pow(2, attempt) * 500; // Exponential backoff
+        console.log(`Waiting ${delay / 1000}s before retry...\n`);
+        await new Promise((resolve) => setTimeout(resolve, delay));
+      }
+    }
+  }
+
+  throw new Error(`Failed after ${maxRetries} attempts: ${lastError.message}`);
+}</code></pre>
+    </div>
+
+    <div class="takeaways">
+        <h2>Key Takeaways</h2>
+        
+        <h3>Async/Await:</h3>
+        <ul>
+            <li>Makes asynchronous code easier to read and write</li>
+            <li>Always use with try-catch for error handling</li>
+            <li>Can run promises in parallel by starting them before awaiting</li>
+        </ul>
+
+        <h3>Promise.allSettled():</h3>
+        <ul>
+            <li>Perfect when you need results from all promises, even if some fail</li>
+            <li>Returns array with <code>status</code> ("fulfilled" or "rejected") and <code>value</code>/<code>reason</code></li>
+            <li>Better than Promise.all() for non-critical operations</li>
+        </ul>
+
+        <h3>Error Handling:</h3>
+        <ul>
+            <li>Always use try-catch with async/await</li>
+            <li>Handle errors gracefully and provide meaningful messages</li>
+            <li>Consider retry patterns for unreliable operations</li>
+        </ul>
+    </div>
+
+    <div class="exercises">
+        <h2>Practice Exercises</h2>
+        <ol>
+            <li>Convert a promise chain to async/await</li>
+            <li>Create a function that fetches data from 3 APIs in parallel</li>
+            <li>Build an error handler that retries failed requests</li>
+            <li>Use Promise.allSettled() to load optional dashboard widgets</li>
+        </ol>
+        <p style="margin-top: 20px; text-align: center; font-size: 1.2em;"><strong>Happy coding! 🚀</strong></p>
+    </div>
+</body>
+</html>
