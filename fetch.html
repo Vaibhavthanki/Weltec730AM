@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      async function callAllApi() {
+        // GET request using Fetch API
+        const letPosts = await fetch(
+          "https://jsonplaceholder.typicode.com/posts",
+          {
+            method: "GET",
+          }
+        ).then((response) => response.json().then((data) => console.log(data)));
+
+        //   POST request using Fetch API
+        const letPost = await fetch(
+          "https://jsonplaceholder.typicode.com/posts",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              title: "foo",
+              body: "bar",
+              userId: 1,
+            }),
+          }
+        )
+          .then((response) => response.json())
+          .then((data) => console.log("Fetch POST Response:", data))
+          .catch((error) => console.error("Error:", error));
+
+        // PUT request using Fetch API
+        const letPut = await fetch(
+          "https://jsonplaceholder.typicode.com/posts/1",
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              id: 1,
+              title: "foo updated",
+              body: "bar updated",
+              userId: 1,
+            }),
+          }
+        )
+          .then((response) => response.json())
+          .then((data) => console.log("Fetch PUT Response:", data))
+          .catch((error) => console.error("Error:", error));
+
+        // DELETE request using Fetch API
+        const letDelete = await fetch(
+          "https://jsonplaceholder.typicode.com/posts/1",
+          {
+            method: "DELETE",
+          }
+        )
+          .then((response) => response.json())
+          .then((data) => console.log("Fetch DELETE Response:", data))
+          .catch((error) => console.error("Error:", error));
+
+        // PATCH request using Fetch API
+        const letPatch = await fetch(
+          "https://jsonplaceholder.typicode.com/posts/1",
+          {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              title: "foo patched",
+            }),
+          }
+        )
+          .then((response) => response.json())
+          .then((data) => console.log("Fetch PATCH Response:", data))
+          .catch((error) => console.error("Error:", error));
+      }
+
+      callAllApi();
+    </script>
+  </body>
+</html>

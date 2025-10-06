@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function myFunction() {
+        let a = 4;
+        return a * a;
+      }
+
+      let b = 4;
+      function myFunction() {
+        return b * b;
+      }
+
+      console.log(b);
+
+      function chnageValue() {
+        b = 50;
+      }
+      chnageValue();
+
+      console.log(b, "check26");
+
+      function myFunction() {
+        a = 4;
+      }
+
+      // Initiate counter
+      //   let counter = 0;
+
+      // Function to increment counter
+      //   function add() {
+      //     let counter = 0;
+      //     counter += 1;
+      //     return counter;
+      //   }
+
+      //   let x = 0;
+      //   // Call add() 3 times
+      //   x = add();
+      //   x = add();
+      //   x = add();
+      //   //   // Call add() 3 times
+      //   //   add();
+      //   //   add();
+      //   //   add();
+
+      //   // The counter should now be 3
+      //   console.log(x, "check47");
+
+      //   function add() {
+      //     let counter = 0;
+      //     function plus() {
+      //       counter += 1;
+      //     }
+      //     plus();
+      //     return counter;
+      //   }
+
+      function myCounter() {
+        let counter = 0;
+        return function () {
+          counter++;
+          return counter;
+        };
+      }
+      const add = myCounter();
+      add();
+      add();
+      const lastAdd = add();
+      console.log(lastAdd, "check65");
+    </script>
+  </body>
+</html>
