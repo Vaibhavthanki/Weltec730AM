@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkbox Validation</title>
+    <style>
+      .error {
+        color: red;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="myForm">
+      <div>
+        <label>
+          <input type="checkbox" class="terms" name="terms" />
+          Accept Terms & Conditions
+        </label>
+      </div>
+      <div>
+        <label>
+          <input type="checkbox" class="privacy" name="privacy" />
+          Agree to Privacy Policy
+        </label>
+      </div>
+      <div>
+        <label>
+          <input type="checkbox" class="newsletter" name="newsletter" />
+          Subscribe to Newsletter
+        </label>
+      </div>
+      <br /><br />
+      <button type="submit">Submit</button>
+      <p id="error" class="error"></p>
+      <p id="checkedCheckboxes"></p>
+      <!-- Display checked checkboxes here -->
+    </form>
+
+    <script>
+      const form = document.getElementById("myForm");
+      const checkboxes = Array.from(
+        form.querySelectorAll('input[type="checkbox"]')
+      );
+      const error = document.getElementById("error");
+      const checkedCheckboxesDisplay =
+        document.getElementById("checkedCheckboxes");
+
+      // Check if all required checkboxes are checked
+      function validateCheckboxes() {
+        const uncheckedCheckboxes = checkboxes.filter(
+          (checkbox) => !checkbox.checked
+        );
+        if (uncheckedCheckboxes.length > 0) {
+          error.textContent =
+            "You must accept all the required options before submitting.";
+          return false;
+        }
+        error.textContent = "";
+        return true;
+      }
+
+      // on change and on blur events for all checkboxes
+      checkboxes.forEach((checkbox) => {
+        checkbox.addEventListener("change", function () {
+          validateCheckboxes();
+        });
+
+        checkbox.addEventListener("blur", function () {
+          validateCheckboxes();
+        });
+      });
+
+      // form submit validation
+      form.onsubmit = function (e) {
+        e.preventDefault(); // prevent normal form submit
+        if (validateCheckboxes()) {
+          // Gather the checked checkboxes
+          const checkedCheckboxes = checkboxes
+            .filter((checkbox) => checkbox.checked)
+            .map((checkbox) => checkbox.name); // Get names of checked checkboxes
+
+          // Display the checked checkboxes at the bottom
+          if (checkedCheckboxes.length > 0) {
+            checkedCheckboxesDisplay.textContent =
+              "You have selected: " + checkedCheckboxes.join(", ");
+          } else {
+            checkedCheckboxesDisplay.textContent = "No checkboxes selected.";
+          }
+
+          alert("Form submitted successfully!");
+        } else {
+          // Error already handled in validateCheckboxes
+          checkboxes[0].focus(); // Focus on the first checkbox for better UX
+        }
+      };
+    </script>
+  </body>
+</html>

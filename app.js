@@ -1,3 +1,4 @@
+let selectedIndex = null;
 // Function to handle form change events
 function handleChange(event) {
   const field = event.target;
@@ -34,8 +35,13 @@ document
     // Get existing users from localStorage
     const users = JSON.parse(localStorage.getItem("users")) || [];
 
-    // Add the new user
-    users.push(formData);
+    if (selectedIndex !== null) {
+      users[selectedIndex] = formData;
+      selectedIndex = null;
+    } else {
+      // Add the new user
+      users.push(formData);
+    }
 
     // Save the updated users to localStorage
     localStorage.setItem("users", JSON.stringify(users));
@@ -74,6 +80,7 @@ function updateTable() {
 
 // Function to edit a user
 function editUser(index) {
+  selectedIndex = index;
   const users = JSON.parse(localStorage.getItem("users")) || [];
   const user = users[index];
 
@@ -86,9 +93,6 @@ function editUser(index) {
     `input[name="subscription"][value="${user.subscription.toLowerCase()}"]`
   ).checked = true;
   document.getElementById("terms").checked = user.terms;
-
-  // Remove the user from the list
-  deleteUser(index);
 }
 
 // Function to delete a user
