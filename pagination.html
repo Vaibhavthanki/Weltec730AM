@@ -214,6 +214,7 @@
       let postsPerPage = 10;
       let totalPages = 0;
 
+      // Step 2: Fetch and display posts
       // Fetch posts from API
       async function fetchPosts() {
         try {
@@ -234,6 +235,7 @@
         }
       }
 
+      // Step 3: Pagination logic
       // Display posts for current page
       function displayPosts() {
         const start = (currentPage - 1) * postsPerPage;
@@ -279,8 +281,8 @@
       function updatePageNumbers() {
         const pageNumbers = document.getElementById("pageNumbers");
         const maxVisible = 5;
-        let start = Math.max(1, currentPage - 2);
-        let end = Math.min(totalPages, start + maxVisible - 1);
+        let start = Math.max(1, currentPage - 2); // 1
+        let end = Math.min(totalPages, start + maxVisible - 1); // 5
 
         pageNumbers.innerHTML = "";
         for (let i = start; i <= end; i++) {
@@ -323,6 +325,7 @@
         document.getElementById("error").style.display = "block";
       }
 
+      // Step 1: Initialize
       // Event listeners
       document.addEventListener("DOMContentLoaded", () => {
         fetchPosts();
@@ -336,6 +339,8 @@
 
         document.getElementById("pageSize").onchange = (e) => {
           postsPerPage = parseInt(e.target.value);
+          // 100/10 = 10
+          // 100/15 = 6.66 => 7
           totalPages = Math.ceil(allPosts.length / postsPerPage);
           currentPage = 1;
           displayPosts();
